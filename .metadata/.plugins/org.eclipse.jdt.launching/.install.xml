@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <dirs>
     <entry loc="C:\NhaTrang_University\HKII_2024_2025\Phat_Trien_UD_Web2\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.6.v20250130-0529" stamp="1741055234719"/>
@@ -6,3 +7,10 @@
     <entry loc="C:\NhaTrang_University\HKII_2024_2025\Phat_Trien_UD_Web2\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.6.v20250130-0529\jre" stamp="1741055234716"/>
     <entry loc="C:\Program Files\Java\jdk-19" stamp="1683206843783"/>
 </dirs>
+=======
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<dirs>
+    <entry loc="C:\NhaTrang_University\HKII_2024_2025\Phat_Trien_UD_Web2\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.6.v20250130-0529" stamp="1741055234719"/>
+    <entry loc="C:\NhaTrang_University\HKII_2024_2025\Phat_Trien_UD_Web2\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.6.v20250130-0529\jre" stamp="1741055234716"/>
+</dirs>
+>>>>>>> b28841397b168f5f353a9b6e022d50f49dd32924

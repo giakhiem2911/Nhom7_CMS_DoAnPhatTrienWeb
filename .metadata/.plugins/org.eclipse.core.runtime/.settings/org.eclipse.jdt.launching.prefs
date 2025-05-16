@@ -1,2 +1,7 @@
+<<<<<<< HEAD
 eclipse.preferences.version=1
 org.eclipse.jdt.launching.PREF_VM_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<vmSettings defaultVM\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1747384005559" defaultVMConnector\="">\r\n    <vmType id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType">\r\n        <vm id\="1747384005559" name\="jre" path\="C\:\\Users\\letru\\.p2\\pool\\plugins\\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_23.0.2.v20250131-0604\\jre"/>\r\n        <vm id\="C\:\\Program Files\\Java\\jdk-19" name\="jdk-19" path\="C\:\\Program Files\\Java\\jdk-19"/>\r\n    </vmType>\r\n</vmSettings>\r\n
+=======
+eclipse.preferences.version=1
+org.eclipse.jdt.launching.PREF_VM_XML=<?xml version\="1.0" encoding\="UTF-8" standalone\="no"?>\r\n<vmSettings defaultVM\="57,org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType13,1747038615413" defaultVMConnector\="">\r\n    <vmType id\="org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType">\r\n        <vm id\="1747038615413" name\="jre" path\="C\:\\NhaTrang_University\\HKII_2024_2025\\Phat_Trien_UD_Web2\\eclipse\\plugins\\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.6.v20250130-0529\\jre"/>\r\n    </vmType>\r\n</vmSettings>\r\n
+>>>>>>> b28841397b168f5f353a9b6e022d50f49dd32924

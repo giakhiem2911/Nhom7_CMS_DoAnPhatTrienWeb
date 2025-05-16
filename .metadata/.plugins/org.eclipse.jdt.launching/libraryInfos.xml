@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <libraryInfos>
     <libraryInfo home="C:\NhaTrang_University\HKII_2024_2025\Phat_Trien_UD_Web2\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.6.v20250130-0529" version="21.0.6">
@@ -26,3 +27,20 @@
     <libraryInfo home="C:\NhaTrang_University\HKII_2024_2025\Phat_Trien_UD_Web2\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.6.v20250130-0529\jre" version="21.0.6"/>
     <libraryInfo home="C:\Program Files\Java\jdk-19" version="19.0.2"/>
 </libraryInfos>
+=======
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+    <libraryInfo home="C:\NhaTrang_University\HKII_2024_2025\Phat_Trien_UD_Web2\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.6.v20250130-0529" version="21.0.6">
+        <bootpath>
+            <entry path="null"/>
+        </bootpath>
+        <extensionDirs>
+            <entry path="null"/>
+        </extensionDirs>
+        <endorsedDirs>
+            <entry path="null"/>
+        </endorsedDirs>
+    </libraryInfo>
+    <libraryInfo home="C:\NhaTrang_University\HKII_2024_2025\Phat_Trien_UD_Web2\eclipse\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.6.v20250130-0529\jre" version="21.0.6"/>
+</libraryInfos>
+>>>>>>> b28841397b168f5f353a9b6e022d50f49dd32924
