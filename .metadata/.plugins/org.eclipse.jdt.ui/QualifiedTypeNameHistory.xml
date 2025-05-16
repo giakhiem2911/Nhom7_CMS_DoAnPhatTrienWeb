@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.NguoiDung"/>
+    <fullyQualifiedTypeName name="nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.SuKien"/>
+    <fullyQualifiedTypeName name="nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.ThongBao"/>
+    <fullyQualifiedTypeName name="nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.DanhMuc"/>
+    <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
+    <fullyQualifiedTypeName name="nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.DanhMucRepository"/>
+    <fullyQualifiedTypeName name="nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.MetaData"/>
+</qualifiedTypeNameHistroy>
