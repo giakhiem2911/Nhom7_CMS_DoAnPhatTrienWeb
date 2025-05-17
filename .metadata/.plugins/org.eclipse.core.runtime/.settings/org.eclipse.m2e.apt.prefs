@@ -1,0 +1,9 @@
+<<<<<<< HEAD
+eclipse.preferences.version=1
+org.eclipse.m2e.apt.mode=jdt_apt
+org.springframework.ide.eclipse.boot.customised=true
+=======
+eclipse.preferences.version=1
+org.eclipse.m2e.apt.mode=jdt_apt
+org.springframework.ide.eclipse.boot.customised=true
+>>>>>>> b28841397b168f5f353a9b6e022d50f49dd32924
