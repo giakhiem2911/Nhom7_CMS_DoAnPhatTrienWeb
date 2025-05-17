@@ -18,6 +18,7 @@ CREATE TABLE NguoiDung (
     MatKhau CHAR(256),
     HoTen CHAR(256),
     Email CHAR(256),
+	NgayTao DATETIME,
     FOREIGN KEY (MaVaiTro) REFERENCES VaiTro(MaVaiTro)
 );
 
@@ -60,24 +61,13 @@ CREATE TABLE BaiViet (
     TieuDe CHAR(256),
     DuongDan CHAR(256),
     NoiDung TEXT,
+	AnhDaiDien CHAR(256),
+	TrangThai CHAR(256),
+	FileDinhKem CHAR(256)
+	NgayXuatBan DATETIME,
+	NgayCapNhat DATETIME,
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung),
     FOREIGN KEY (MaDanhMuc) REFERENCES DanhMuc(MaDanhMuc)
-);
-
--- Bảng CaiDat
-CREATE TABLE CaiDat (
-    MaCaiDat CHAR(256) PRIMARY KEY,
-    TenCaiDat CHAR(256),
-    GiaTri CHAR(256)
-);
-
--- Bảng MetaData
-CREATE TABLE MetaData (
-    MaMeta CHAR(256) PRIMARY KEY,
-    LoaiDoiTuong CHAR(256),
-    MaDoiTuong CHAR(256),
-    Khoa CHAR(256),
-    GiaTri CHAR(256)
 );
 
 -- Bảng Menu
@@ -85,8 +75,7 @@ CREATE TABLE Menu (
     MaMenu CHAR(256) PRIMARY KEY,
     MaNguoiDung CHAR(256),
     Ten CHAR(256),
-    MenuCha CHAR(256),
-    DuongDan CHAR(256),
+    ThuTuHienThi CHAR(256),
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung)
 );
 
@@ -99,6 +88,8 @@ CREATE TABLE Trang (
     DuongDan CHAR(256),
     NoiDung TEXT,
     TrangThai CHAR(256),
+	NgayTao DATETIME,
     FOREIGN KEY (MaMenu) REFERENCES Menu(MaMenu),
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung)
 );
+
