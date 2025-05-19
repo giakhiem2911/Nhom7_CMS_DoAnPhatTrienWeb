@@ -14,19 +14,23 @@ public class TrangService {
     @Autowired
     private TrangRepository trangRepository;
 
-    public List<Trang> getAllTrang() {
+    // Lấy tất cả trang
+    public List<Trang> findAll() {
         return trangRepository.findAll();
     }
 
-    public Optional<Trang> getTrangById(Long id) {
-        return trangRepository.findById(id);
+    // Lấy trang theo ID
+    public Optional<Trang> findById(String loaiDoiTuong) {
+        return trangRepository.findById(loaiDoiTuong);
     }
 
-    public Trang saveTrang(Trang trang) {
+    // Tạo hoặc cập nhật trang
+    public Trang save(Trang trang) {
         return trangRepository.save(trang);
     }
 
-    public void deleteTrang(Long id) {
-        trangRepository.deleteById(id);
+    // Xóa trang theo ID
+    public void deleteById(String loaiDoiTuong) {
+        trangRepository.deleteById(loaiDoiTuong);
     }
 }

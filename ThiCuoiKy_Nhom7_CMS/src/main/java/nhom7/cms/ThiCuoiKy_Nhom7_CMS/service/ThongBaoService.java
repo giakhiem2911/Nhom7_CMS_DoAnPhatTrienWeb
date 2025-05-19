@@ -14,19 +14,23 @@ public class ThongBaoService {
     @Autowired
     private ThongBaoRepository thongBaoRepository;
 
-    public List<ThongBao> getAllThongBao() {
+    // Lấy tất cả thông báo
+    public List<ThongBao> findAll() {
         return thongBaoRepository.findAll();
     }
 
-    public Optional<ThongBao> getThongBaoById(Long id) {
-        return thongBaoRepository.findById(id);
+    // Lấy thông báo theo ID
+    public Optional<ThongBao> findById(String maThongBao) {
+        return thongBaoRepository.findById(maThongBao);
     }
 
-    public ThongBao saveThongBao(ThongBao thongBao) {
+    // Tạo hoặc cập nhật thông báo
+    public ThongBao save(ThongBao thongBao) {
         return thongBaoRepository.save(thongBao);
     }
 
-    public void deleteThongBao(Long id) {
-        thongBaoRepository.deleteById(id);
+    // Xóa thông báo theo ID
+    public void deleteById(String maThongBao) {
+        thongBaoRepository.deleteById(maThongBao);
     }
 }

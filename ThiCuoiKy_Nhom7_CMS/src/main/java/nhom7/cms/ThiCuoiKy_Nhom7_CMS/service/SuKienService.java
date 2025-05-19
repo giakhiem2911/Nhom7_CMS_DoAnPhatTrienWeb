@@ -14,19 +14,23 @@ public class SuKienService {
     @Autowired
     private SuKienRepository suKienRepository;
 
-    public List<SuKien> getAllSuKien() {
+    // Lấy tất cả sự kiện
+    public List<SuKien> findAll() {
         return suKienRepository.findAll();
     }
 
-    public Optional<SuKien> getSuKienById(Long id) {
-        return suKienRepository.findById(id);
+    // Lấy sự kiện theo ID
+    public Optional<SuKien> findById(String maSuKien) {
+        return suKienRepository.findById(maSuKien);
     }
 
-    public SuKien saveSuKien(SuKien suKien) {
+    // Tạo hoặc cập nhật sự kiện
+    public SuKien save(SuKien suKien) {
         return suKienRepository.save(suKien);
     }
 
-    public void deleteSuKien(Long id) {
-        suKienRepository.deleteById(id);
+    // Xóa sự kiện theo ID
+    public void deleteById(String maSuKien) {
+        suKienRepository.deleteById(maSuKien);
     }
 }

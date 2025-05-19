@@ -14,19 +14,23 @@ public class BaiVietService {
     @Autowired
     private BaiVietRepository baiVietRepository;
 
-    public List<BaiViet> getAllBaiViet() {
+    // Lấy tất cả bài viết
+    public List<BaiViet> findAll() {
         return baiVietRepository.findAll();
     }
 
-    public Optional<BaiViet> getBaiVietById(Long id) {
-        return baiVietRepository.findById(id);
+    // Lấy bài viết theo ID
+    public Optional<BaiViet> findById(String maBaiViet) {
+        return baiVietRepository.findById(maBaiViet);
     }
 
-    public BaiViet saveBaiViet(BaiViet baiViet) {
+    // Tạo hoặc cập nhật bài viết
+    public BaiViet save(BaiViet baiViet) {
         return baiVietRepository.save(baiViet);
     }
 
-    public void deleteBaiViet(Long id) {
-        baiVietRepository.deleteById(id);
+    // Xóa bài viết theo ID
+    public void deleteById(String maBaiViet) {
+        baiVietRepository.deleteById(maBaiViet);
     }
 }

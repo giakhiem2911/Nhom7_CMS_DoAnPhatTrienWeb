@@ -14,19 +14,23 @@ public class MenuService {
     @Autowired
     private MenuRepository menuRepository;
 
-    public List<Menu> getAllMenu() {
+    // Lấy tất cả menu
+    public List<Menu> findAll() {
         return menuRepository.findAll();
     }
 
-    public Optional<Menu> getMenuById(Long id) {
-        return menuRepository.findById(id);
+    // Lấy menu theo ID
+    public Optional<Menu> findById(String maMenu) {
+        return menuRepository.findById(maMenu);
     }
 
-    public Menu saveMenu(Menu menu) {
+    // Tạo hoặc cập nhật menu
+    public Menu save(Menu menu) {
         return menuRepository.save(menu);
     }
 
-    public void deleteMenu(Long id) {
-        menuRepository.deleteById(id);
+    // Xóa menu theo ID
+    public void deleteById(String maMenu) {
+        menuRepository.deleteById(maMenu);
     }
 }

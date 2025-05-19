@@ -14,19 +14,23 @@ public class VaiTroService {
     @Autowired
     private VaiTroRepository vaiTroRepository;
 
-    public List<VaiTro> getAllVaiTro() {
+    // Lấy tất cả vai trò
+    public List<VaiTro> findAll() {
         return vaiTroRepository.findAll();
     }
 
-    public Optional<VaiTro> getVaiTroById(Long id) {
-        return vaiTroRepository.findById(id);
+    // Lấy vai trò theo ID
+    public Optional<VaiTro> findById(String maVaiTro) {
+        return vaiTroRepository.findById(maVaiTro);
     }
 
-    public VaiTro saveVaiTro(VaiTro vaiTro) {
+    // Tạo hoặc cập nhật vai trò
+    public VaiTro save(VaiTro vaiTro) {
         return vaiTroRepository.save(vaiTro);
     }
 
-    public void deleteVaiTro(Long id) {
-        vaiTroRepository.deleteById(id);
+    // Xóa vai trò theo ID
+    public void deleteById(String maVaiTro) {
+        vaiTroRepository.deleteById(maVaiTro);
     }
 }

@@ -14,19 +14,28 @@ public class NguoiDungService {
     @Autowired
     private NguoiDungRepository nguoiDungRepository;
 
-    public List<NguoiDung> getAllNguoiDung() {
+    // Lấy tất cả người dùng
+    public List<NguoiDung> findAll() {
         return nguoiDungRepository.findAll();
     }
 
-    public Optional<NguoiDung> getNguoiDungById(Long id) {
-        return nguoiDungRepository.findById(id);
+    // Lấy người dùng theo ID
+    public Optional<NguoiDung> findById(String maNguoiDung) {
+        return nguoiDungRepository.findById(maNguoiDung);
     }
 
-    public NguoiDung saveNguoiDung(NguoiDung nguoiDung) {
+    // Lấy người dùng theo tên đăng nhập
+    public Optional<NguoiDung> findByTenDangNhap(String tenDangNhap) {
+        return nguoiDungRepository.findByTenDangNhap(tenDangNhap);
+    }
+
+    // Tạo hoặc cập nhật người dùng
+    public NguoiDung save(NguoiDung nguoiDung) {
         return nguoiDungRepository.save(nguoiDung);
     }
 
-    public void deleteNguoiDung(Long id) {
-        nguoiDungRepository.deleteById(id);
+    // Xóa người dùng theo ID
+    public void deleteById(String maNguoiDung) {
+        nguoiDungRepository.deleteById(maNguoiDung);
     }
 }

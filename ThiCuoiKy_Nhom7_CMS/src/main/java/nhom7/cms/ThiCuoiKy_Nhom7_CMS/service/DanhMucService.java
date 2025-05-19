@@ -14,19 +14,23 @@ public class DanhMucService {
     @Autowired
     private DanhMucRepository danhMucRepository;
 
-    public List<DanhMuc> getAllDanhMuc() {
+    // Lấy tất cả danh mục
+    public List<DanhMuc> findAll() {
         return danhMucRepository.findAll();
     }
 
-    public Optional<DanhMuc> getDanhMucById(Long id) {
-        return danhMucRepository.findById(id);
+    // Lấy danh mục theo ID
+    public Optional<DanhMuc> findById(String maDanhMuc) {
+        return danhMucRepository.findById(maDanhMuc);
     }
 
-    public DanhMuc saveDanhMuc(DanhMuc danhMuc) {
+    // Tạo hoặc cập nhật danh mục
+    public DanhMuc save(DanhMuc danhMuc) {
         return danhMucRepository.save(danhMuc);
     }
 
-    public void deleteDanhMuc(Long id) {
-        danhMucRepository.deleteById(id);
+    // Xóa danh mục theo ID
+    public void deleteById(String maDanhMuc) {
+        danhMucRepository.deleteById(maDanhMuc);
     }
 }
