@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body th:replace="~{layout :: layout}">
+    <div th:fragment="content" class="p-4">
+        <h2 class="mb-4 fw-bold" th:text="${suKien.maSuKien != null} ? 'Sửa Sự Kiện' : 'Thêm Sự Kiện'"></h2>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form th:action="@{/sukien/save}" th:object="${suKien}" method="post" class="needs-validation" novalidate>
+                    <div class="mb-4">
+                        <label for="maSuKien" class="form-label fw-medium">Mã Sự Kiện</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-ticket-perforated"></i></span>
+                            <input type="text" id="maSuKien" th:field="*{maSuKien}" class="form-control"
+                                   th:readonly="${suKien.maSuKien != null}" required
+                                   placeholder="Nhập mã sự kiện (ví dụ: SK01)" />
+                            <div class="invalid-feedback">Vui lòng nhập mã sự kiện.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="nguoiDung" class="form-label fw-medium">Người Tạo</label>
+                        <select id="nguoiDung" th:field="*{nguoiDung}" class="form-select" required>
+                            <option value="" disabled th:selected="${suKien.nguoiDung == null}">-- Chọn người dùng --</option>
+                            <option th:each="nd : ${danhSachNguoiDung}" 
+                                    th:value="${nd}" 
+                                    th:text="${nd.hoTen}" 
+                                    th:selected="${nd.equals(suKien.nguoiDung)}">
+                            </option>
+                        </select>
+                        <div class="invalid-feedback">Vui lòng chọn người tạo sự kiện.</div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="tieuDe" class="form-label fw-medium">Tiêu Đề</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                            <input type="text" id="tieuDe" th:field="*{tieuDe}" class="form-control" required
+                                   placeholder="Nhập tiêu đề sự kiện" />
+                            <div class="invalid-feedback">Vui lòng nhập tiêu đề.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="moTa" class="form-label fw-medium">Mô Tả</label>
+                        <textarea id="moTa" th:field="*{moTa}" class="form-control" rows="4"
+                                  placeholder="Nhập mô tả sự kiện (tùy chọn)"></textarea>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="duongDan" class="form-label fw-medium">Đường Dẫn</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                            <input type="text" id="duongDan" th:field="*{duongDan}" class="form-control"
+                                   placeholder="Nhập đường dẫn (ví dụ: /su-kien-1)" />
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="thoiGianBatDau" class="form-label fw-medium">Thời Gian Bắt Đầu</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-clock"></i></span>
+                            <input type="datetime-local" id="thoiGianBatDau" th:field="*{thoiGianBatDau}" class="form-control" required />
+                            <div class="invalid-feedback">Vui lòng nhập thời gian bắt đầu.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="thoiGianKetThuc" class="form-label fw-medium">Thời Gian Kết Thúc</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-clock-history"></i></span>
+                            <input type="datetime-local" id="thoiGianKetThuc" th:field="*{thoiGianKetThuc}" class="form-control" required />
+                            <div class="invalid-feedback">Vui lòng nhập thời gian kết thúc.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label for="diaDiem" class="form-label fw-medium">Địa Điểm</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
+                            <input type="text" id="diaDiem" th:field="*{diaDiem}" class="form-control"
+                                   placeholder="Nhập địa điểm tổ chức" />
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-3">
+                        <a href="/sukien" class="btn btn-secondary px-4">Hủy</a>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="bi bi-save me-2"></i>Lưu
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        (() => {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+</body>
+</html>
