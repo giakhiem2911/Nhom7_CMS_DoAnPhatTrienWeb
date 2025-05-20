@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body th:replace="~{layout :: layout}">
+    <div th:fragment="content" class="p-4">
+        <h2 class="mb-4 fw-bold" th:text="${danhMuc.maDanhMuc != null} ? 'Sửa Danh Mục' : 'Thêm Danh Mục'"></h2>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form th:action="@{/danhmuc/save}" th:object="${danhMuc}" method="post" class="needs-validation" novalidate>
+                    <div class="mb-4">
+                        <label for="maDanhMuc" class="form-label fw-medium">Mã Danh Mục</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                            <input type="text" id="maDanhMuc" th:field="*{maDanhMuc}" class="form-control"
+                                   th:readonly="${danhMuc.maDanhMuc != null}" required
+                                   placeholder="Nhập mã danh mục (ví dụ: DM01)" />
+                            <div class="invalid-feedback">Vui lòng nhập mã danh mục.</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="ten" class="form-label fw-medium">Tên Danh Mục</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-type"></i></span>
+                            <input type="text" id="ten" th:field="*{ten}" class="form-control" required
+                                   placeholder="Nhập tên danh mục (ví dụ: Công Nghệ)" />
+                            <div class="invalid-feedback">Vui lòng nhập tên danh mục.</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="duongDan" class="form-label fw-medium">Đường Dẫn</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                            <input type="text" id="duongDan" th:field="*{duongDan}" class="form-control" required
+                                   placeholder="Nhập đường dẫn (ví dụ: /cong-nghe)" />
+                            <div class="invalid-feedback">Vui lòng nhập đường dẫn.</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <label for="moTa" class="form-label fw-medium">Mô Tả</label>
+                        <textarea id="moTa" th:field="*{moTa}" class="form-control" rows="4"
+                                  placeholder="Nhập mô tả danh mục (tùy chọn)"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end gap-3">
+                        <a href="/danhmuc" class="btn btn-secondary px-4">Hủy</a>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="bi bi-save me-2"></i>Lưu
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        (() => {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+</body>
+</html>

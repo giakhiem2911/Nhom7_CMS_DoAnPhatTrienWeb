@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body th:replace="~{layout :: layout}">
+<<<<<<< HEAD
 <div th:fragment="content" class="p-4">
     <h2 class="fw-bold mb-4" th:text="${user.id != null} ? 'Sửa người dùng' : 'Thêm người dùng'"></h2>
 
@@ -21,6 +22,22 @@
                         <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                         <input type="email" th:field="*{email}" class="form-control" required placeholder="example@email.com">
                         <div class="invalid-feedback">Vui lòng nhập email hợp lệ.</div>
+=======
+    <div th:fragment="content" class="p-4">
+        <h2 class="mb-4 fw-bold" th:text="${menu.maMenu != null} ? 'Sửa Menu' : 'Thêm Menu'"></h2>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form th:action="@{/menu/save}" th:object="${menu}" method="post" class="needs-validation" novalidate>
+                    <div class="mb-4 ">
+                        <label for="maMenu" class="form-label fw-medium">Mã Menu</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                            <input type="text" id="maMenu" th:field="*{maMenu}" class="form-control"
+                                   th:readonly="${menu.maMenu != null}" required
+                                   placeholder="Nhập mã menu (ví dụ: M001)" />
+                            <div class="invalid-feedback">Vui lòng nhập mã menu.</div>
+                        </div>
+>>>>>>> a38ddcfd46c97a6e4bdd752f6e747e7ee3fd4f80
                     </div>
                 </div>
 
