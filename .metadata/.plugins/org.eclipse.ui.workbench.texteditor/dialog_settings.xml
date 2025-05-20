@@ -3,6 +3,9 @@
 	<item key="hasShownOverlayPopupBefore" value="true"/>
 	<section name="java.lang.Class">
 		<list key="findhistory">
+			<item value="btn"/>
+			<item value="form-label"/>
+			<item value="form_label"/>
 			<item value="CaiDat"/>
 		</list>
 	</section>
