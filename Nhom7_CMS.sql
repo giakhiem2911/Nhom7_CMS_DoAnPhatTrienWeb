@@ -94,6 +94,19 @@ CREATE TABLE Trang (
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung)
 );
 
+-- Bảng SiteInfor
+CREATE TABLE SiteInfor (
+    MaSiteInfor CHAR(256) PRIMARY KEY,
+    TenSite CHAR(256),
+    Logo CHAR(256),
+    Email CHAR(256),
+    SoDienThoai CHAR(256),
+    Facebook CHAR(256),	
+    DiaChi CHAR(256),
+    NgayTao DATETIME,
+    NgayCapNhat DATETIME
+);
+
 INSERT INTO VaiTro (MaVaiTro, TenVaiTro) VALUES ('VT001', 'Admin');
 
 INSERT INTO NguoiDung (MaNguoiDung, MaVaiTro, TenDangNhap, MatKhau, HoTen, Email)
@@ -102,4 +115,5 @@ VALUES ('ND001', 'VT001', 'admin', '123456', 'Nguyen Hoang Gia Khiem', 'admin@gm
 INSERT INTO Menu (MaMenu, MaNguoiDung, Ten, ThuTuHienThi)
 VALUES ('MN001', 'ND001', N'Trang Chủ', 1),
        ('MN002', 'ND001', N'Giới Thiệu', 2);
+
 
