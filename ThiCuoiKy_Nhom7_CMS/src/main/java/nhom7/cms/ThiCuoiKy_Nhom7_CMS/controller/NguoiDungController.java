@@ -30,8 +30,7 @@ public class NguoiDungController {
 
     @GetMapping("/add")
     public String showAddForm(Model model) {
-        model.addAttribute("nguoiDung", new NguoiDung());
-        model.addAttribute("vaiTros", vaiTroRepository.findAll());
+        model.addAttribute("user", new NguoiDung());
         return "nguoidung/form";
     }
 

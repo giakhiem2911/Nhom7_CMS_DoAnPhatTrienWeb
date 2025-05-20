@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách Trang</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body th:replace="~{layout :: layout}">
+<div th:fragment="content" class="p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Danh sách Trang</h2>
+        <a href="/trang/add" class="btn btn-primary shadow-sm">
+            <i class="bi bi-file-earmark-plus me-2"></i>Thêm trang mới
+        </a>
+    </div>
+
+    <form th:action="@{/trang}" method="get" class="card mb-4 border-0 shadow-sm">
+        <div class="card-body row g-3 align-items-center">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                    <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm..." th:value="${keyword}">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive shadow rounded">
+        <table class="table table-hover text-center mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tiêu đề</th>
+                    <th>Đường dẫn</th>
+                    <th>Hiển thị</th>
+                    <th>Ngày tạo</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="trang : ${dsTrang}">
+                    <td th:text="${trang.tieuDe}">Tiêu đề mẫu</td>
+                    <td th:text="${trang.duongDan}">/duong-dan-mau</td>
+                    <td th:text="${trang.hienThi} ? 'Có' : 'Không'">Có</td>
+                    <td th:text="${#temporals.format(trang.ngayTao, 'dd/MM/yyyy HH:mm')}">01/01/2024 12:00</td>
+                    <td>
+                        <a th:href="@{'/trang/edit/' + ${trang.id}}" class="btn btn-sm btn-warning">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a th:href="@{'/trang/delete/' + ${trang.id}}" class="btn btn-sm btn-danger"
+                           onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(dsTrang)}">
+                    <td colspan="5" class="text-muted py-3">Chưa có trang nào</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-end mt-4" th:if="${totalPages > 1}">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/trang(page=${currentPage - 1})}">«</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/trang(page=${i})}" th:text="${i + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/trang(page=${currentPage + 1})}">»</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

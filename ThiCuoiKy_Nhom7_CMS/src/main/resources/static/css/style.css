@@ -1,6 +1,6 @@
 /* Body và font */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Segoe UI', Arial, Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f1f1f1;
     margin: 0;
     padding: 0;
@@ -47,7 +47,6 @@ body {
 .btn {
     text-decoration: none;
     color: white;
-    margin:10px;
 }
 
 .card {
@@ -331,7 +330,7 @@ body {
     background-color: #fafafa;
 }
 
-/* Bổ sung CSS cho menu/form.html */
+/* CSS cho menu/form.html và trang/form.html */
 
 /* Form styles */
 .card.shadow-sm {
@@ -341,7 +340,7 @@ body {
 }
 
 .card-body {
-    padding: 24px;
+    padding: 32px;
 }
 
 .form-label {
@@ -390,6 +389,30 @@ body {
     font-size: 0.9rem;
 }
 
+/* CKEditor styles */
+.ck-editor__editable {
+    min-height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 12px;
+    background-color: #fafafa;
+    color: #23282d;
+    font-size: 0.9rem;
+}
+
+.ck-editor__editable:focus {
+    border-color: #00a0d2;
+    box-shadow: 0 0 0 2px #00a0d2;
+    outline: none;
+}
+
+.ck-toolbar {
+    border: 1px solid #ddd;
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+    background-color: #fff;
+}
+
 /* Responsive adjustments */
 @media (max-width: 767px) {
     .sidebar {
@@ -430,10 +453,13 @@ body {
         font-size: 0.8rem;
     }
     .card-body {
-        padding: 16px;
+        padding: 20px;
     }
     .form-label {
         font-size: 0.9rem;
+    }
+    .ck-editor__editable {
+        min-height: 200px;
     }
 }
 
@@ -456,6 +482,6 @@ body {
     }
     .d-flex.justify-content-end {
         flex-direction: column;
-        gap: 8px;
+        gap: 12px;
     }
 }
