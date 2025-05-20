@@ -106,5 +106,21 @@ CREATE TABLE SiteInfor (
     NgayCapNhat DATETIME
 );
 
+-- Thêm vai trò mẫu: Admin
+INSERT INTO VaiTro (MaVaiTro, TenVaiTro, MoTa)
+VALUES ('VT001', N'Admin', N'Quản trị hệ thống');
+
+-- Thêm người dùng mẫu: Admin
+INSERT INTO NguoiDung (MaNguoiDung, MaVaiTro, TenDangNhap, MatKhau, HoTen, Email, NgayTao)
+VALUES (
+    'ND001',
+    'VT001',
+    N'admin',
+    N'123456', -- Bạn nên hash mật khẩu trong thực tế
+    N'Nguyễn Hoàng Gia Khiêm',
+    N'admin@gmail.com',
+    GETDATE()
+);
+
 
 
