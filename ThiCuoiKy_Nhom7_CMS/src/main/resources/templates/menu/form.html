@@ -11,7 +11,6 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <form th:action="@{/menu/save}" th:object="${menu}" method="post" class="needs-validation" novalidate>
-                    <input type="hidden" th:field="*{maMenu}" />
                     <div class="mb-4 ">
                         <label for="maMenu" class="form-label fw-medium">Mã Menu</label>
                         <div class="input-group">
