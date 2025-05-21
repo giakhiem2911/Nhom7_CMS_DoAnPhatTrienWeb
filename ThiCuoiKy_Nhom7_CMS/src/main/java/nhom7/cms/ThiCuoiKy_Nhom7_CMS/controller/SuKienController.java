@@ -1,9 +1,9 @@
 package nhom7.cms.ThiCuoiKy_Nhom7_CMS.controller;
 
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.SuKien;
-import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.NguoiDung;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.SuKienService;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.NguoiDungService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,25 +21,25 @@ public class SuKienController {
     @Autowired
     private NguoiDungService nguoiDungService;
 
-    // Hiển thị danh sách sự kiện
+    // Trang danh sách sự kiện
     @GetMapping
-    public String hienThiDanhSach(Model model) {
+    public String hienThiDanhSachSuKien(Model model) {
         List<SuKien> danhSachSuKien = suKienService.findAll();
         model.addAttribute("danhSachSuKien", danhSachSuKien);
-        return "sukien/list_sukien";  // tên file html danh sách sự kiện
+        return "sukien/list_sukien";
     }
 
     // Hiển thị form thêm sự kiện
     @GetMapping("/them")
-    public String hienThiFormThem(Model model) {
+    public String hienThiFormThemSuKien(Model model) {
         model.addAttribute("suKien", new SuKien());
         model.addAttribute("danhSachNguoiDung", nguoiDungService.findAll());
         return "sukien/form_su_kien";
     }
 
-    // Hiển thị form sửa sự kiện
+    // Hiển thị form chỉnh sửa sự kiện
     @GetMapping("/sua/{maSuKien}")
-    public String hienThiFormSua(@PathVariable String maSuKien, Model model) {
+    public String hienThiFormSuaSuKien(@PathVariable String maSuKien, Model model) {
         SuKien suKien = suKienService.findById(maSuKien);
         if (suKien == null) {
             return "redirect:/sukien";
@@ -49,7 +49,7 @@ public class SuKienController {
         return "sukien/form_su_kien";
     }
 
-    // Lưu sự kiện (thêm hoặc sửa)
+    // Lưu thông tin sự kiện (thêm hoặc cập nhật)
     @PostMapping("/save")
     public String luuSuKien(@ModelAttribute("suKien") SuKien suKien) {
         suKienService.save(suKien);
