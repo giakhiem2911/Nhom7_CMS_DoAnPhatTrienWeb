@@ -2,96 +2,91 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Form</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body th:replace="~{layout :: layout}">
-<div th:fragment="content" class="p-4">
-    <h2 class="fw-bold mb-4" th:text="${user.id != null} ? 'Sửa người dùng' : 'Thêm người dùng'"></h2>
-
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <form th:action="@{/nguoidung/save}" th:object="${user}" method="post" class="needs-validation" novalidate>
-                <input type="hidden" th:field="*{id}"/>
-
-                <div class="mb-3">
-                    <label class="form-label fw-medium">Email</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                        <input type="email" th:field="*{email}" class="form-control" required placeholder="example@email.com">
-                        <div class="invalid-feedback">Vui lòng nhập email hợp lệ.</div>
     <div th:fragment="content" class="p-4">
         <h2 class="mb-4 fw-bold" th:text="${menu.maMenu != null} ? 'Sửa Menu' : 'Thêm Menu'"></h2>
         <div class="card shadow-sm">
             <div class="card-body">
                 <form th:action="@{/menu/save}" th:object="${menu}" method="post" class="needs-validation" novalidate>
-                    <div class="mb-4 ">
+                    <!-- Mã Menu -->
+                    <div class="mb-4">
                         <label for="maMenu" class="form-label fw-medium">Mã Menu</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-tag"></i></span>
                             <input type="text" id="maMenu" th:field="*{maMenu}" class="form-control"
                                    th:readonly="${menu.maMenu != null}" required
-                                   placeholder="Nhập mã menu (ví dụ: M001)" />
+                                   placeholder="Nhập mã menu (ví dụ: MN01)" />
                             <div class="invalid-feedback">Vui lòng nhập mã menu.</div>
                         </div>
                     </div>
-                </div>
 
-                <div class="mb-3">
-                    <label class="form-label fw-medium">Họ tên</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-person"></i></span>
-                        <input type="text" th:field="*{fullName}" class="form-control" required placeholder="Nguyễn Văn A">
-                        <div class="invalid-feedback">Vui lòng nhập họ tên.</div>
+                    <!-- Tên Menu -->
+                    <div class="mb-4">
+                        <label for="ten" class="form-label fw-medium">Tên Menu</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-type"></i></span>
+                            <input type="text" id="ten" th:field="*{ten}" class="form-control" required
+                                   placeholder="Nhập tên menu (ví dụ: Trang chủ)" />
+                            <div class="invalid-feedback">Vui lòng nhập tên menu.</div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="mb-3">
-                    <label class="form-label fw-medium">Mật khẩu</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                        <input type="password" th:field="*{password}" class="form-control" th:placeholder="${user.id != null} ? '••••••••' : 'Nhập mật khẩu mới'" th:required="${user.id == null}">
-                        <div class="invalid-feedback">Vui lòng nhập mật khẩu.</div>
+                    <!-- Thứ Tự Hiển Thị -->
+                    <div class="mb-4">
+                        <label for="thuTuHienThi" class="form-label fw-medium">Thứ Tự Hiển Thị</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-sort-numeric-down"></i></span>
+                            <input type="number" id="thuTuHienThi" th:field="*{thuTuHienThi}" class="form-control" required />
+                            <div class="invalid-feedback">Vui lòng nhập thứ tự hiển thị.</div>
+                        </div>
                     </div>
-                </div>
 
-                <div class="mb-3">
-                    <label class="form-label fw-medium">Vai trò</label>
-                    <select th:field="*{role}" class="form-select" required>
-                        <option value="">-- Chọn vai trò --</option>
-                        <option value="ADMIN">Quản trị viên</option>
-                        <option value="USER">Người dùng</option>
-                    </select>
-                    <div class="invalid-feedback">Vui lòng chọn vai trò.</div>
-                </div>
+                    <!-- Người Dùng -->
+                    <div class="mb-4">
+                        <label for="maNguoiDung" class="form-label fw-medium">Người Tạo</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <select id="maNguoiDung" th:field="*{maNguoiDung}" class="form-select" required>
+                                <option value="">-- Chọn người dùng --</option>
+                                <option th:each="nguoiDung : ${nguoiDungs}"
+                                        th:value="${nguoiDung.maNguoiDung}"
+                                        th:text="${nguoiDung.hoTen}"></option>
+                            </select>
+                            <div class="invalid-feedback">Vui lòng chọn người tạo.</div>
+                        </div>
+                    </div>
 
-                <div class="d-flex justify-content-end gap-3">
-                    <a href="/nguoidung" class="btn btn-secondary">Hủy</a>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-save me-1"></i>Lưu
-                    </button>
-                </div>
-            </form>
+                    <!-- Nút Lưu / Hủy -->
+                    <div class="d-flex justify-content-end gap-3">
+                        <a href="/menu" class="btn btn-secondary px-4">Hủy</a>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="bi bi-save me-2"></i>Lưu
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-(() => {
-    'use strict';
-    const forms = document.querySelectorAll('.needs-validation');
-    Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        }, false);
-    });
-})();
-</script>
+    <!-- Script Bootstrap & Validation -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+        (() => {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
 </body>
 </html>
