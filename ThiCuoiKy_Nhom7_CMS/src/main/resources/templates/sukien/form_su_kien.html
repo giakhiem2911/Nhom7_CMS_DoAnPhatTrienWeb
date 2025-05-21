@@ -8,97 +8,123 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <body th:replace="~{layout :: layout}">
-    <div th:fragment="content" class="container py-4">
-        <h2 class="mb-4 fw-bold" th:text="${suKien.maSuKien != null} ? 'Sửa Sự Kiện' : 'Thêm Sự Kiện'"></h2>
+<div th:fragment="content" class="p-4">
+    <h2 class="mb-4 fw-bold" th:text="${suKien.maSuKien != null} ? 'Sửa Sự Kiện' : 'Thêm Sự Kiện'"></h2>
 
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <form th:action="@{/sukien/save}" th:object="${suKien}" method="post" class="needs-validation" novalidate>
-                    
-                    <!-- Mã Sự Kiện -->
-                    <div class="mb-3">
-                        <label for="maSuKien" class="form-label">Mã Sự Kiện</label>
-                        <input type="text" th:field="*{maSuKien}" id="maSuKien" class="form-control" 
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form th:action="@{/sukien/save}" th:object="${suKien}" method="post" class="needs-validation" novalidate>
+
+                <!-- Mã Sự Kiện -->
+                <div class="mb-4">
+                    <label for="maSuKien" class="form-label fw-medium">Mã Sự Kiện</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                        <input type="text" th:field="*{maSuKien}" id="maSuKien" class="form-control"
                                th:readonly="${suKien.maSuKien != null}" required placeholder="VD: SK01">
                         <div class="invalid-feedback">Vui lòng nhập mã sự kiện.</div>
                     </div>
+                </div>
 
-                    <!-- Người Tạo -->
-                    <div class="mb-3">
-                        <label for="nguoiDung" class="form-label">Người Tạo</label>
-                        <select th:field="*{nguoiDung}" id="nguoiDung" class="form-select" required>
-                            <option value="" disabled th:selected="${suKien.nguoiDung == null}">-- Chọn người dùng --</option>
-                            <option th:each="nd : ${danhSachNguoiDung}" th:value="${nd}" th:text="${nd.hoTen}" 
-                                    th:selected="${nd.equals(suKien.nguoiDung)}"></option>
-                        </select>
+                <!-- Người Tạo -->
+                <div class="mb-4">
+                    <label for="nguoiDung" class="form-label fw-medium">Người Tạo</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-person"></i></span>
+                        <select th:field="*{nguoiDung.maNguoiDung}" id="nguoiDung" class="form-select" required>
+    <option value="" disabled th:selected="${suKien.nguoiDung == null}">-- Chọn người dùng --</option>
+    <option th:each="nd : ${danhSachNguoiDung}" 
+            th:value="${nd.maNguoiDung}" 
+            th:text="${nd.hoTen}" 
+            th:selected="${nd.maNguoiDung == suKien.nguoiDung?.maNguoiDung}"></option>
+</select>
+
                         <div class="invalid-feedback">Vui lòng chọn người tạo sự kiện.</div>
                     </div>
+                </div>
 
-                    <!-- Tiêu đề -->
-                    <div class="mb-3">
-                        <label for="tieuDe" class="form-label">Tiêu Đề</label>
+                <!-- Tiêu Đề -->
+                <div class="mb-4">
+                    <label for="tieuDe" class="form-label fw-medium">Tiêu Đề</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-type"></i></span>
                         <input type="text" th:field="*{tieuDe}" id="tieuDe" class="form-control" required placeholder="Nhập tiêu đề">
                         <div class="invalid-feedback">Vui lòng nhập tiêu đề.</div>
                     </div>
+                </div>
 
-                    <!-- Mô tả -->
-                    <div class="mb-3">
-                        <label for="moTa" class="form-label">Mô Tả</label>
-                        <textarea th:field="*{moTa}" id="moTa" class="form-control" rows="3" placeholder="Nhập mô tả (tùy chọn)"></textarea>
-                    </div>
+                <!-- Mô Tả -->
+                <div class="mb-4">
+                    <label for="moTa" class="form-label fw-medium">Mô Tả</label>
+                    <textarea th:field="*{moTa}" id="moTa" class="form-control" rows="4" placeholder="Nhập mô tả (tùy chọn)"></textarea>
+                </div>
 
-                    <!-- Đường dẫn -->
-                    <div class="mb-3">
-                        <label for="duongDan" class="form-label">Đường Dẫn</label>
+                <!-- Đường Dẫn -->
+                <div class="mb-4">
+                    <label for="duongDan" class="form-label fw-medium">Đường Dẫn</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
                         <input type="text" th:field="*{duongDan}" id="duongDan" class="form-control" placeholder="/su-kien-1">
                     </div>
+                </div>
 
-                    <!-- Thời gian bắt đầu -->
-                    <div class="mb-3">
-                        <label for="thoiGianBatDau" class="form-label">Thời Gian Bắt Đầu</label>
+                <!-- Thời Gian Bắt Đầu -->
+                <div class="mb-4">
+                    <label for="thoiGianBatDau" class="form-label fw-medium">Thời Gian Bắt Đầu</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                         <input type="datetime-local" th:field="*{thoiGianBatDau}" id="thoiGianBatDau" class="form-control" required>
                         <div class="invalid-feedback">Vui lòng chọn thời gian bắt đầu.</div>
                     </div>
+                </div>
 
-                    <!-- Thời gian kết thúc -->
-                    <div class="mb-3">
-                        <label for="thoiGianKetThuc" class="form-label">Thời Gian Kết Thúc</label>
+                <!-- Thời Gian Kết Thúc -->
+                <div class="mb-4">
+                    <label for="thoiGianKetThuc" class="form-label fw-medium">Thời Gian Kết Thúc</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
                         <input type="datetime-local" th:field="*{thoiGianKetThuc}" id="thoiGianKetThuc" class="form-control" required>
                         <div class="invalid-feedback">Vui lòng chọn thời gian kết thúc.</div>
                     </div>
+                </div>
 
-                    <!-- Địa điểm -->
-                    <div class="mb-3">
-                        <label for="diaDiem" class="form-label">Địa Điểm</label>
+                <!-- Địa Điểm -->
+                <div class="mb-4">
+                    <label for="diaDiem" class="form-label fw-medium">Địa Điểm</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-geo-alt"></i></span>
                         <input type="text" th:field="*{diaDiem}" id="diaDiem" class="form-control" placeholder="VD: TP. HCM">
                     </div>
+                </div>
 
-                    <!-- Nút hành động -->
-                    <div class="d-flex justify-content-end gap-2">
-                        <a th:href="@{/sukien}" class="btn btn-secondary"><i class="bi bi-x-circle me-1"></i>Hủy</a>
-                        <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i>Lưu</button>
-                    </div>
-                </form>
-            </div>
+                <!-- Nút hành động -->
+                <div class="d-flex justify-content-end gap-3">
+                    <a th:href="@{/sukien}" class="btn btn-secondary px-4">Hủy</a>
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-save me-2"></i>Lưu
+                    </button>
+                </div>
+
+            </form>
         </div>
     </div>
+</div>
 
-    <!-- Script Bootstrap và Validation -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        (() => {
-            'use strict';
-            const forms = document.querySelectorAll('.needs-validation');
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
-                    }
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        })();
-    </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
 </body>
 </html>
