@@ -13,7 +13,7 @@
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <form th:action="@{/thongbao/luu}" th:object="${thongBao}" method="post" class="needs-validation" novalidate>
+            <form th:action="@{/thongbao/save}" th:object="${thongBao}" method="post" class="needs-validation" novalidate>
 
                 <!-- Mã Thông Báo -->
                 <div class="mb-3">
@@ -26,11 +26,14 @@
                 <!-- Người Dùng -->
                 <div class="mb-3">
                     <label for="nguoiDung" class="form-label">Người Gửi</label>
-                    <select th:field="*{nguoiDung}" id="nguoiDung" class="form-select" required>
-                        <option value="" disabled th:selected="${thongBao.nguoiDung == null}">-- Chọn người dùng --</option>
-                        <option th:each="nd : ${danhSachNguoiDung}" th:value="${nd}" th:text="${nd.hoTen}"
-                                th:selected="${nd.equals(thongBao.nguoiDung)}"></option>
-                    </select>
+                    <select th:field="*{nguoiDung.maNguoiDung}" id="nguoiDung" class="form-select" required>
+    <option value="" disabled th:selected="${thongBao.nguoiDung == null}">-- Chọn người dùng --</option>
+    <option th:each="nd : ${danhSachNguoiDung}" 
+            th:value="${nd.maNguoiDung}" 
+            th:text="${nd.hoTen}">
+    </option>
+</select>
+
                     <div class="invalid-feedback">Vui lòng chọn người dùng gửi thông báo.</div>
                 </div>
 
