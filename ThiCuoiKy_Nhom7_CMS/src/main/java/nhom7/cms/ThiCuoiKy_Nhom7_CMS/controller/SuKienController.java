@@ -62,4 +62,4 @@ public class SuKienController {
         suKienService.deleteById(maSuKien);
         return "redirect:/sukien";
     }
-}
+} 

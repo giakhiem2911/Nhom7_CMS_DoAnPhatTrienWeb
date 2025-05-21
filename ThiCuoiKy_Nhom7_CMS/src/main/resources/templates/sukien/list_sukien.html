@@ -9,7 +9,7 @@
     <div th:fragment="content" class="p-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="m-0 fw-bold">Danh sách Sự Kiện</h2>
-            <a href="/sukien/add" class="btn btn-primary px-4 shadow-sm">
+            <a th:href="@{/sukien/them}" class="btn btn-primary px-4 shadow-sm">
                 <i class="bi bi-plus-lg me-2"></i>Thêm Sự Kiện
             </a>
         </div>
@@ -53,7 +53,8 @@
         <td th:text="${iterStat.count}"></td>
         <td th:text="${suKien.maSuKien}"></td>
         <td th:text="${suKien.tieuDe}"></td>
-        <td th:text="${suKien.nguoiDung.hoTen}"></td>
+        <td th:text="${suKien.nguoiDung != null ? suKien.nguoiDung.hoTen : 'Không có'}"></td>
+
         <td th:text="${#temporals.format(suKien.thoiGianBatDau, 'dd/MM/yyyy HH:mm')}"></td>
         <td th:text="${#temporals.format(suKien.thoiGianKetThuc, 'dd/MM/yyyy HH:mm')}"></td>
         <td class="text-center">
