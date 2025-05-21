@@ -57,18 +57,22 @@
 
         <td th:text="${#temporals.format(suKien.thoiGianBatDau, 'dd/MM/yyyy HH:mm')}"></td>
         <td th:text="${#temporals.format(suKien.thoiGianKetThuc, 'dd/MM/yyyy HH:mm')}"></td>
-        <td class="text-center">
-    <a th:href="@{'/sukien/sua/' + ${suKien.maSuKien}}" class="btn btn-dark btn-sm me-1" title="Sửa">
-       <i class="bi bi-pencil-square text-white"></i> <!-- nếu nền đen -->
-
+<td class="text-center" style="white-space: nowrap;">
+    <a th:href="@{/sukien/sua/{id}(id=${suKien.maSuKien})}"
+       class="btn btn-sm btn-warning px-2 me-1 d-inline-block"
+       title="Sửa">
+        <i class="bi bi-pencil-square me-1"></i>Sửa
     </a>
-    <a th:href="@{'/sukien/xoa/' + ${suKien.maSuKien}}"
-       class="btn btn-dark btn-sm"
+    <a th:href="@{/sukien/xoa/{id}(id=${suKien.maSuKien})}"
+       class="btn btn-sm btn-danger px-2 d-inline-block"
        title="Xóa"
        onclick="return confirm('Bạn có chắc chắn muốn xóa sự kiện này?');">
-        <i class="bi bi-trash text-black"></i>
+        <i class="bi bi-trash me-1"></i>Xóa
     </a>
 </td>
+
+
+
 
     </tr>
     <tr th:if="${#lists.isEmpty(danhSachSuKien)}">
