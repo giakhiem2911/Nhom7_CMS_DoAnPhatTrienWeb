@@ -148,4 +148,10 @@ VALUES (
 );
 
 
+INSERT INTO ThongBao (MaThongBao, MaNguoiDung, TieuDe, NoiDung, TrangThai) VALUES
+('TB001', 'ND001', 'Chào mừng đến với hệ thống', 'Chúc mừng bạn đã đăng ký thành công tài khoản tại hệ thống quản lý bài viết thú cưng.', 'Chưa đọc'),
+('TB002', 'ND002', 'Cập nhật mật khẩu', 'Vui lòng cập nhật mật khẩu mới để tăng cường bảo mật cho tài khoản của bạn.', 'Đã đọc'),
+('TB003', 'ND003', 'Thông báo bảo trì', 'Hệ thống sẽ được bảo trì vào lúc 00:00 ngày 01/06/2025. Vui lòng lưu lại dữ liệu.', 'Chưa đọc'),
+('TB004', 'ND001', 'Thành viên tích cực', 'Bạn là thành viên có nhiều bài viết chất lượng nhất trong tháng 5. Cảm ơn bạn!', 'Đã đọc'),
+('TB005', 'ND002', 'Đổi ảnh đại diện', 'Ảnh đại diện của bạn không hợp lệ. Vui lòng chọn ảnh khác.', 'Chưa đọc');
 
