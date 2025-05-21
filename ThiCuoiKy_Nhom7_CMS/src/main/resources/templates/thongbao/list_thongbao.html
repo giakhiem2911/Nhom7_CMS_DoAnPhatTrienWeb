@@ -57,11 +57,13 @@
             <td th:text="${tb.nguoiDung != null ? tb.nguoiDung.hoTen : 'Không có'}"></td>
             <td th:text="${tb.trangThai}"></td>
             <td class="text-center" style="white-space: nowrap;">
-                <a th:href="@{/thongbao/sua/{id}(id=${tb.maThongBao})}"
+                <a th:href="@{/thongbao/sua/{maThongBao}(maThongBao=${tb.maThongBao})}"
+
                    class="btn btn-sm btn-warning px-2 me-1">
                     <i class="bi bi-pencil-square me-1"></i>Sửa
                 </a>
-                <a th:href="@{/thongbao/xoa/{id}(id=${tb.maThongBao})}"
+               <a th:href="@{/thongbao/xoa/{maThongBao}(maThongBao=${tb.maThongBao})}"
+
                    class="btn btn-sm btn-danger px-2"
                    onclick="return confirm('Bạn có chắc muốn xóa thông báo này?');">
                     <i class="bi bi-trash me-1"></i>Xóa

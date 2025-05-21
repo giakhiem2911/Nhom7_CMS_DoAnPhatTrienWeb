@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import jakarta.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -24,14 +24,14 @@ public class ThongBaoController {
     @Autowired
     private NguoiDungService nguoiDungService;
 
-    // Hiển thị danh sách thông báo
+    // Danh sách thông báo
     @GetMapping
     public String danhSachThongBao(Model model) {
         model.addAttribute("danhSachThongBao", thongBaoService.findAll());
         return "thongbao/list_thongbao";
     }
 
-    // Hiển thị form tạo mới thông báo
+    // Form tạo mới
     @GetMapping("/tao")
     public String hienThiFormTao(Model model) {
         model.addAttribute("thongBao", new ThongBao());
@@ -39,7 +39,7 @@ public class ThongBaoController {
         return "thongbao/form_thong_bao";
     }
 
-    // Hiển thị form sửa thông báo
+    // Form sửa
     @GetMapping("/sua/{maThongBao}")
     public String hienThiFormSua(@PathVariable("maThongBao") String maThongBao, Model model) {
         Optional<ThongBao> thongBaoOpt = thongBaoService.findById(maThongBao);
@@ -52,13 +52,26 @@ public class ThongBaoController {
         }
     }
 
-    // Lưu thông báo (cả thêm mới và cập nhật)
+    // Lưu (tạo/sửa) với validate
     @PostMapping("/save")
-    public String luuThongBao(@ModelAttribute("thongBao") ThongBao thongBao) {
-        thongBaoService.save(thongBao);
+    public String luuThongBao(@Validated @ModelAttribute("thongBao") ThongBao thongBao,
+                              BindingResult result,
+                              Model model,
+                              RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            model.addAttribute("danhSachNguoiDung", nguoiDungService.findAll());
+            return "thongbao/form_thong_bao";
+        }
+
+        try {
+            thongBaoService.save(thongBao);
+            redirectAttributes.addFlashAttribute("successMessage", "Lưu thông báo thành công!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Lỗi khi lưu: " + e.getMessage());
+        }
+
         return "redirect:/thongbao";
     }
-
 
     // Xóa thông báo
     @GetMapping("/xoa/{maThongBao}")
