@@ -1,9 +1,11 @@
 package nhom7.cms.ThiCuoiKy_Nhom7_CMS.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.NguoiDung;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.Trang;
@@ -75,14 +77,13 @@ public class TrangController {
         trangRepository.deleteById(maTrang);
         return "redirect:/trang";
     }
-    @GetMapping("/{slug}")
-    public String hienThiTrang(@PathVariable("slug") String slug, Model model) {
-        Trang trang = trangService.findByDuongDan(slug);
-        if (trang == null || !trang.getTrangThai().equals("PUBLISH")) {
-            return "error/404";
+    @GetMapping("/{duongDan}")
+    public String hienThiTrang(@PathVariable("duongDan") String duongDan, Model model) {
+        Trang trang = trangService.findByDuongDan(duongDan);
+        if (trang == null || !"PUBLISH".equals(trang.getTrangThai())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy trang");
         }
         model.addAttribute("trang", trang);
-        return "trang/trang-chitiet";
+        return "trang/trang-chu";
     }
-
 }
