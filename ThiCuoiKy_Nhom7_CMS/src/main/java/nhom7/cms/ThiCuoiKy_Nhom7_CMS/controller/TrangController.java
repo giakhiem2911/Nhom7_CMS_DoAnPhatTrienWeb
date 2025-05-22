@@ -80,10 +80,12 @@ public class TrangController {
     @GetMapping("/{duongDan}")
     public String hienThiTrang(@PathVariable("duongDan") String duongDan, Model model) {
         Trang trang = trangService.findByDuongDan(duongDan);
-        if (trang == null || !"PUBLISH".equals(trang.getTrangThai())) {
+        System.out.println("Trang lấy được: " + trang); // ✅ Debug nhanh
+        if (trang == null || !trang.getTrangThai().equals("PUBLISH")) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy trang");
         }
         model.addAttribute("trang", trang);
         return "trang/trang-chu";
     }
+
 }
