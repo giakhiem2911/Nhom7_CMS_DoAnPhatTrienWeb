@@ -2,7 +2,6 @@ package nhom7.cms.ThiCuoiKy_Nhom7_CMS.service;
 
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.SiteInfor;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.SiteInforRepository;
-import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.SiteInforService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,28 +12,35 @@ import java.util.Optional;
 public class SiteInforServiceImpl implements SiteInforService {
 
     @Autowired
-    private SiteInforRepository siteIforRepository;
+    private SiteInforRepository siteInforRepository;
 
     @Override
     public List<SiteInfor> getAll() {
-        return siteIforRepository.findAll();
+        return siteInforRepository.findAll();
     }
 
     @Override
     public Optional<SiteInfor> getById(String id) {
-        return siteIforRepository.findById(id);
+        return siteInforRepository.findById(id);
     }
 
     @Override
     public void save(SiteInfor siteInfor) {
-        siteIforRepository.save(siteInfor);
+        // Set ngayTao only if new
+        if (siteInfor.getNgayTao() == null) {
+            siteInfor.setNgayTao(java.time.LocalDateTime.now());
+        }
+        siteInfor.setNgayCapNhat(java.time.LocalDateTime.now());
+        siteInforRepository.save(siteInfor);
     }
 
     @Override
     public void deleteById(String id) {
-        siteIforRepository.deleteById(id);
+        siteInforRepository.deleteById(id);
     }
+
+    @Override
     public List<SiteInfor> searchByKeyword(String keyword) {
-        return siteIforRepository.findByTenSiteContainingIgnoreCaseOrDiaChiContainingIgnoreCase(keyword, keyword);
+        return siteInforRepository.findByTenSiteContainingIgnoreCaseOrDiaChiContainingIgnoreCase(keyword, keyword);
     }
 }

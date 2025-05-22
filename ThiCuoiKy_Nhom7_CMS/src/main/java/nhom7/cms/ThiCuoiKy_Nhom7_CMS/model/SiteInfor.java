@@ -35,23 +35,12 @@ public class SiteInfor {
     @Column(name = "NgayCapNhat")
     private LocalDateTime ngayCapNhat;
 
+
     // Constructors
     public SiteInfor() {}
 
-    public SiteInfor(String maSiteInfor, String tenSite, String logo, String email, String soDienThoai,
-                     String facebook, String diaChi, LocalDateTime ngayTao, LocalDateTime ngayCapNhat) {
-        this.maSiteInfor = maSiteInfor;
-        this.tenSite = tenSite;
-        this.logo = logo;
-        this.email = email;
-        this.soDienThoai = soDienThoai;
-        this.facebook = facebook;
-        this.diaChi = diaChi;
-        this.ngayTao = ngayTao;
-        this.ngayCapNhat = ngayCapNhat;
-    }
+    // Getters and setters
 
-    // Getters and Setters
     public String getMaSiteInfor() { return maSiteInfor; }
     public void setMaSiteInfor(String maSiteInfor) { this.maSiteInfor = maSiteInfor; }
 
@@ -78,4 +67,5 @@ public class SiteInfor {
 
     public LocalDateTime getNgayCapNhat() { return ngayCapNhat; }
     public void setNgayCapNhat(LocalDateTime ngayCapNhat) { this.ngayCapNhat = ngayCapNhat; }
+
 }
