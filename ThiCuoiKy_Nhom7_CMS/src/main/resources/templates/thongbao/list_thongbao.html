@@ -36,7 +36,7 @@
         </div>
     </form>
 
-    <table class="table table-bordered table-hover shadow-sm bg-white">
+    <table class="table table-bordered table-hover shadow-sm bg-white" width="100%">
         <thead class="table-light">
         <tr>
             <th style="width:5%;">STT</th>
@@ -49,7 +49,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="tb, iter : ${danhSachThongBao}">
+        <tr th:each="tb, iter : ${danhSachThongBao}" class="list">
             <td th:text="${iter.count}"></td>
             <td th:text="${tb.maThongBao}"></td>
             <td th:text="${tb.tieuDe}"></td>

@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TrangRepository extends JpaRepository<Trang, String> {
-    Optional<Trang> findByDuongDan(String duongDan);
+    Trang findByDuongDan(String duongDan);
 }
 

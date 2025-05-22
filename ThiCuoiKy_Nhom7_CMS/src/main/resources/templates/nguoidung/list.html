@@ -27,27 +27,29 @@
     </form>
 
     <div class="table-responsive shadow rounded">
-        <table class="table table-hover text-center mb-0">
+        <table class="table table-hover text-center mb-0" width="100%">
             <thead class="table-dark">
                 <tr>
                     <th>Email</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Mật khẩu</th>
                     <th>Họ tên</th>
                     <th>Vai trò</th>
-                    <th>Ngày tạo</th>
-                    <th>Thao tác</th>
+	                    <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="user : ${users}">
-                    <td th:text="${user.email}">email@example.com</td>
-                    <td th:text="${user.fullName}">Nguyễn Văn A</td>
-                    <td th:text="${user.role}">ADMIN</td>
-                    <td th:text="${#dates.format(user.createdAt, 'dd/MM/yyyy')}">01/01/2024</td>
+                <tr th:each="nguoidung : ${nguoiDungs}" class="list">
+                    <td th:text="${nguoidung.email}">email@example.com</td>
+                    <td th:text="${nguoidung.tenDangNhap}">email@example.com</td>
+                    <td th:text="${nguoidung.matKhau}">email@example.com</td>
+                    <td th:text="${nguoidung.hoTen}">Nguyễn Văn A</td>
+                    <td th:text="${nguoidung.maVaiTro}">ADMIN</td>
                     <td>
-                        <a th:href="@{/nguoidung/edit/{id}(id=${user.id})}" class="btn btn-sm btn-warning">
+                        <a th:href="@{/nguoidung/edit/{id}(id=${nguoidung.maNguoiDung})}" class="btn btn-sm btn-warning">
                             <i class="bi bi-pencil-square"></i>
                         </a>
-                        <a th:href="@{/nguoidung/delete/{id}(id=${user.id})}" 
+                        <a th:href="@{/nguoidung/delete/{id}(id=${nguoidung.maNguoiDung})}" 
                            class="btn btn-sm btn-danger"
                            onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')">
                             <i class="bi bi-trash"></i>

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${trang.tieuDe}">Trang</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<div class="container py-4">
+    <h1 class="mb-4" th:text="${trang.tieuDe}">Tiêu đề</h1>
+    <div th:utext="${trang.noiDung}">Nội dung trang...</div>
+</div>
+</body>
+</html>

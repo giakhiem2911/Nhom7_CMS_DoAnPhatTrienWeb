@@ -38,7 +38,7 @@
 
     <!-- Table -->
     <div class="table-responsive shadow rounded">
-        <table class="table table-hover align-middle text-center mb-0">
+        <table class="table table-hover align-middle text-center mb-0" width="100%">
             <thead class="table-dark">
                 <tr>
                     <th scope="col">Mã Danh Mục</th>
@@ -49,7 +49,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="danhmuc : ${danhMucs}">
+                <tr th:each="danhmuc : ${danhMucs}" class="list">
                     <td th:text="${danhmuc.maDanhMuc}">DM001</td>
                     <td th:text="${danhmuc.ten}">Công Nghệ</td>
                     <td th:text="${danhmuc.duongDan}">/cong-nghe</td>

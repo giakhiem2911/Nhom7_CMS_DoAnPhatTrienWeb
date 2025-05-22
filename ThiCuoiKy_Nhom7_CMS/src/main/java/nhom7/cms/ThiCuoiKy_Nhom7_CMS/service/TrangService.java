@@ -33,4 +33,8 @@ public class TrangService {
     public void deleteById(String loaiDoiTuong) {
         trangRepository.deleteById(loaiDoiTuong);
     }
+    public Trang findByDuongDan(String duongDan) {
+        return trangRepository.findByDuongDan(duongDan);
+    }
+
 }

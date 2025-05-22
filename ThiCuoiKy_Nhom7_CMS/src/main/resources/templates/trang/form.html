@@ -8,19 +8,19 @@
 </head>
 <body th:replace="~{layout :: layout}">
 <div th:fragment="content" class="p-4">
-        <h2 class="mb-4 fw-bold" th:text="${trang.loaiDoiTuong != null} ? 'Sửa Trang' : 'Thêm Trang'"></h2>
+        <h2 class="mb-4 fw-bold" th:text="${trang.maTrang != null} ? 'Sửa Trang' : 'Thêm Trang'"></h2>
         <div class="card shadow-sm">
             <div class="card-body">
                 <form th:action="@{/trang/save}" th:object="${trang}" method="post" class="needs-validation" novalidate>
                     <!-- LoaiDoiTuong -->
                     <div class="mb-4">
-                        <label for="loaiDoiTuong" class="form-label fw-medium">Loại Đối Tượng</label>
+                        <label for="maTrang" class="form-label fw-medium">Mã Trang</label>
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-tag"></i></span>
-                            <input type="text" id="loaiDoiTuong" th:field="*{loaiDoiTuong}" class="form-control"
-                                   th:readonly="${trang.loaiDoiTuong != null}" required
-                                   placeholder="Nhập loại đối tượng (ví dụ: PAGE001)" />
-                            <div class="invalid-feedback">Vui lòng nhập loại đối tượng.</div>
+                            <input type="text" id="maTrang" th:field="*{maTrang}" class="form-control"
+                                   th:readonly="${trang.maTrang != null}" required
+                                   placeholder="Nhập mã trang (ví dụ: PAGE001)" />
+                            <div class="invalid-feedback">Vui lòng nhập mã trang.</div>
                         </div>
                     </div>
 
@@ -38,7 +38,20 @@
                             <div class="invalid-feedback">Vui lòng chọn menu.</div>
                         </div>
                     </div>
-
+                  <!-- NguoiDung -->
+                    <div class="mb-4">
+                        <label for="nguoiDung" class="form-label fw-medium">Người tạo</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-list"></i></span>
+                            <select id="nguoiDung" th:field="*{nguoiDung.maNguoiDung}" class="form-select" required>
+                                <option value="" disabled selected>-- Chọn người tạo --</option>
+                                <option th:each="nguoiDung : ${danhSachNguoiDung}"
+                                        th:value="${nguoiDung.maNguoiDung}"
+                                        th:text="${nguoiDung.hoTen}"></option>
+                            </select>
+                            <div class="invalid-feedback">Vui lòng chọn người tạo.</div>
+                        </div>
+                    </div>
                     <!-- TieuDe -->
                     <div class="mb-4">
                         <label for="tieuDe" class="form-label fw-medium">Tiêu Đề</label>

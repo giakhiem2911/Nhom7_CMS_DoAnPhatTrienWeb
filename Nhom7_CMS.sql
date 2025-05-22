@@ -81,7 +81,7 @@ CREATE TABLE Menu (
 
 -- Bảng Trang
 CREATE TABLE Trang (
-    LoaiDoiTuong CHAR(256) PRIMARY KEY,
+    MaTrang CHAR(256) PRIMARY KEY,
     MaMenu CHAR(256),
     MaNguoiDung CHAR(256),
     TieuDe NVARCHAR(256),

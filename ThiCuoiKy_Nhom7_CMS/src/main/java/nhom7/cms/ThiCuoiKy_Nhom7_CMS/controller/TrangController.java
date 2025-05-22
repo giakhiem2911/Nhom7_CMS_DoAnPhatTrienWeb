@@ -4,10 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.NguoiDung;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.Trang;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.TrangRepository;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.TrangService;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.MenuRepository;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.NguoiDungRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -20,10 +25,16 @@ public class TrangController {
     @Autowired
     private MenuRepository menuRepository;
 
+    @Autowired
+    private NguoiDungRepository nguoiDungRepository;
+    
+    @Autowired
+    private TrangService trangService;
+
     @GetMapping
     public String listTrang(Model model) {
         List<Trang> trangs = trangRepository.findAll();
-        model.addAttribute("trangs", trangs);
+        model.addAttribute("dsTrang", trangs);
         return "trang/list";
     }
 
@@ -31,27 +42,47 @@ public class TrangController {
     public String showAddForm(Model model) {
         model.addAttribute("trang", new Trang());
         model.addAttribute("danhSachMenu", menuRepository.findAll());
+        model.addAttribute("danhSachNguoiDung", nguoiDungRepository.findAll());
         return "trang/form";
     }
 
     @PostMapping("/save")
     public String saveTrang(@ModelAttribute("trang") Trang trang) {
+        if (trang.getNgayTao() == null) {
+            trang.setNgayTao(LocalDateTime.now());
+        }
+        // Gán người dùng nếu có như mình đã nói ở trên
+        if (trang.getNguoiDung() != null && trang.getNguoiDung().getMaNguoiDung() != null) {
+            NguoiDung nguoiDung = nguoiDungRepository.findById(trang.getNguoiDung().getMaNguoiDung()).orElse(null);
+            trang.setNguoiDung(nguoiDung);
+        }
         trangRepository.save(trang);
         return "redirect:/trang";
     }
 
-    @GetMapping("/edit/{loaiDoiTuong}")
-    public String showEditForm(@PathVariable String loaiDoiTuong, Model model) {
-        Trang trang = trangRepository.findById(loaiDoiTuong)
-                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy trang: " + loaiDoiTuong));
+    @GetMapping("/edit/{maTrang}")
+    public String showEditForm(@PathVariable String maTrang, Model model) {
+        Trang trang = trangRepository.findById(maTrang)
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy trang: " + maTrang));
         model.addAttribute("trang", trang);
         model.addAttribute("danhSachMenu", menuRepository.findAll());
+        model.addAttribute("danhSachNguoiDung", nguoiDungRepository.findAll());
         return "trang/form";
     }
 
-    @GetMapping("/delete/{loaiDoiTuong}")
-    public String deleteTrang(@PathVariable String loaiDoiTuong) {
-        trangRepository.deleteById(loaiDoiTuong);
+    @GetMapping("/delete/{maTrang}")
+    public String deleteTrang(@PathVariable String maTrang) {
+        trangRepository.deleteById(maTrang);
         return "redirect:/trang";
     }
+    @GetMapping("/{slug}")
+    public String hienThiTrang(@PathVariable("slug") String slug, Model model) {
+        Trang trang = trangService.findByDuongDan(slug);
+        if (trang == null || !trang.getTrangThai().equals("PUBLISH")) {
+            return "error/404";
+        }
+        model.addAttribute("trang", trang);
+        return "trang/trang-chitiet";
+    }
+
 }

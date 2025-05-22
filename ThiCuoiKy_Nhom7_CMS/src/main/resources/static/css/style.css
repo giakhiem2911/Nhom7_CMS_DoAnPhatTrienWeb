@@ -592,3 +592,6 @@ body {
         gap: 12px;
     }
 }
+.list td{
+	text-align: center;
+}

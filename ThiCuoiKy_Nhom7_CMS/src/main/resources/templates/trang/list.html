@@ -27,27 +27,23 @@
     </form>
 
     <div class="table-responsive shadow rounded">
-        <table class="table table-hover text-center mb-0">
+        <table class="table table-hover text-center mb-0" width="100%">
             <thead class="table-dark">
                 <tr>
                     <th>Tiêu đề</th>
                     <th>Đường dẫn</th>
-                    <th>Hiển thị</th>
-                    <th>Ngày tạo</th>
                     <th>Hành động</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="trang : ${dsTrang}">
+                <tr th:each="trang : ${dsTrang}" class="list">
                     <td th:text="${trang.tieuDe}">Tiêu đề mẫu</td>
                     <td th:text="${trang.duongDan}">/duong-dan-mau</td>
-                    <td th:text="${trang.hienThi} ? 'Có' : 'Không'">Có</td>
-                    <td th:text="${#temporals.format(trang.ngayTao, 'dd/MM/yyyy HH:mm')}">01/01/2024 12:00</td>
                     <td>
-                        <a th:href="@{'/trang/edit/' + ${trang.id}}" class="btn btn-sm btn-warning">
+                        <a th:href="@{'/trang/edit/' + ${trang.maTrang}}" class="btn btn-sm btn-warning">
                             <i class="bi bi-pencil-square"></i>
                         </a>
-                        <a th:href="@{'/trang/delete/' + ${trang.id}}" class="btn btn-sm btn-danger"
+                        <a th:href="@{'/trang/delete/' + ${trang.maTrang}}" class="btn btn-sm btn-danger"
                            onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
                             <i class="bi bi-trash"></i>
                         </a>
