@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${siteInfor.maSiteInfor != null} ? 'Chỉnh sửa Site Information' : 'Tạo mới Site Information'"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body th:replace="~{layout :: layout}">
+
+<div th:fragment="content" class="p-4">
+    <h2 class="mb-4 fw-bold" th:text="${siteInfor.maSiteInfor != null} ? 'Chỉnh sửa Site Information' : 'Tạo mới Site Information'"></h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form th:action="@{/siteinfor/save}" th:object="${siteInfor}" method="post" class="needs-validation" novalidate>
+
+                <!-- Mã SiteInfor -->
+                <div class="mb-4">
+                    <label for="maSiteInfor" class="form-label fw-medium">Mã SiteInfor</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-hash"></i></span>
+                        <input type="text" th:field="*{maSiteInfor}" id="maSiteInfor" class="form-control"
+                               th:readonly="${siteInfor.maSiteInfor != null}" required placeholder="Nhập mã SiteInfor">
+                        <div class="invalid-feedback">Vui lòng nhập mã SiteInfor.</div>
+                    </div>
+                </div>
+
+                <!-- Tên Website -->
+                <div class="mb-4">
+                    <label for="tenWebsite" class="form-label fw-medium">Tên Website</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-globe"></i></span>
+                        <input type="text" th:field="*{tenWebsite}" id="tenWebsite" class="form-control" required placeholder="Nhập tên website">
+                        <div class="invalid-feedback">Vui lòng nhập tên website.</div>
+                    </div>
+                </div>
+
+                <!-- Logo URL -->
+                <div class="mb-4">
+                    <label for="logo" class="form-label fw-medium">Logo (URL hoặc đường dẫn tĩnh)</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-image"></i></span>
+                        <input type="text" th:field="*{logo}" id="logo" class="form-control" placeholder="Nhập URL hoặc đường dẫn ảnh logo">
+                    </div>
+                </div>
+
+                <!-- Mô Tả -->
+                <div class="mb-4">
+                    <label for="moTa" class="form-label fw-medium">Mô Tả</label>
+                    <textarea th:field="*{moTa}" id="moTa" class="form-control" rows="4" placeholder="Nhập mô tả website"></textarea>
+                </div>
+
+                <!-- Footer -->
+                <div class="mb-4">
+                    <label for="footer" class="form-label fw-medium">Nội dung Footer</label>
+                    <textarea th:field="*{footer}" id="footer" class="form-control" rows="3" placeholder="Nhập nội dung chân trang"></textarea>
+                </div>
+
+                <!-- Trạng Thái -->
+                <div class="mb-4">
+                    <label for="trangThai" class="form-label fw-medium">Trạng Thái</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-toggle-on"></i></span>
+                        <select th:field="*{trangThai}" id="trangThai" class="form-select" required>
+                            <option value="" disabled th:selected="${siteInfor.trangThai == null}">-- Chọn trạng thái --</option>
+                            <option value="Đang hoạt động" th:selected="${siteInfor.trangThai == 'Đang hoạt động'}">Đang hoạt động</option>
+                            <option value="Tạm ngưng" th:selected="${siteInfor.trangThai == 'Tạm ngưng'}">Tạm ngưng</option>
+                        </select>
+                        <div class="invalid-feedback">Vui lòng chọn trạng thái.</div>
+                    </div>
+                </div>
+
+                <!-- Nút hành động -->
+                <div class="d-flex justify-content-end gap-3">
+                    <a th:href="@{/siteinfor}" class="btn btn-secondary px-4">Hủy</a>
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-save me-2"></i>Lưu
+                    </button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
+
+</body>
+</html>

@@ -34,7 +34,7 @@ public class MenuController {
             @RequestParam(defaultValue = "maMenu") String sortBy,
             @RequestParam(defaultValue = "0") int page,
             Model model) {
-        // Kích thước trang (10 menu/trang)
+        
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sortBy));
         Page<Menu> menuPage;
 
