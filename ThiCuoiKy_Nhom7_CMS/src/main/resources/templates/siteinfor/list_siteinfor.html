@@ -2,8 +2,14 @@
 <html lang="vi" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <title>Danh sách Site</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .table-responsive {
+            overflow-x: auto;
+        }
+    </style>
 </head>
 <body th:replace="~{layout :: layout}">
 <div th:fragment="content" class="p-4">
@@ -37,49 +43,56 @@
     </form>
 
     <div class="table-responsive shadow rounded">
-        <table class="table table-hover align-middle text-center mb-0" width="100%">
-            <thead class="table-dark">
+        <table class="table table-bordered table-hover shadow-sm bg-white" width="100%">
+            <thead class="table-light">
                 <tr>
-                    <th scope="col">Mã Site</th>
-                    <th scope="col">Tên Website</th>
-                    <th scope="col">Logo</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Số điện thoại</th>
-                    <th scope="col">Facebook</th>
-                    <th scope="col">Địa chỉ</th>
-                    <th scope="col">Trạng thái</th>
-                    <th scope="col">Ngày tạo</th>
-                    <th scope="col">Ngày cập nhật</th>
-                    <th scope="col">Thao Tác</th>
+                    <th style="width:5%;">STT</th>
+                    <th style="width:12%;">Mã Site</th>
+                    <th>Tên Website</th>
+                    <th>Logo</th>
+                    <th>Email</th>
+                    <th>SĐT</th>
+                    <th>Facebook</th>
+                    <th>Địa chỉ</th>
+                    <th>Ngày tạo</th>
+                    <th>Ngày cập nhật</th>
+                    <th style="width:10%;">Thao tác</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="site : ${siteInfors}" class="list">
-                    <td th:text="${site.maSiteInfor}">SITE01</td>
-                    <td th:text="${site.tenSite}">Tên website</td>
-                    <td>
-                        <img th:if="${site.logo != null and #strings.isNotEmpty(site.logo)}"
-                             th:src="@{${site.logo}}" alt="Logo" style="height: 40px;">
+                <tr th:each="site, iterStat : ${siteInfors}">
+                    <td th:text="${iterStat.count + currentPage * 10}"></td>
+                    <td th:text="${site.maSiteInfor}"></td>
+                    <td th:text="${site.tenSite}"></td>
+                    <td class="text-center">
+                        <img th:if="${site.logo != null and !#strings.isEmpty(site.logo)}"
+                             th:src="${site.logo}" alt="Logo" style="height: 40px;">
+                        <span th:if="${site.logo == null or #strings.isEmpty(site.logo)}" 
+                              class="text-muted fst-italic">Không có</span>
                     </td>
                     <td th:text="${site.email}"></td>
                     <td th:text="${site.soDienThoai}"></td>
-                    <td th:text="${site.facebook}"></td>
-                    <td th:text="${site.diaChi}">Địa chỉ</td>
-                    <td th:text="${site.trangThai}"></td>
-                    <td th:text="${#dates.format(site.ngayTao, 'dd/MM/yyyy HH:mm')}">01/01/2025 12:00</td>
-                    <td th:text="${#dates.format(site.ngayCapNhat, 'dd/MM/yyyy HH:mm')}">01/01/2025 13:00</td>
                     <td>
-                        <a th:href="@{/siteinfor/edit/{maSiteInfor}(maSiteInfor=${site.maSiteInfor})}" class="btn btn-sm btn-warning px-3">
+                        <a th:href="'https://' + ${site.facebook}" th:text="${site.facebook}" target="_blank"></a>
+                    </td>
+                    <td th:text="${site.diaChi}"></td>
+                    <td th:text="${#temporals.format(site.ngayTao, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td th:text="${#temporals.format(site.ngayCapNhat, 'dd/MM/yyyy HH:mm')}"></td>
+                    <td class="text-center" style="white-space: nowrap;">
+                        <a th:href="@{/siteinfor/edit/{id}(id=${site.maSiteInfor})}"
+                           class="btn btn-sm btn-warning px-2 me-1 d-inline-block"
+                           title="Sửa">
                             <i class="bi bi-pencil-square me-1"></i>Sửa
                         </a>
-                        <a th:href="@{/siteinfor/delete/{maSiteInfor}(maSiteInfor=${site.maSiteInfor})}" class="btn btn-sm btn-danger px-3"
-                           onclick="return confirm('Bạn có chắc chắn muốn xóa site này?');">
+                        <a th:href="@{/siteinfor/delete/{id}(id=${site.maSiteInfor})}" 
+                           onclick="return confirm('Bạn có chắc chắn muốn xóa site này?');"
+                           class="btn btn-sm btn-danger px-2">
                             <i class="bi bi-trash me-1"></i>Xóa
                         </a>
                     </td>
                 </tr>
                 <tr th:if="${#lists.isEmpty(siteInfors)}">
-                    <td colspan="11" class="text-center py-4 fs-5 text-muted">Không có site nào</td>
+                    <td colspan="11" class="text-center fst-italic text-muted">Không có site nào.</td>
                 </tr>
             </tbody>
         </table>
@@ -89,24 +102,19 @@
         <nav aria-label="Page navigation">
             <ul class="pagination">
                 <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
-                    <a class="page-link" th:href="@{/siteinfor(keyword=${keyword},sortBy=${sortBy},page=${currentPage - 1})}" aria-label="Previous">
-                        <span aria-hidden="true">«</span>
-                    </a>
+                    <a class="page-link" th:href="@{/siteinfor(keyword=${keyword}, sortBy=${sortBy}, page=${currentPage - 1})}">«</a>
                 </li>
                 <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
                     th:classappend="${i == currentPage} ? 'active'">
-                    <a class="page-link" th:href="@{/siteinfor(keyword=${keyword},sortBy=${sortBy},page=${i})}" th:text="${i + 1}"></a>
+                    <a class="page-link" th:href="@{/siteinfor(keyword=${keyword}, sortBy=${sortBy}, page=${i})}" th:text="${i + 1}"></a>
                 </li>
                 <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
-                    <a class="page-link" th:href="@{/siteinfor(keyword=${keyword},sortBy=${sortBy},page=${currentPage + 1})}" aria-label="Next">
-                        <span aria-hidden="true">»</span>
-                    </a>
+                    <a class="page-link" th:href="@{/siteinfor(keyword=${keyword}, sortBy=${sortBy}, page=${currentPage + 1})}">»</a>
                 </li>
             </ul>
         </nav>
     </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
