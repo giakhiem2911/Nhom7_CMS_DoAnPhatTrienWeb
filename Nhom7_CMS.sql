@@ -10,6 +10,10 @@ CREATE TABLE VaiTro (
     MoTa TEXT
 );
 
+
+ALTER TABLE Trang ALTER COLUMN NoiDung NVARCHAR(MAX);
+ALTER TABLE BaiViet ALTER COLUMN NoiDung NVARCHAR(MAX);
+
 -- Bảng NguoiDung
 CREATE TABLE NguoiDung (
     MaNguoiDung CHAR(256) PRIMARY KEY,
@@ -60,7 +64,7 @@ CREATE TABLE BaiViet (
     MaDanhMuc CHAR(256),
     TieuDe NVARCHAR(256),
     DuongDan NVARCHAR(256),
-    NoiDung TEXT,
+    NoiDung NVARCHAR(MAX),
 	AnhDaiDien NVARCHAR(256),
 	TrangThai NVARCHAR(256),
 	FileDinhKem NVARCHAR(256),
@@ -86,7 +90,7 @@ CREATE TABLE Trang (
     MaNguoiDung CHAR(256),
     TieuDe NVARCHAR(256),
     DuongDan NVARCHAR(256),
-    NoiDung TEXT,
+    NoiDung NVARCHAR(MAX),
     TrangThai NVARCHAR(256),
 	NgayTao DATETIME,
     FOREIGN KEY (MaMenu) REFERENCES Menu(MaMenu),
@@ -154,4 +158,3 @@ INSERT INTO ThongBao (MaThongBao, MaNguoiDung, TieuDe, NoiDung, TrangThai) VALUE
 ('TB003', 'ND003', 'Thông báo bảo trì', 'Hệ thống sẽ được bảo trì vào lúc 00:00 ngày 01/06/2025. Vui lòng lưu lại dữ liệu.', 'Chưa đọc'),
 ('TB004', 'ND001', 'Thành viên tích cực', 'Bạn là thành viên có nhiều bài viết chất lượng nhất trong tháng 5. Cảm ơn bạn!', 'Đã đọc'),
 ('TB005', 'ND002', 'Đổi ảnh đại diện', 'Ảnh đại diện của bạn không hợp lệ. Vui lòng chọn ảnh khác.', 'Chưa đọc');
-

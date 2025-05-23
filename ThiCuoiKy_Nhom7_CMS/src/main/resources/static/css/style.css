@@ -595,3 +595,11 @@ body {
 .list td{
 	text-align: center;
 }
+.table-responsive {
+    overflow-x: auto;
+}
+table {
+    white-space: nowrap;
+}
+
+

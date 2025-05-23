@@ -3,6 +3,8 @@ package nhom7.cms.ThiCuoiKy_Nhom7_CMS.service;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.SiteInfor;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.SiteInforRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +28,6 @@ public class SiteInforServiceImpl implements SiteInforService {
 
     @Override
     public void save(SiteInfor siteInfor) {
-        // Set ngayTao only if new
         if (siteInfor.getNgayTao() == null) {
             siteInfor.setNgayTao(java.time.LocalDateTime.now());
         }
@@ -42,5 +43,17 @@ public class SiteInforServiceImpl implements SiteInforService {
     @Override
     public List<SiteInfor> searchByKeyword(String keyword) {
         return siteInforRepository.findByTenSiteContainingIgnoreCaseOrDiaChiContainingIgnoreCase(keyword, keyword);
+    }
+
+    // --- Thêm 2 phương thức phân trang ---
+
+    @Override
+    public Page<SiteInfor> getAll(Pageable pageable) {
+        return siteInforRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<SiteInfor> searchByKeyword(String keyword, Pageable pageable) {
+        return siteInforRepository.findByTenSiteContainingIgnoreCaseOrDiaChiContainingIgnoreCase(keyword, keyword, pageable);
     }
 }

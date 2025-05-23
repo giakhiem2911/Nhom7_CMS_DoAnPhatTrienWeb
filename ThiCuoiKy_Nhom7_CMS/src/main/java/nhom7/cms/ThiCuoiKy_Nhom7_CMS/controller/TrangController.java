@@ -13,6 +13,7 @@ import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.TrangRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.TrangService;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.MenuRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.NguoiDungRepository;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.SiteInforRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,6 +33,9 @@ public class TrangController {
     
     @Autowired
     private TrangService trangService;
+
+    @Autowired
+    private SiteInforRepository siteInforRepository;
 
     @GetMapping
     public String listTrang(Model model) {
@@ -80,12 +84,13 @@ public class TrangController {
     @GetMapping("/{duongDan}")
     public String hienThiTrang(@PathVariable("duongDan") String duongDan, Model model) {
         Trang trang = trangService.findByDuongDan(duongDan);
-        System.out.println("Trang lấy được: " + trang); // ✅ Debug nhanh
+        System.out.println("Trang lấy được: " + trang);
         if (trang == null || !trang.getTrangThai().equals("PUBLISH")) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy trang");
         }
+        model.addAttribute("siteInfor", siteInforRepository.findFirstByOrderByMaSiteInforAsc());
         model.addAttribute("trang", trang);
-        return "trang/trang-chu";
+        return "trang/detail";
     }
 
 }

@@ -43,7 +43,9 @@
 			<tbody>
 			    <tr th:each="trang : ${dsTrang}" class="list">
 			        <td th:text="${trang.maTrang}">ma-trang</td>
-			        <td th:text="${trang.tieuDe}">Tiêu đề mẫu</td>
+			        <td>
+					    <a th:href="@{'/trang/' + ${trang.duongDan}}" th:text="${trang.tieuDe}" class="text-decoration-none"></a>
+					</td>
 			        <td th:text="${trang.duongDan}">/duong-dan-mau</td>
 			        <td th:text="${trang.menu != null ? trang.menu.ten : 'Không có'}">Tên menu</td>
 			        <td th:text="${trang.nguoiDung != null ? trang.nguoiDung.hoTen : 'Không có'}">Tên người tạo</td>
