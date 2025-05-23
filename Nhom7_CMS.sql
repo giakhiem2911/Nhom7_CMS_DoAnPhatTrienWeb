@@ -155,3 +155,73 @@ INSERT INTO ThongBao (MaThongBao, MaNguoiDung, TieuDe, NoiDung, TrangThai) VALUE
 ('TB004', 'ND001', 'Thành viên tích cực', 'Bạn là thành viên có nhiều bài viết chất lượng nhất trong tháng 5. Cảm ơn bạn!', 'Đã đọc'),
 ('TB005', 'ND002', 'Đổi ảnh đại diện', 'Ảnh đại diện của bạn không hợp lệ. Vui lòng chọn ảnh khác.', 'Chưa đọc');
 
+--thêm dữ liệu cho siteinfor
+-- Thêm site Facebook
+INSERT INTO SiteInfor (
+    maSiteInfor,
+    tenSite,
+    logo,
+    email,
+    soDienThoai,
+    facebook,
+    diaChi,
+    ngayTao,
+    ngayCapNhat
+) VALUES (
+    'site_fb',
+    'Facebook',
+    'https://freepnglogo.com/images/all_img/1536184673facebook-png-icon-logo.png',
+    'lienhe@thegioithucung.vn',
+    '0909123456',
+    'https://facebook.com/thegioithucung',
+    '123 Đường Trần Hưng Đạo, Quận 1, TP.HCM',
+    NOW(),
+    NOW()
+);
+
+-- Thêm site Instagram
+INSERT INTO SiteInfor (
+    maSiteInfor,
+    tenSite,
+    logo,
+    email,
+    soDienThoai,
+    facebook,
+    diaChi,
+    ngayTao,
+    ngayCapNhat
+) VALUES (
+    'site_ig',
+    'Instagram',
+    'https://download.logo.wine/logo/Instagram/Instagram-Logo.wine.png',
+    'lienhe@thegioithucung.vn',
+    '0909123456',
+    'https://instagram.com/thegioithucung',
+    '123 Đường Trần Hưng Đạo, Quận 1, TP.HCM',
+    NOW(),
+    NOW()
+);
+
+-- Thêm site X (Twitter X)
+INSERT INTO SiteInfor (
+    maSiteInfor,
+    tenSite,
+    logo,
+    email,
+    soDienThoai,
+    facebook,
+    diaChi,
+    ngayTao,
+    ngayCapNhat
+) VALUES (
+    'site_x',
+    'Twitter X',
+    'https://logowik.com/content/uploads/images/telegram7584.jpg',
+    'lienhe@thegioithucung.vn',
+    '0909123456',
+    'https://x.com/thegioithucung',
+    '123 Đường Trần Hưng Đạo, Quận 1, TP.HCM',
+    NOW(),
+    NOW()
+);
+
