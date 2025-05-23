@@ -41,10 +41,12 @@
                             <span class="input-group-text"><i class="bi bi-image"></i></span>
                             <input type="text" id="logo" th:field="*{logo}" class="form-control" placeholder="Nhập đường dẫn logo" />
                         </div>
-                        <div class="mt-2">
-                            <img th:if="${siteInfor.logo != null and #strings.isNotEmpty(siteInfor.logo)}"
-                                th:src="@{${siteInfor.logo}}" alt="Logo" style="height: 50px;">
-                        </div>
+                       <div class="mt-2">
+    <img th:if="${siteInfor.logo != null and !#strings.isEmpty(siteInfor.logo)}"
+         th:src="@{${siteInfor.logo}}" alt="Logo" style="height: 50px;">
+    <span th:if="${siteInfor.logo == null or #strings.isEmpty(siteInfor.logo)}"
+          class="text-muted fst-italic">Không có logo</span>
+</div>
                     </div>
 
                     <div class="mb-4">

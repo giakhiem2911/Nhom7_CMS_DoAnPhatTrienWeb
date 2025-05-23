@@ -51,15 +51,14 @@ public class SiteInforController {
         return "siteinfor/form_siteinfor";
     }
 
-    @GetMapping("/edit/{id}")
-    public String hienThiFormChinhSua(@PathVariable("id") String id, Model model) {
-        Optional<SiteInfor> optionalSiteInfor = siteInforService.getById(id);
-        if (optionalSiteInfor.isPresent()) {
-            model.addAttribute("siteInfor", optionalSiteInfor.get());
-            return "siteinfor/form_siteinfor";
-        } else {
+    @GetMapping("/sua/{maSiteInfor}")
+    public String hienThiFormChinhSua(@PathVariable("maSiteInfor") String maSiteInfor, Model model) {
+        SiteInfor siteInfor = siteInforService.getById(maSiteInfor).orElse(null);
+        if (siteInfor == null) {
             return "redirect:/siteinfor";
         }
+        model.addAttribute("siteInfor", siteInfor);
+        return "siteinfor/form_siteinfor";
     }
 
     @PostMapping("/save")

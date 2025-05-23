@@ -58,11 +58,11 @@
         <td th:text="${#temporals.format(suKien.thoiGianBatDau, 'dd/MM/yyyy HH:mm')}"></td>
         <td th:text="${#temporals.format(suKien.thoiGianKetThuc, 'dd/MM/yyyy HH:mm')}"></td>
 <td class="text-center" style="white-space: nowrap;">
-    <a th:href="@{/sukien/sua/{id}(id=${suKien.maSuKien})}"
-       class="btn btn-sm btn-warning px-2 me-1 d-inline-block"
-       title="Sửa">
-        <i class="bi bi-pencil-square me-1"></i>Sửa
-    </a>
+	    <a th:href="@{/sukien/sua/{id}(id=${suKien.maSuKien})}"
+	       class="btn btn-sm btn-warning px-2 me-1 d-inline-block"
+	       title="Sửa">
+	        <i class="bi bi-pencil-square me-1"></i>Sửa
+	    </a>
     <a th:href="@{/sukien/xoa/{id}(id=${suKien.maSuKien})}"
        class="btn btn-sm btn-danger px-2 d-inline-block"
        title="Xóa"
