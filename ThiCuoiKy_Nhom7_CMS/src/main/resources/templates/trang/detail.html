@@ -96,7 +96,15 @@
                 </header>
 
                 <article>
-                    <div th:utext="${trang.noiDung}">Nội dung trang hiển thị ở đây</div>
+                    <section>
+					    <h2>Tin tức mới nhất</h2>
+					    <ul>
+					        <li th:each="baiViet : ${danhSachTinTuc}">
+					            <a th:href="@{'/baiviet/' + ${baiViet.maBaiViet}}" th:text="${baiViet.tieuDe}">Tiêu đề bài viết</a>
+					            <small th:text="${#temporals.format(baiViet.ngayXuatBan, 'dd/MM/yyyy')}"></small>
+					        </li>
+					    </ul>
+					</section>
                 </article>
             </main>
         </div>

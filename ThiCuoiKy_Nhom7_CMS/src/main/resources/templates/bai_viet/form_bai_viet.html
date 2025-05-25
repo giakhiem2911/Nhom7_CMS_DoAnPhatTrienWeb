@@ -14,7 +14,7 @@
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <form th:action="@{/baiviet/save}" th:object="${baiViet}" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
+            <form th:action="@{/baiviet/luu}" th:object="${baiViet}" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
                 <!-- Mã Bài Viết -->
                 <div class="mb-4">
                     <label for="maBaiViet" class="form-label fw-medium">Mã Bài Viết</label>
@@ -154,14 +154,14 @@
         });
     })();
  	// Initialize CKEditor
-    ClassicEditor
-        .create(document.querySelector('#noiDung'), {
-            toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'],
-            placeholder: 'Nhập nội dung trang...'
-        })
-        .catch(error => {
-            console.error(error);
-        });
+	  ClassicEditor
+	    .create(document.querySelector('#noiDung'))
+	    .then(editor => {
+	      editor.ui.view.editable.element.style.height = '400px';
+	    })
+	    .catch(error => {
+	      console.error(error);
+	    });
 </script>
 </body>
 </html>

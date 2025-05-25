@@ -7,10 +7,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.BaiViet;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.NguoiDung;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.Trang;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.TrangRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.TrangService;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.BaiVietRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.MenuRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.NguoiDungRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.SiteInforRepository;
@@ -81,6 +83,26 @@ public class TrangController {
         trangRepository.deleteById(maTrang);
         return "redirect:/trang";
     }
+    
+    @Autowired
+    private BaiVietRepository baiVietRepository;
+
+    @GetMapping("/trang-chu")
+    public String trangChu(Model model) {
+        // Lấy thông tin site
+        model.addAttribute("siteInfor", siteInforRepository.findFirstByOrderByMaSiteInforAsc());
+
+        // Lấy trang chủ (nếu bạn có dữ liệu trang chủ trong bảng Trang)
+        Trang trangChu = trangService.findByDuongDan("trang-chu");
+        model.addAttribute("trang", trangChu);
+
+        // Lấy danh sách bài viết thuộc danh mục "Tin tức"
+        List<BaiViet> danhSachTinTuc = baiVietRepository.findByDanhMucTen("Tin tức");
+        model.addAttribute("danhSachTinTuc", danhSachTinTuc);
+
+        return "trang/detail";  // Hoặc template trang chủ của bạn
+    }
+    
     @GetMapping("/{duongDan}")
     public String hienThiTrang(@PathVariable("duongDan") String duongDan, Model model) {
         Trang trang = trangService.findByDuongDan(duongDan);

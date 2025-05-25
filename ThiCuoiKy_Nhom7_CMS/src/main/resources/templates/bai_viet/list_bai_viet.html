@@ -58,8 +58,8 @@
 	                    <td th:text="${baiViet.maBaiViet}">BV001</td>
 	                    <td th:text="${baiViet.tieuDe}">Tiêu đề bài viết</td>
 	                    <td th:text="${baiViet.nguoiDung != null ? baiViet.nguoiDung.hoTen : 'N/A'}">Tác giả</td>
-	                    <td th:text="${baiViet.danhMuc != null ? baiViet.danhMuc.tenDanhMuc : 'N/A'}">Danh mục</td>
-	                    <td th:text="${#dates.format(baiViet.ngayTao, 'dd/MM/yyyy')}">01/01/2024</td>
+	                    <td th:text="${baiViet.danhMuc != null ? baiViet.danhMuc.ten : 'N/A'}">Danh mục</td>
+	                    <td th:text="${#temporals.format(baiViet.ngayXuatBan, 'dd/MM/yyyy')}">01/01/2024</td>
 	                    <td>
 	                        <a th:href="@{/baiviet/sua/{id}(id=${baiViet.maBaiViet})}" class="btn btn-sm btn-warning me-2">
 	                            <i class="bi bi-pencil-square me-1"></i>Sửa
