@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import jakarta.servlet.http.HttpServletRequest;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.MenuRepository;
 
 @Controller
@@ -14,7 +15,8 @@ public class HomeController {
     private MenuRepository menuRepository;
 
     @GetMapping("/")
-    public String home(Model model) {
+    public String home(HttpServletRequest request, Model model) {
+        model.addAttribute("requestURI", request.getRequestURI());
         model.addAttribute("title", "Bảng điều khiển - NHOM7_CMS");
         model.addAttribute("menuCount", menuRepository.count());
         model.addAttribute("pageCount", 5);

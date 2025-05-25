@@ -31,7 +31,7 @@ body {
 .sidebar a {
     list-style: none;
     color: #b4b9be;
-    display: flex;
+    display: block;
     align-items: center;
     padding: 12px 24px;
     text-decoration: none;
@@ -211,7 +211,9 @@ body {
     color: #6b7280;
     font-style: italic;
 }
-
+.mb-4{
+	margin-bottom:15px;
+}
 /* Buttons */
 .btn-warning {
     background-color: #f59e0b;
@@ -221,6 +223,7 @@ body {
     border-radius: 3px;
     color: #fff;
     transition: background-color 0.2s ease;
+    margin:10px;
 }
 
 .btn-warning:hover {
@@ -272,6 +275,7 @@ body {
     background-color: #fafafa;
     color: #23282d;
     transition: all 0.2s ease;
+    width:100%;
 }
 
 .form-control:focus {
