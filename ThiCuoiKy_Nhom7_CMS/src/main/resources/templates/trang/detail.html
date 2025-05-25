@@ -49,12 +49,23 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Danh Mục
+                            Bộ môn
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                            <li><a class="dropdown-item" th:href="@{/trang/gioi-thieu}">Giới thiệu</a></li>
-                            <li><a class="dropdown-item" th:href="@{/trang/hoi-thao}">Hội thảo</a></li>
-                            <li><a class="dropdown-item" th:href="@{/trang/lien-he}">Liên hệ</a></li>
+                            <li><a class="dropdown-item" th:href="@{/trang/bo-mon/ky-thuat-phan-mem}">Kỹ thuật phần mềm</a></li>
+                            <li><a class="dropdown-item" th:href="@{/trang/bo-mon/mang-may-tinh-va-truyen-thong}">Mạng máy tính và truyền thông</a></li>
+                            <li><a class="dropdown-item" th:href="@{/trang/bo-mon/he-thong-thong-tin}">Hệ thống thông tin</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Kế hoạch đào tạo
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" th:href="@{/trang/đao-tao/ctđt-nganh-khoa-hoc-may-tinh}">CTĐT Ngành Khoa học máy tính</a></li>
+                            <li><a class="dropdown-item" th:href="@{/trang/đao-tao/ctđt-nganh-he-thong-thong-tin-quan-ly}">CTĐT Ngành Hệ thống thông tin quản lý</a></li>
+                            <li><a class="dropdown-item" th:href="@{/trang/đao-tao/ctđt-nganh-cong-nghe-thong-tin}">CTĐT Ngành Công nghệ thông tin</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -73,10 +84,19 @@
                     <h5 class="px-3 mt-3">Menu</h5>
                     <ul class="nav flex-column">
                         <li class="nav-item">
+                            <a class="nav-link" th:href="@{/trang/trang-chu}">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" th:href="@{/trang/gioi-thieu}">Giới thiệu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" th:href="@{/trang/hoi-thao}">Hội thảo</a>
+                            <a class="nav-link" th:href="@{/trang/bo-mon}">Bộ môn</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/trang/dao-tao}">Đào tạo</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/trang/nghien-cuu-khoa-hoc}">Nghiên cứu khoa học</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" th:href="@{/trang/lien-he}">Liên hệ</a>
