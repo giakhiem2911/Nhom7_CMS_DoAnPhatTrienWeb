@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Bài Viết</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+	<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+<div th:replace="~{layout :: layout}">
+	<div th:fragment="content" class="p-4">
+    <h2 class="mb-4 fw-bold" th:text="${baiViet.maBaiViet != null} ? 'Sửa Bài Viết' : 'Thêm Bài Viết'"></h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <form th:action="@{/baiviet/luu}" th:object="${baiViet}" method="post" class="needs-validation" novalidate enctype="multipart/form-data">
+                <!-- Mã Bài Viết -->
+                <div class="mb-4">
+                    <label for="maBaiViet" class="form-label fw-medium">Mã Bài Viết</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                        <input type="text" id="maBaiViet" th:field="*{maBaiViet}" class="form-control"
+                               th:readonly="${baiViet.maBaiViet != null}" required
+                               placeholder="Nhập mã bài viết (ví dụ: BV001)" />
+                        <div class="invalid-feedback">Vui lòng nhập mã bài viết.</div>
+                    </div>
+                </div>
+
+                <!-- Tiêu Đề -->
+                <div class="mb-4">
+                    <label for="tieuDe" class="form-label fw-medium">Tiêu Đề</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-fonts"></i></span>
+                        <input type="text" id="tieuDe" th:field="*{tieuDe}" class="form-control" required
+                               placeholder="Nhập tiêu đề bài viết" />
+                        <div class="invalid-feedback">Vui lòng nhập tiêu đề.</div>
+                    </div>
+                </div>
+
+                <!-- Đường Dẫn -->
+                <div class="mb-4">
+                    <label for="duongDan" class="form-label fw-medium">Đường Dẫn</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                        <input type="text" id="duongDan" th:field="*{duongDan}" class="form-control" placeholder="duong-dan-bai-viet" />
+                    </div>
+                </div>
+
+                <!-- Nội Dung -->
+                <div class="mb-4">
+                    <label for="noiDung" class="form-label fw-medium">Nội Dung</label>
+                    <textarea id="noiDung" th:field="*{noiDung}" class="form-control" rows="6" required placeholder="Nhập nội dung bài viết"></textarea>
+                    <div class="invalid-feedback">Vui lòng nhập nội dung bài viết.</div>
+                </div>
+
+				<!-- Danh Mục -->
+				<div class="mb-4">
+				    <label for="maDanhMuc" class="form-label fw-medium">Danh Mục</label>
+				    <select id="maDanhMuc" name="maDanhMuc" class="form-select" required>
+				        <option value="">-- Chọn danh mục --</option>
+				        <option th:each="dm : ${danhSachDanhMuc}" 
+				                th:value="${dm.maDanhMuc}" 
+				                th:text="${dm.ten}"
+				                th:selected="${baiViet.danhMuc != null and baiViet.danhMuc.maDanhMuc == dm.maDanhMuc}">
+				        </option>
+				    </select>
+				    <div class="invalid-feedback">Vui lòng chọn danh mục.</div>
+				</div>
+				
+				<!-- Người Tạo -->
+				<div class="mb-4">
+				    <label for="maNguoiDung" class="form-label fw-medium">Người Tạo</label>
+				    <select id="maNguoiDung" name="maNguoiDung" class="form-select" required>
+				        <option value="">-- Chọn người dùng --</option>
+				        <option th:each="nd : ${danhSachNguoiDung}" 
+				                th:value="${nd.maNguoiDung}" 
+				                th:text="${nd.hoTen}"
+				                th:selected="${baiViet.nguoiDung != null and baiViet.nguoiDung.maNguoiDung == nd.maNguoiDung}">
+				        </option>
+				    </select>
+				    <div class="invalid-feedback">Vui lòng chọn người tạo.</div>
+				</div>
+
+                <!-- Trạng Thái -->
+                <div class="mb-4">
+                    <label for="trangThai" class="form-label fw-medium">Trạng Thái</label>
+                    <select id="trangThai" th:field="*{trangThai}" class="form-select" required>
+                        <option value="">-- Chọn trạng thái --</option>
+                        <option value="Nháp">Nháp</option>
+                        <option value="Xuất bản">Xuất bản</option>
+                    </select>
+                    <div class="invalid-feedback">Vui lòng chọn trạng thái.</div>
+                </div>
+
+                <!-- Ảnh Đại Diện -->
+                <div class="mb-4">
+                    <label for="anhDaiDien" class="form-label fw-medium">Ảnh Đại Diện</label>
+                    <input type="file" id="anhDaiDien" name="anhDaiDienFile" class="form-control" />
+                    <div class="form-text" th:if="${baiViet.anhDaiDien != null}">
+                        Ảnh hiện tại: <span th:text="${baiViet.anhDaiDien}"></span>
+                    </div>
+                </div>
+
+                <!-- File Đính Kèm -->
+                <div class="mb-4">
+                    <label for="fileDinhKem" class="form-label fw-medium">File Đính Kèm</label>
+                    <input type="file" id="fileDinhKem" name="fileDinhKemFile" class="form-control" />
+                    <div class="form-text" th:if="${baiViet.fileDinhKem != null}">
+                        File hiện tại: <span th:text="${baiViet.fileDinhKem}"></span>
+                    </div>
+                </div>
+
+                <!-- Ngày Xuất Bản -->
+                <div class="mb-4">
+                    <label for="ngayXuatBan" class="form-label fw-medium">Ngày Xuất Bản</label>
+                    <input type="datetime-local" id="ngayXuatBan" th:field="*{ngayXuatBan}" class="form-control" />
+                </div>
+
+                <!-- Ngày Cập Nhật -->
+                <div class="mb-4">
+                    <label for="ngayCapNhat" class="form-label fw-medium">Ngày Cập Nhật</label>
+                    <input type="datetime-local" id="ngayCapNhat" th:field="*{ngayCapNhat}" class="form-control" />
+                </div>
+
+                <!-- Nút Lưu / Hủy -->
+                <div class="d-flex justify-content-end gap-3">
+                    <a href="/baiviet" class="btn btn-secondary px-4">Hủy</a>
+                    <button type="submit" class="btn btn-primary px-4">
+                        <i class="bi bi-save me-2"></i>Lưu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<!-- Script Bootstrap & Validation -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script>
+    (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+ 	// Initialize CKEditor
+	  ClassicEditor
+	    .create(document.querySelector('#noiDung'))
+	    .then(editor => {
+	      editor.ui.view.editable.element.style.height = '400px';
+	    })
+	    .catch(error => {
+	      console.error(error);
+	    });
+</script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/auth_style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <div class="signin-container">
+	    <a href="javascript:history.back()" class="close-button">&times;</a>
+	    <h2>Đăng nhập</h2>
+	
+	    <!-- Hiển thị thông báo lỗi -->
+	    <div th:if="${error}" class="alert alert-danger" style="color: red; margin-bottom: 15px;">
+	        <i class="bi bi-exclamation-triangle-fill"></i>
+	        <span th:text="${error}"></span>
+	    </div>
+	
+	    <form th:action="@{/sign_in}" method="post">
+	        <div class="form-group">
+	            <i class="bi bi-person"></i>
+	            <input type="text" name="username" class="form-control" placeholder="Email hoặc tên đăng nhập" required>
+	        </div>
+	        <div class="form-group">
+	            <i class="bi bi-lock"></i>
+	            <input type="password" name="password" class="form-control" placeholder="Mật khẩu" required>
+	        </div>
+	        <button type="submit" class="btn-signin">Đăng nhập</button>
+	    </form>
+	
+	    <div class="signin-footer">
+	        Chưa có tài khoản? <a th:href="@{/sign_up}">Đăng ký ngay</a>
+	    </div>
+	</div>
+</body>
+</html>
