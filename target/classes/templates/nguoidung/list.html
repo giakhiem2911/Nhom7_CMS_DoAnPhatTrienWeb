@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách người dùng</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body th:replace="~{layout :: layout}">
+<div th:fragment="content" class="p-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Danh sách Người dùng</h2>
+        <a href="/nguoidung/add" class="btn btn-primary shadow-sm">
+            <i class="bi bi-person-plus me-2"></i>Thêm người dùng
+        </a>
+    </div>
+
+    <form th:action="@{/nguoidung}" method="get" class="card mb-4 border-0 shadow-sm">
+        <div class="card-body row g-3 align-items-center">
+            <div class="col-md-6">
+                <div class="input-group">
+                    <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                    <input type="text" name="keyword" class="form-control" placeholder="Tìm kiếm..." th:value="${keyword}">
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="table-responsive shadow rounded">
+        <table class="table table-hover text-center mb-0" width="100%">
+            <thead class="table-dark">
+                <tr>
+                    <th>Email</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Mật khẩu</th>
+                    <th>Họ tên</th>
+                    <th>Vai trò</th>
+	                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="nguoidung : ${nguoiDungs}" class="list">
+                    <td th:text="${nguoidung.email}">email@example.com</td>
+                    <td th:text="${nguoidung.tenDangNhap}">email@example.com</td>
+                    <td th:text="${nguoidung.matKhau}">email@example.com</td>
+                    <td th:text="${nguoidung.hoTen}">Nguyễn Văn A</td>
+                    <td th:text="${nguoidung.maVaiTro}">ADMIN</td>
+                    <td>
+                        <a th:href="@{/nguoidung/edit/{id}(id=${nguoidung.maNguoiDung})}" class="btn btn-sm btn-warning">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a th:href="@{/nguoidung/delete/{id}(id=${nguoidung.maNguoiDung})}" 
+                           class="btn btn-sm btn-danger"
+                           onclick="return confirm('Bạn có chắc chắn muốn xóa người dùng này?')">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                <tr th:if="${#lists.isEmpty(users)}">
+                    <td colspan="5" class="text-muted py-3">Không có người dùng nào.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-end mt-4" th:if="${totalPages > 1}">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/nguoidung(page=${currentPage - 1})}">«</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/nguoidung(page=${i})}" th:text="${i + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage == totalPages - 1} ? 'disabled'">
+                    <a class="page-link" th:href="@{/nguoidung(page=${currentPage + 1})}">»</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+</body>
+</html>
