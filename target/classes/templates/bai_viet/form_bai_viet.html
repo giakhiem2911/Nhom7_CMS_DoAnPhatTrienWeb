@@ -96,7 +96,7 @@
                 <!-- Ảnh Đại Diện -->
                 <div class="mb-4">
                     <label for="anhDaiDien" class="form-label fw-medium">Ảnh Đại Diện</label>
-                    <input type="file" id="anhDaiDien" name="anhDaiDienFile" class="form-control" />
+                    <input type="file" name="anhDaiDien" accept="image/*" class="form-control" />
                     <div class="form-text" th:if="${baiViet.anhDaiDien != null}">
                         Ảnh hiện tại: <span th:text="${baiViet.anhDaiDien}"></span>
                     </div>

@@ -46,6 +46,7 @@
 	                <thead class="table-dark">
 	                <tr>
 	                    <th>Mã</th>
+	                    <th>Ảnh</th>
 	                    <th>Tiêu Đề</th>
 	                    <th>Tác Giả</th>
 	                    <th>Danh Mục</th>
@@ -56,6 +57,10 @@
 	                <tbody>
 	                <tr th:each="baiViet : ${danhSachBaiViet}" class="list">
 	                    <td th:text="${baiViet.maBaiViet}">BV001</td>
+	                    <td>
+					        <img th:src="@{${baiViet.anhDaiDien}}" alt="Ảnh đại diện" width="80" height="60"
+					             class="img-thumbnail object-fit-cover">
+					    </td>
 	                    <td th:text="${baiViet.tieuDe}">Tiêu đề bài viết</td>
 	                    <td th:text="${baiViet.nguoiDung != null ? baiViet.nguoiDung.hoTen : 'N/A'}">Tác giả</td>
 	                    <td th:text="${baiViet.danhMuc != null ? baiViet.danhMuc.ten : 'N/A'}">Danh mục</td>
