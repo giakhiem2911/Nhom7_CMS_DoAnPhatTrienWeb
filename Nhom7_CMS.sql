@@ -82,7 +82,7 @@ CREATE TABLE Menu (
     ThuTuHienThi INT,
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung)
 );
-
+SELECT * FROM Trang
 -- Bảng Trang
 CREATE TABLE Trang (
     MaTrang CHAR(256) PRIMARY KEY,
