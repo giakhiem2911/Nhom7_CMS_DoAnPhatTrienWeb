@@ -126,32 +126,6 @@ VALUES (
     GETDATE()
 );
 
-INSERT INTO SuKien (
-    MaSuKien, MaNguoiDung, TieuDe, MoTa, DuongDan, 
-    ThoiGianBatDau, ThoiGianKetThuc, DiaDiem
-)
-VALUES (
-    'SK001',
-    'ND001',
-    N'Hội thảo chăm sóc thú cưng',
-    N'Hội thảo chia sẻ kiến thức chăm sóc thú cưng với sự tham gia của bác sĩ thú y.',
-    N'hoi-thao-cham-soc-thu-cung',
-    '2025-06-01 09:00:00',
-    '2025-06-01 12:00:00',
-    N'Trung tâm triển lãm Quận 1, TP.HCM'
-),
-(
-    'SK002',
-    'ND001',
-    N'Ngày hội nhận nuôi thú cưng',
-    N'Sự kiện kết nối giữa những người yêu động vật và các tổ chức cứu trợ thú cưng.',
-    N'ngay-hoi-nhan-nuoi-thu-cung',
-    '2025-06-15 08:30:00',
-    '2025-06-15 16:00:00',
-    N'Nhà văn hóa Thanh Niên, TP.HCM'
-);
-
-
 INSERT INTO ThongBao (MaThongBao, MaNguoiDung, TieuDe, NoiDung, TrangThai) VALUES
 ('TB001', 'ND001', 'Chào mừng đến với hệ thống', 'Chúc mừng bạn đã đăng ký thành công tài khoản tại hệ thống quản lý bài viết thú cưng.', 'Chưa đọc'),
 ('TB002', 'ND002', 'Cập nhật mật khẩu', 'Vui lòng cập nhật mật khẩu mới để tăng cường bảo mật cho tài khoản của bạn.', 'Đã đọc'),

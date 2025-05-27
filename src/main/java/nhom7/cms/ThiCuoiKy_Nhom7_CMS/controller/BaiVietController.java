@@ -14,8 +14,16 @@ import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.SiteInforService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -66,18 +74,42 @@ public class BaiVietController {
         model.addAttribute("danhSachNguoiDung", nguoiDungRepository.findAll());
         return "bai_viet/form_bai_viet";
     }
-
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setDisallowedFields("anhDaiDien");
+    }
     // Lưu bài viết mới hoặc cập nhật
     @PostMapping("/luu")
     public String luuBaiViet(@ModelAttribute BaiViet baiViet,
                              @RequestParam("maNguoiDung") String maNguoiDung,
-                             @RequestParam("maDanhMuc") String maDanhMuc) {
+                             @RequestParam("maDanhMuc") String maDanhMuc,
+                             @RequestParam("anhDaiDien") MultipartFile file) {
 
         NguoiDung nguoiDung = nguoiDungRepository.findById(maNguoiDung).orElse(null);
         DanhMuc danhMuc = danhMucRepository.findById(maDanhMuc).orElse(null);
 
         baiViet.setNguoiDung(nguoiDung);
         baiViet.setDanhMuc(danhMuc);
+
+        // Xử lý ảnh đại diện
+        if (!file.isEmpty()) {
+            try {
+                String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+                String relativePath = "src/main/resources/static/images/";
+                File uploadDir = new File(relativePath);
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdirs();
+                }
+
+                Path filePath = Paths.get(relativePath + fileName);
+                Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+                // Lưu đường dẫn để hiển thị (đường dẫn tĩnh)
+                baiViet.setAnhDaiDien("/images/" + fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         if (baiViet.getMaBaiViet() == null || baiViet.getMaBaiViet().isEmpty()) {
             baiViet.setMaBaiViet(UUID.randomUUID().toString());
@@ -88,6 +120,7 @@ public class BaiVietController {
         baiVietRepository.save(baiViet);
         return "redirect:/baiviet";
     }
+
 
     // Hiển thị form sửa bài viết
     @GetMapping("/sua/{id}")
