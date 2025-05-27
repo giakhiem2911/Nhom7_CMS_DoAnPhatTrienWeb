@@ -1,3 +1,0 @@
-INDEX VERSION 1.134
-file:/C:/Web2_Eclipse/Du_An_Do_An_Mon_Hoc_Web2_chinhthuc/Nhom7_CMS_DoAnPhatTrienWeb/ThiCuoiKy_Nhom7_CMS/.metadata/.plugins/org.eclipse.jdt.core/1865797976.index
-meta_index
