@@ -10,10 +10,6 @@ CREATE TABLE VaiTro (
     MoTa TEXT
 );
 
-
-ALTER TABLE Trang ALTER COLUMN NoiDung NVARCHAR(MAX);
-ALTER TABLE BaiViet ALTER COLUMN NoiDung NVARCHAR(MAX);
-
 -- Bảng NguoiDung
 CREATE TABLE NguoiDung (
     MaNguoiDung CHAR(256) PRIMARY KEY,
@@ -82,7 +78,7 @@ CREATE TABLE Menu (
     ThuTuHienThi INT,
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung)
 );
-SELECT * FROM Trang
+
 -- Bảng Trang
 CREATE TABLE Trang (
     MaTrang CHAR(256) PRIMARY KEY,

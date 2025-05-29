@@ -63,7 +63,9 @@
                 <tr th:each="site, iterStat : ${siteInfors}">
                     <td th:text="${iterStat.count + currentPage * 10}"></td>
                     <td th:text="${site.maSiteInfor}"></td>
-                    <td th:text="${site.tenSite}"></td>
+                    <td  >
+                    	<a th:href="@{#}" th:text="${site.tenSite}" class="text-decoration-none"></a>
+                    </td>
                     <td class="text-center">
                         <img th:if="${site.logo != null and site.logo != ''}"
                              th:src="@{${site.logo}}" alt="Logo" style="height: 40px;">
