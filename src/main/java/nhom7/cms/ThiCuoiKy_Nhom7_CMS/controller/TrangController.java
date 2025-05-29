@@ -1,5 +1,6 @@
 package nhom7.cms.ThiCuoiKy_Nhom7_CMS.controller;
 
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -86,7 +87,10 @@ public class TrangController {
     
     @Autowired
     private BaiVietRepository baiVietRepository;
-
+    private String stripHtml(String html) {
+        if (html == null) return "";
+        return Jsoup.parse(html).text();
+    }
     @GetMapping("/trang-chu")
     public String trangChu(Model model) {
         // Lấy thông tin site
@@ -98,6 +102,9 @@ public class TrangController {
 
         // Lấy danh sách bài viết thuộc danh mục "Tin tức"
         List<BaiViet> danhSachTinTuc = baiVietRepository.findByDanhMucTen("Tin tức");
+        for (BaiViet baiViet : danhSachTinTuc) {
+            baiViet.setNoiDung(stripHtml(baiViet.getNoiDung()));
+        }
         model.addAttribute("danhSachTinTuc", danhSachTinTuc);
 
         return "trang/detail";  // Hoặc template trang chủ của bạn

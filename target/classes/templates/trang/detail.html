@@ -104,12 +104,23 @@
                 <article>
                     <section>
                         <h2>Tin tức mới nhất</h2>
-                        <ul class="list-unstyled">
-                            <li class="news-item" th:each="baiViet : ${danhSachTinTuc}">
-                                <a th:href="@{'/baiviet/' + ${baiViet.maBaiViet}}" th:text="${baiViet.tieuDe}">Tiêu đề bài viết</a>
-                                <small th:text="${#temporals.format(baiViet.ngayXuatBan, 'dd/MM/yyyy')}"></small>
-                            </li>
-                        </ul>
+						<ul class="list-unstyled">
+						    <li class="news-item mb-3" th:each="baiViet : ${danhSachTinTuc}">
+						        <div class="d-flex align-items-start">
+						            <!-- Hình ảnh đại diện -->
+						            <a th:href="@{'/baiviet/' + ${baiViet.maBaiViet}}" class="me-3">
+						                <img th:src="@{${baiViet.anhDaiDien}}" alt="Ảnh đại diện" style="height: 70px; width: 100px; object-fit: cover;">
+						            </a>
+						
+						            <!-- Nội dung bài viết -->
+						            <div>
+						                <a th:href="@{'/baiviet/' + ${baiViet.maBaiViet}}" th:text="${baiViet.tieuDe}"></a>
+						                <small class="text-muted" th:text="${#temporals.format(baiViet.ngayXuatBan, 'dd/MM/yyyy')}"></small>
+						                <p class="mb-0 mt-1" th:text="${#strings.abbreviate(baiViet.noiDung, 150)}"></p>
+						            </div>
+						        </div>
+						    </li>
+						</ul>
                     </section>
                 </article>
             </main>
@@ -150,6 +161,10 @@
         document.getElementById('sidebarToggle').addEventListener('click', function() {
             document.getElementById('sidebarMenu').classList.toggle('active');
         });
+        document.querySelectorAll('.noi-dung').forEach(el => {
+            el.textContent = el.innerText; // Gỡ HTML
+        });
     </script>
+    
 </body>
 </html>

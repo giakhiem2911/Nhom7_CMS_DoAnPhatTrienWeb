@@ -8,6 +8,7 @@ import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.DanhMucRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.NguoiDungRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.SiteInforRepository;
 
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -43,7 +44,7 @@ public class BaiVietController {
 
     @Autowired
     private NguoiDungRepository nguoiDungRepository;
-
+    
     @GetMapping
     public String danhSachBaiViet(Model model) {
         List<BaiViet> danhSach = baiVietRepository.findAll();
@@ -69,6 +70,7 @@ public class BaiVietController {
         model.addAttribute("baiViet", baiViet);
         baiViet.setNgayXuatBan(LocalDateTime.now());
         baiViet.setNgayCapNhat(LocalDateTime.now());
+        
         model.addAttribute("danhSachDanhMuc", danhMucRepository.findAll());
         model.addAttribute("danhSachNguoiDung", nguoiDungRepository.findAll());
         return "bai_viet/form_bai_viet";
