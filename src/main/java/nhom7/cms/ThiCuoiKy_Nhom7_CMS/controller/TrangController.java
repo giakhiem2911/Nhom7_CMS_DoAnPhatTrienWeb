@@ -107,7 +107,7 @@ public class TrangController {
         }
         model.addAttribute("danhSachTinTuc", danhSachTinTuc);
 
-        return "trang/detail";  // Hoặc template trang chủ của bạn
+        return "trang/detail";
     }
     
     @GetMapping("/{duongDan}")
