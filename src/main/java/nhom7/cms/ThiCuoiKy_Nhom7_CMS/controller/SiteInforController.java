@@ -1,14 +1,17 @@
 package nhom7.cms.ThiCuoiKy_Nhom7_CMS.controller;
 
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.SiteInfor;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.Trang;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.SiteInforService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -78,4 +81,7 @@ public class SiteInforController {
         siteInforService.deleteById(id);
         return "redirect:/siteinfor";
     }
+    
+    
+
 }

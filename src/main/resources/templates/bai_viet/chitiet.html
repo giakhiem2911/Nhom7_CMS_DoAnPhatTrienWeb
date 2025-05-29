@@ -426,6 +426,11 @@
                     <section class="article-content">
                         <div th:utext="${baiViet?.noiDung} ?: 'Nội dung bài viết không có'">Nội dung bài viết</div>
                     </section>
+                    <div th:utext="${baiViet.noiDung}" class="mb-5">
+                        <!-- Nội dung bài viết có thể bao gồm HTML -->
+                        Nội dung bài viết...
+                    </div>
+
                     <a class="btn btn-secondary" th:href="@{/trang/trang-chu}">← Quay về trang chủ</a>
                 </article>
             </main>
