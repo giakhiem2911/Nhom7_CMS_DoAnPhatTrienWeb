@@ -12,8 +12,13 @@
         <div class="card shadow-sm">
             <div class="card-body">
                 <form th:action="@{/siteinfor/save}" th:object="${siteInfor}" method="post" 
-                      class="needs-validation" novalidate enctype="multipart/form-data">
-                    
+                      class="needs-validation" enctype="multipart/form-data">
+                    <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+					    <ul>
+					        <li th:each="err : ${#fields.errors('*')}" th:text="${err}"></li>
+					    </ul>
+					</div>
+					                    
                     <div class="mb-4">
                         <label for="maSiteInfor" class="form-label fw-medium">Mã Site Information</label>
                         <div class="input-group">
@@ -36,17 +41,14 @@
                     </div>
 
                     <div class="mb-4">
-                        <label for="logo" class="form-label fw-medium">Logo URL</label>
-                        <div class="input-group">
-                            <span class="input-group-text"><i class="bi bi-image"></i></span>
-                            <input type="text" id="logo" th:field="*{logo}" class="form-control" placeholder="Nhập đường dẫn logo" />
-                        </div>
+                        <label for="logoFile" class="form-label fw-medium">Logo</label>
+	                    <input type="file" id="logo" name="logoFile" accept="image/*" class="form-control" />
                        <div class="mt-2">
-    <img th:if="${siteInfor.logo != null and !#strings.isEmpty(siteInfor.logo)}"
-         th:src="@{${siteInfor.logo}}" alt="Logo" style="height: 50px;">
-    <span th:if="${siteInfor.logo == null or #strings.isEmpty(siteInfor.logo)}"
-          class="text-muted fst-italic">Không có logo</span>
-</div>
+						    <img th:if="${siteInfor.logo != null and !#strings.isEmpty(siteInfor.logo)}"
+						         th:src="@{${siteInfor.logo}}" alt="Logo" style="height: 50px;">
+						    <span th:if="${siteInfor.logo == null or #strings.isEmpty(siteInfor.logo)}"
+						          class="text-muted fst-italic">Không có logo</span>
+						</div>
                     </div>
 
                     <div class="mb-4">

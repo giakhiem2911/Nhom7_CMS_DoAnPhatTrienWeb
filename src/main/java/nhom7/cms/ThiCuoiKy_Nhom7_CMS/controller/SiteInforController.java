@@ -11,9 +11,19 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/siteinfor")
@@ -54,7 +64,7 @@ public class SiteInforController {
         return "siteinfor/form_siteinfor";
     }
 
-    @GetMapping("/sua/{maSiteInfor}")
+    @GetMapping("/sua/{maSiteInfor}")	
     public String hienThiFormChinhSua(@PathVariable("maSiteInfor") String maSiteInfor, Model model) {
         SiteInfor siteInfor = siteInforService.getById(maSiteInfor).orElse(null);
         if (siteInfor == null) {
@@ -65,16 +75,41 @@ public class SiteInforController {
     }
 
     @PostMapping("/save")
-    public String luuSiteInfor(@Validated @ModelAttribute("siteInfor") SiteInfor siteInfor,
-                               BindingResult result,
-                               Model model) {
-        if (result.hasErrors()) {
-            return "siteinfor/form_siteinfor";
+    public String saveSiteInfor(@Validated @ModelAttribute("siteInfor") SiteInfor siteInfor,
+                               @RequestParam("logoFile") MultipartFile logoFile) {
+
+        if (!logoFile.isEmpty()) {
+            try {
+                // Tên file gốc
+                String fileName = logoFile.getOriginalFilename();
+
+                // Đường dẫn lưu file: thư mục "uploads" ngay trong thư mục project
+                String uploadDir = System.getProperty("user.dir") + "/uploads/";
+                File uploadFolder = new File(uploadDir);
+                if (!uploadFolder.exists()) {
+                    uploadFolder.mkdirs();
+                }
+
+                // Lưu file
+                Path filePath = Paths.get(uploadDir + fileName);
+                Files.write(filePath, logoFile.getBytes());
+
+                // Lưu đường dẫn file tương đối để hiển thị trên web
+                siteInfor.setLogo("/uploads/" + fileName);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
+        siteInfor.setNgayCapNhat(LocalDateTime.now());
+        // Lưu siteInfor vào DB
         siteInforService.save(siteInfor);
+
         return "redirect:/siteinfor";
     }
+
+
 
     @GetMapping("/delete/{id}")
     public String xoaSiteInfor(@PathVariable("id") String id) {
