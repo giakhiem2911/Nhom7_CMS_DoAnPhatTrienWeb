@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+	<div th:fragment="sidebar" class="col-md-2 sidebar">
+	    <h4 class="text-center">HỆ QUẢN TRỊ NỘI DUNG</h4>
+	    <a th:href="@{/}" 
+	       th:class="${'nav-link text-white ' + (requestURI == '/' ? 'active' : '')}">
+	       <i class="bi bi-house-door-fill"></i> Tổng quan
+	    </a>
+	    <a th:href="@{/menu}" 
+	       th:class="${'nav-link text-white ' + (requestURI.startsWith('/menu') ? 'active' : '')}">
+	       <i class="bi bi-folder-fill"></i> Quản lý Menu
+	    </a>
+	    <a th:href="@{/danhmuc}" 
+	       th:class="${'nav-link text-white ' + (requestURI.startsWith('/danhmuc') ? 'active' : '')}">
+	       <i class="bi bi-bookmarks-fill"></i> Quản lý Danh Mục
+	    </a>
+	    <a th:href="@{/trang}" 
+	       th:class="${'nav-link text-white ' + (requestURI.startsWith('/trang') ? 'active' : '')}">
+	       <i class="bi bi-file-earmark-text-fill"></i> Quản lý Trang
+	    </a>
+	    <a th:href="@{/baiviet}" 
+	       th:class="${'nav-link text-white ' + (requestURI.startsWith('/baiviet') ? 'active' : '')}">
+	       <i class="bi bi-file-text-fill"></i> Quản lý Bài viết
+	    </a>
+	    <a th:href="@{/nguoidung}" 
+	       th:class="${'nav-link text-white ' + (requestURI.startsWith('/nguoidung') ? 'active' : '')}">
+	       <i class="bi bi-people-fill"></i> Quản lý Người dùng
+	    </a>
+	    <a th:href="@{/thongbao}" 
+	       th:class="${'nav-link text-white ' + (requestURI.startsWith('/thongbao') ? 'active' : '')}">
+	       <i class="bi bi-bell-fill"></i> Quản lý Thông báo
+	    </a>
+	    <a th:href="@{/sukien}" 
+	       th:class="${'nav-link text-white ' + (requestURI.startsWith('/sukien') ? 'active' : '')}">
+	       <i class="bi bi-calendar-event-fill"></i> Quản lý Sự kiện
+	    </a>
+	    <a th:href="@{/siteinfor}" 
+	       th:class="${'nav-link text-white ' + (requestURI.startsWith('/siteinfor') ? 'active' : '')}">
+	       <i class="bi bi-gear"></i> Cài đặt thêm
+	    </a>        
+	</div>
+</body>
+</html>

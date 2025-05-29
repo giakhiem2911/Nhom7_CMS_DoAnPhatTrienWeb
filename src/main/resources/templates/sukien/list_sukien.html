@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body th:replace="~{layout :: layout}">
+    <div th:fragment="content" class="p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="m-0 fw-bold">Danh sách Sự Kiện</h2>
+            <a th:href="@{/sukien/them}" class="btn btn-primary px-4 shadow-sm">
+                <i class="bi bi-plus-lg me-2"></i>Thêm Sự Kiện
+            </a>
+        </div>
+
+        <form th:action="@{/sukien}" method="get" class="card mb-4 border-0 shadow-sm">
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0">
+                                <i class="bi bi-search"></i>
+                            </span>
+                            <input type="text" name="keyword" class="form-control border-start-0" th:value="${keyword}" placeholder="Tìm kiếm sự kiện..." />
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <select name="sortBy" class="form-select w-auto d-inline-block" onchange="this.form.submit()">
+                            <option value="maSuKien" th:selected="${sortBy == 'maSuKien'}">Sắp xếp theo Mã Sự Kiện</option>
+                            <option value="tieuDe" th:selected="${sortBy == 'tieuDe'}">Sắp xếp theo Tiêu Đề</option>
+                            <option value="thoiGianBatDau" th:selected="${sortBy == 'thoiGianBatDau'}">Sắp xếp theo Thời Gian Bắt Đầu</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </form>
+		<div class="table-responsive shadow rounded">
+				        <table class="table table-hover text-center mb-0" width="100%">
+		            <thead class="table-dark">
+		                <tr>
+		                    <th style="width:5%;">STT</th>
+		                    <th style="width:12%;">Mã Sự Kiện</th>
+		                    <th>Tiêu Đề</th>
+		                    <th style="width:15%;">Người Tạo</th>
+		                    <th style="width:15%;">Thời Gian Bắt Đầu</th>
+		                    <th style="width:15%;">Thời Gian Kết Thúc</th>
+		                    <th style="width:10%;">Thao Tác</th>
+		                </tr>
+		            </thead>
+		          <tbody>
+		    <tr th:each="suKien, iterStat : ${danhSachSuKien}" class="list">
+		        <td th:text="${iterStat.count}"></td>
+		        <td th:text="${suKien.maSuKien}"></td>
+		        <td th:text="${suKien.tieuDe}"></td>
+		        <td th:text="${suKien.nguoiDung != null ? suKien.nguoiDung.hoTen : 'Không có'}"></td>
+		
+		        <td th:text="${#temporals.format(suKien.thoiGianBatDau, 'dd/MM/yyyy HH:mm')}"></td>
+		        <td th:text="${#temporals.format(suKien.thoiGianKetThuc, 'dd/MM/yyyy HH:mm')}"></td>
+		<td class="text-center" style="white-space: nowrap;">
+			    <a th:href="@{/sukien/sua/{id}(id=${suKien.maSuKien})}"
+			       class="btn btn-sm btn-warning px-2 me-1 d-inline-block"
+			       title="Sửa">
+			        <i class="bi bi-pencil-square me-1"></i>Sửa
+			    </a>
+		    <a th:href="@{/sukien/xoa/{id}(id=${suKien.maSuKien})}"
+		       class="btn btn-sm btn-danger px-2 d-inline-block"
+		       title="Xóa"
+		       onclick="return confirm('Bạn có chắc chắn muốn xóa sự kiện này?');">
+		        <i class="bi bi-trash me-1"></i>Xóa
+		    </a>
+		</td>
+		    </tr>
+		    <tr th:if="${#lists.isEmpty(danhSachSuKien)}">
+		        <td colspan="7" class="text-center fst-italic text-muted">Không có sự kiện nào.</td>
+		    </tr>
+		</tbody>
+		        </table>
+		</div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

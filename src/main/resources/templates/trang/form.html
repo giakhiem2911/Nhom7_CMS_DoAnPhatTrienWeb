@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Form Trang</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+	<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+</head>
+<body >
+<div th:replace="~{layout :: layout}">
+	<div th:fragment="content" class="p-4">
+        <h2 class="mb-4 fw-bold" th:text="${trang.maTrang != null} ? 'Sửa Trang' : 'Thêm Trang'"></h2>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form th:action="@{/trang/save}" th:object="${trang}" method="post" class="needs-validation" novalidate>
+                    <!-- LoaiDoiTuong -->
+                    <div class="mb-4">
+                        <label for="maTrang" class="form-label fw-medium">Mã Trang</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                            <input type="text" id="maTrang" th:field="*{maTrang}" class="form-control"
+                                   th:readonly="${trang.maTrang != null}" required
+                                   placeholder="Nhập mã trang (ví dụ: PAGE001)" />
+                            <div class="invalid-feedback">Vui lòng nhập mã trang.</div>
+                        </div>
+                    </div>
+
+                    <!-- Menu -->
+                    <div class="mb-4">
+                        <label for="menu" class="form-label fw-medium">Menu</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-list"></i></span>
+                            <select id="menu" th:field="*{menu.maMenu}" class="form-select" required>
+                                <option value="" disabled selected>-- Chọn menu --</option>
+                                <option th:each="m : ${danhSachMenu}"
+                                        th:value="${m.maMenu}"
+                                        th:text="${m.ten}"></option>
+                            </select>
+                            <div class="invalid-feedback">Vui lòng chọn menu.</div>
+                        </div>
+                    </div>
+                  <!-- NguoiDung -->
+                    <div class="mb-4">
+                        <label for="nguoiDung" class="form-label fw-medium">Người tạo</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-list"></i></span>
+                            <select id="nguoiDung" th:field="*{nguoiDung.maNguoiDung}" class="form-select" required>
+                                <option value="" disabled selected>-- Chọn người tạo --</option>
+                                <option th:each="nguoiDung : ${danhSachNguoiDung}"
+                                        th:value="${nguoiDung.maNguoiDung}"
+                                        th:text="${nguoiDung.hoTen}"></option>
+                            </select>
+                            <div class="invalid-feedback">Vui lòng chọn người tạo.</div>
+                        </div>
+                    </div>
+                    <!-- TieuDe -->
+                    <div class="mb-4">
+                        <label for="tieuDe" class="form-label fw-medium">Tiêu Đề</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-type"></i></span>
+                            <input type="text" id="tieuDe" th:field="*{tieuDe}" class="form-control" required
+                                   placeholder="Nhập tiêu đề (ví dụ: Giới Thiệu)" />
+                            <div class="invalid-feedback">Vui lòng nhập tiêu đề.</div>
+                        </div>
+                    </div>
+
+                    <!-- DuongDan -->
+                    <div class="mb-4">
+                        <label for="duongDan" class="form-label fw-medium">Đường Dẫn</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-link"></i></span>
+                            <input type="text" id="duongDan" th:field="*{duongDan}" class="form-control"
+                                   placeholder="Nhập đường dẫn (ví dụ: /gioi-thieu)" />
+                            <div class="invalid-feedback">Vui lòng nhập đường dẫn hợp lệ.</div>
+                        </div>
+                    </div>
+
+                    <!-- NoiDung -->
+                    <div class="mb-4">
+                        <label for="noiDung" class="form-label fw-medium">Nội Dung</label>
+                        <textarea required id="noiDung" th:field="*{noiDung}" class="form-control" rows="5" placeholder="Nhập nội dung"></textarea>
+                        <div class="invalid-feedback">Vui lòng nhập nội dung.</div>
+                    </div>
+
+                    <!-- TrangThai -->
+                    <div class="mb-4">
+                        <label for="trangThai" class="form-label fw-medium">Trạng Thái</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-toggle-on"></i></span>
+                            <select id="trangThai" th:field="*{trangThai}" class="form-select">
+                                <option value="PUBLISH">Công khai</option>
+                                <option value="DRAFT">Bản nháp</option>
+                            </select>
+                            <div class="invalid-feedback">Vui lòng chọn trạng thái.</div>
+                        </div>
+                    </div>
+
+                    <!-- Buttons -->
+                    <div class="d-flex justify-content-end gap-4">
+                        <a href="/trang" class="btn btn-secondary px-4">Hủy</a>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="bi bi-save me-2"></i>Lưu
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        (() => {
+            'use strict';
+            const forms = document.querySelectorAll('.needs-validation');
+            Array.from(forms).forEach(form => {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+        // Initialize CKEditor
+        ClassicEditor
+            .create(document.querySelector('#noiDung'), {
+                toolbar: ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', '|', 'undo', 'redo'],
+                placeholder: 'Nhập nội dung trang...'
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+</body>
+</html>
