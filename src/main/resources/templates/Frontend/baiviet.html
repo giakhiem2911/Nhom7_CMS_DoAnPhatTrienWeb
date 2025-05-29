@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style_fronend.css">
+  <title>Tuyển sinh Đại học - HCMUT</title>
+</head>
+<body>
+
+  <header>
+    <h1>Chỗ này gắn logo nha mấy fen</h1>
+    <p>Khúc này làm cái panner</p>
+  </header>
+  
+	<nav class="bg-primary" >
+		<a href="#">Bài viet</a>
+	    <a th:each="menu : ${allMenus}"
+		   th:href="@{'/menu.html?id=' + ${menu.maMenu}}"
+		   th:text="${menu.ten}"
+		   class="nav-link text-white fw-bold px-3 py-2">
+		</a>
+	</nav>
+	
+
+  <div class="container">
+    <aside class="sidebar">
+      <h3>Danh mục</h3>
+      <ul>
+        <li><a href="#/Frontend/trangchu.html">Giới thiệu chung</a></li>
+        <li><a href="#/Frontend/baiviet.html">Ngành nghề</a></li>
+        <li><a href="#">Hướng nghiệp</a></li>
+        <li><a href="#">Câu hỏi thường gặp</a></li>
+      </ul>
+    </aside>
+
+    <section class="main-content">
+      <h2>Thông báo tuyển sinh 2025</h2>
+      <p>Trường Đại học Bách khoa - ĐHQG TP.HCM thông báo kế hoạch tuyển sinh hệ Đại học chính quy năm 2025 với nhiều phương thức xét tuyển đa dạng.</p>
+
+      <h3>Các phương thức xét tuyển:</h3>
+      <ul>
+        <li>Xét tuyển theo kết quả kỳ thi tốt nghiệp THPT</li>
+        <li>Xét tuyển theo kỳ thi đánh giá năng lực</li>
+        <li>Xét tuyển theo phương thức ưu tiên xét tuyển</li>
+      </ul>
+
+      <p>Chi tiết về các phương thức, mốc thời gian, và cách đăng ký sẽ được công bố tại cổng thông tin tuyển sinh của trường.</p>
+    </section>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Trường Đại học Bách khoa - ĐHQG-HCM | Địa chỉ: 268 Lý Thường Kiệt, Q.10, TP.HCM</p>
+  </footer>
+
+</body>
+</html>
