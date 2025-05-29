@@ -114,13 +114,20 @@
                 <!-- Ngày Xuất Bản -->
                 <div class="mb-4">
                     <label for="ngayXuatBan" class="form-label fw-medium">Ngày Xuất Bản</label>
-                    <input type="datetime-local" id="ngayXuatBan" th:field="*{ngayXuatBan}" class="form-control" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar"></i></span>
+                        <input type="datetime-local" id="ngayXuatBan" th:field="*{ngayXuatBan}" class="form-control" required />
+                        <div class="invalid-feedback">Vui lòng chọn ngày xuất bản.</div>
+                    </div>
                 </div>
 
-                <!-- Ngày Cập Nhật -->
+                <!-- Ngày Cập Nhật (Readonly) -->
                 <div class="mb-4">
                     <label for="ngayCapNhat" class="form-label fw-medium">Ngày Cập Nhật</label>
-                    <input type="datetime-local" id="ngayCapNhat" th:field="*{ngayCapNhat}" class="form-control" />
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="bi bi-calendar-check"></i></span>
+                        <input type="datetime-local" id="ngayCapNhat" th:field="*{ngayCapNhat}" class="form-control" readonly />
+                    </div>
                 </div>
 
                 <!-- Nút Lưu / Hủy -->
@@ -139,6 +146,34 @@
 
 <!-- Script Bootstrap & Validation -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    function getCurrentDateTimeLocal() {
+      const now = new Date();
+
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');  // tháng từ 0-11 nên +1
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+
+      return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
+
+    // Gán ngày giờ hiện tại cho ngày xuất bản nếu rỗng
+    const ngayXuatBanInput = document.getElementById('ngayXuatBan');
+    if (ngayXuatBanInput && !ngayXuatBanInput.value) {
+      ngayXuatBanInput.value = getCurrentDateTimeLocal();
+    }
+
+    // Gán ngày giờ hiện tại cho ngày cập nhật nếu rỗng và nếu không readonly (có thể bỏ điều kiện readonly nếu muốn)
+    const ngayCapNhatInput = document.getElementById('ngayCapNhat');
+    if (ngayCapNhatInput && !ngayCapNhatInput.value) {
+      ngayCapNhatInput.value = getCurrentDateTimeLocal();
+    }
+  });
+</script>
+
 <script>
     (() => {
         'use strict';

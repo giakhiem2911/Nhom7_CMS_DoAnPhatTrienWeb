@@ -65,7 +65,10 @@ public class BaiVietController {
 
     @GetMapping("/add")
     public String formThemBaiViet(Model model) {
-        model.addAttribute("baiViet", new BaiViet());
+    	BaiViet baiViet = new BaiViet();
+        model.addAttribute("baiViet", baiViet);
+        baiViet.setNgayXuatBan(LocalDateTime.now());
+        baiViet.setNgayCapNhat(LocalDateTime.now());
         model.addAttribute("danhSachDanhMuc", danhMucRepository.findAll());
         model.addAttribute("danhSachNguoiDung", nguoiDungRepository.findAll());
         return "bai_viet/form_bai_viet";
@@ -108,12 +111,15 @@ public class BaiVietController {
             }
         }
 
-        if (baiViet.getMaBaiViet() == null || baiViet.getMaBaiViet().isEmpty()) {
-            baiViet.setMaBaiViet(UUID.randomUUID().toString());
-            baiViet.setNgayXuatBan(LocalDateTime.now());
+        LocalDateTime now = LocalDateTime.now();
+        if (baiViet.getMaBaiViet() == null || baiVietRepository.findById(baiViet.getMaBaiViet()).isEmpty()) {
+            // Bài viết mới
+            baiViet.setNgayXuatBan(now);
         }
 
-        baiViet.setNgayCapNhat(LocalDateTime.now());
+        // Cập nhật thời gian cập nhật
+        baiViet.setNgayCapNhat(now);
+        
         baiVietRepository.save(baiViet);
         return "redirect:/baiviet";
     }
@@ -124,7 +130,6 @@ public class BaiVietController {
         if (baiViet == null) {
             return "redirect:/baiviet";
         }
-
         model.addAttribute("baiViet", baiViet);
         model.addAttribute("danhSachDanhMuc", danhMucRepository.findAll());
         model.addAttribute("danhSachNguoiDung", nguoiDungRepository.findAll());
