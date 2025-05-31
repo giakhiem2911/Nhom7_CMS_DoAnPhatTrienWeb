@@ -34,6 +34,7 @@ public class Trang {
 
     @Column(name = "NgayTao")
     private LocalDateTime ngayTao;
+    
     // Getters and setters
     public String getMaTrang() { return maTrang; }
     public void setMaTrang(String maTrang) { this.maTrang = maTrang; }

@@ -10,6 +10,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.BaiViet;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.NguoiDung;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.SiteInfor;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.Trang;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.TrangRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.TrangService;
@@ -91,25 +92,29 @@ public class TrangController {
         if (html == null) return "";
         return Jsoup.parse(html).text();
     }
-    @GetMapping("/trang-chu")
-    public String trangChu(Model model) {
-        // Lấy thông tin site
-        model.addAttribute("siteInfor", siteInforRepository.findFirstByOrderByMaSiteInforAsc());
-
-        // Lấy trang chủ (nếu bạn có dữ liệu trang chủ trong bảng Trang)
-        Trang trangChu = trangService.findByDuongDan("trang-chu");
-        model.addAttribute("trang", trangChu);
-
-        // Lấy danh sách bài viết thuộc danh mục "Tin tức"
-        List<BaiViet> danhSachTinTuc = baiVietRepository.findByDanhMucTen("Tin tức");
-        for (BaiViet baiViet : danhSachTinTuc) {
-            baiViet.setNoiDung(stripHtml(baiViet.getNoiDung()));
-        }
-        model.addAttribute("danhSachTinTuc", danhSachTinTuc);
-
-        return "trang/detail";
+//    @GetMapping("/trang-chu")
+//    public String trangChu(Model model) {
+//        // Lấy thông tin site
+//        model.addAttribute("siteInfor", siteInforRepository.findFirstByOrderByMaSiteInforAsc());
+//
+//        // Lấy trang chủ (nếu bạn có dữ liệu trang chủ trong bảng Trang)
+//        Trang trangChu = trangService.findByDuongDan("trang-chu");
+//        model.addAttribute("trang", trangChu);
+//
+//        // Lấy danh sách bài viết thuộc danh mục "Tin tức"
+//        List<BaiViet> danhSachTinTuc = baiVietRepository.findByDanhMucTen("Tin tức");
+//        for (BaiViet baiViet : danhSachTinTuc) {
+//            baiViet.setNoiDung(stripHtml(baiViet.getNoiDung()));
+//        }
+//        model.addAttribute("danhSachTinTuc", danhSachTinTuc);
+//
+//        return "trang/detail";
+//    }
+    // Thêm danh sách SiteInfor vào model cho mọi request trong controller này
+    @ModelAttribute("danhSachSiteInfor")
+    public List<SiteInfor> danhSachSiteInfor() {
+        return siteInforRepository.findAll();
     }
-    
     @GetMapping("/{duongDan}")
     public String hienThiTrang(@PathVariable("duongDan") String duongDan, Model model) {
         Trang trang = trangService.findByDuongDan(duongDan);
@@ -121,5 +126,37 @@ public class TrangController {
         model.addAttribute("trang", trang);
         return "trang/detail";
     }
+    
+    @GetMapping("/{maSiteInfor}/{duongDan}")
+    public String hienThiTrangTheoSite(
+            @PathVariable String maSiteInfor,
+            @PathVariable String duongDan,
+            Model model) {
 
+        SiteInfor siteInfor = siteInforRepository.findById(maSiteInfor)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
+
+        // Lấy trang chủ (nếu bạn có dữ liệu trang chủ trong bảng Trang)
+        Trang trangChu = trangService.findByDuongDan("trang-chu");
+        model.addAttribute("trang", trangChu);
+
+        // Lấy danh sách bài viết thuộc danh mục "Tin tức"
+        List<BaiViet> danhSachTinTuc = baiVietRepository.findByDanhMucTen("Tin tức");
+        for (BaiViet baiViet : danhSachTinTuc) {
+            baiViet.setNoiDung(stripHtml(baiViet.getNoiDung()));
+        }
+        model.addAttribute("danhSachTinTuc", danhSachTinTuc);
+        
+        List<Trang> danhSachTrang = trangService.findAll();
+        model.addAttribute("danhSachTrang", danhSachTrang);
+        
+        Trang trang = trangService.findByDuongDan(duongDan);
+        if (trang == null || !"PUBLISH".equalsIgnoreCase(trang.getTrangThai())) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy trang");
+        }
+
+        model.addAttribute("siteInfor", siteInfor);
+        model.addAttribute("trang", trang);
+        return "trang/detail";
+    }
 }

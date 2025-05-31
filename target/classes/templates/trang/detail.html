@@ -40,15 +40,17 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Chuyên ngành
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink2">
-                            <li><a class="dropdown-item" th:href="@{/trang/dao-tao/ctdt-nganh-khoa-hoc-may-tinh}">CTĐT Ngành Khoa học máy tính</a></li>
-                            <li><a class="dropdown-item" th:href="@{/trang/dao-tao/ctdt-nganh-he-thong-thong-tin-quan-ly}">CTĐT Ngành Hệ thống thông tin quản lý</a></li>
-                            <li><a class="dropdown-item" th:href="@{/trang/dao-tao/ctdt-nganh-cong-nghe-thong-tin}">CTĐT Ngành Công nghệ thông tin</a></li>
-                        </ul>
+						<div>
+						    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownChuyenNganh" data-bs-toggle="dropdown" aria-expanded="false">
+						        Chuyên ngành
+						    </button>
+						    <ul class="dropdown-menu" aria-labelledby="dropdownChuyenNganh">
+						        <li th:each="siteInfor : ${danhSachSiteInfor}">
+						            <a class="dropdown-item" th:text="${siteInfor.tenSite}" 
+						               th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/trang-chu'"></a>
+						        </li>
+						    </ul>
+						</div>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/trang/ke-hoach-hoc-tap}">Kế hoạch học tập</a>
@@ -76,28 +78,12 @@
                 <div class="position-sticky">
                     <h5 class="px-3 mt-3">Menu</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item1" th:classappend="${trang.tieuDe == 'Trang Chủ'} ? 'active'">
-                            <a class="nav-link1" th:href="@{/trang/trang-chu}">Trang chủ</a>
-                        </li>
-                        <li class="nav-item1" th:classappend="${trang.tieuDe == 'Giới thiệu'} ? 'active'">
-                            <a class="nav-link1" th:href="@{/trang/gioi-thieu}">Giới thiệu</a>
-                        </li>
-                        <li class="nav-item1" th:classappend="${trang.tieuDe == 'Bộ môn'} ? 'active'">
-                            <a class="nav-link1" th:href="@{/trang/bo-mon}">Bộ môn</a>
-                        </li>
-                        <li class="nav-item1" th:classappend="${trang.tieuDe == 'Đào tạo'} ? 'active'">
-                            <a class="nav-link1" th:href="@{/trang/dao-tao}">Đào tạo</a>
-                        </li>
-                        <li class="nav-item1" th:classappend="${trang.tieuDe == 'Nghiên cứu khoa học'} ? 'active'">
-                            <a class="nav-link1" th:href="@{/trang/nghien-cuu-khoa-hoc}">Nghiên cứu khoa học</a>
-                        </li>
-                        <li class="nav-item1" th:classappend="${trang.tieuDe == 'Liên hệ'} ? 'active'">
-                            <a class="nav-link1" th:href="@{/trang/lien-he}">Liên hệ</a>
-                        </li>
-                        <li class="nav-item1" th:each="menu : ${danhSachMenu}" th:classappend="${trang.tieuDe == menu.ten} ? 'active'">
-                            <a class="nav-link1" th:href="@{'/trang/' + ${menu.duongDan}}" th:text="${menu.ten}"></a>
-                        </li>
-                    </ul>
+					    <li class="nav-item1" th:each="tr : ${danhSachTrang}"
+					        th:classappend="${trang.tieuDe == tr.tieuDe} ? 'active'">
+					        <a class="nav-link1" th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/' + ${tr.duongDan}}" 
+					           th:text="${tr.tieuDe}">Tên trang</a>
+					    </li>
+					</ul>
                 </div>
             </nav>
 
