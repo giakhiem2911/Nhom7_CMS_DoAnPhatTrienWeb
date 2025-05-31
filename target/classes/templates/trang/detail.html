@@ -16,7 +16,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid">
-			<a class="navbar-brand" href="#" >
+			<a class="navbar-brand" th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/trang-chu'">
 			    <img th:src="@{${siteInfor.logo}}" alt="Logo" style="height: 50px;">
 			</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -26,7 +26,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/trang/trang-chu}" aria-current="page">Trang Chủ</a>
+                        <a class="nav-link active" th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/trang-chu'" aria-current="page">Trang Chủ</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button"
@@ -76,7 +76,7 @@
             <!-- Sidebar -->
             <nav class="col-md-3 col-lg-2 sidebar" id="sidebarMenu">
                 <div class="position-sticky">
-                    <h5 class="px-3 mt-3">Menu</h5>
+                    <h5 class="px-3 mt-3">Sinh Viên</h5>
                     <ul class="nav flex-column">
 					    <li class="nav-item1" th:each="tr : ${danhSachTrang}"
 					        th:classappend="${trang.tieuDe == tr.tieuDe} ? 'active'">
@@ -93,28 +93,34 @@
                     <h1 th:text="${trang.tieuDe}">Tiêu đề bài viết</h1>
                 </header>
 
-                <article>
-                    <section>
-                        <h2>Tin tức mới nhất</h2>
-						<ul class="list-unstyled">
-						    <li class="news-item mb-3" th:each="baiViet : ${danhSachTinTuc}">
-						        <div class="d-flex align-items-start">
-						            <!-- Hình ảnh đại diện -->
-						            <a th:href="@{'/baiviet/' + ${baiViet.maBaiViet}}" class="me-3">
-						                <img th:src="@{${baiViet.anhDaiDien}}" alt="Ảnh đại diện" style="height: 70px; width: 100px; object-fit: cover;">
-						            </a>
-						
-						            <!-- Nội dung bài viết -->
-						            <div>
-						                <a th:href="@{'/baiviet/' + ${baiViet.maBaiViet}}" th:text="${baiViet.tieuDe}"></a>
-						                <small class="text-muted" th:text="${#temporals.format(baiViet.ngayXuatBan, 'dd/MM/yyyy')}"></small>
-						                <p class="mb-0 mt-1" th:text="${#strings.abbreviate(baiViet.noiDung, 150)}"></p>
-						            </div>
-						        </div>
-						    </li>
-						</ul>
-                    </section>
-                </article>
+				<article>
+				    <section th:if="${trang.duongDan == 'trang-chu'}">
+				        <h2>Tin tức mới nhất</h2>
+				        <ul class="list-unstyled">
+				            <li class="news-item mb-3" th:each="baiViet : ${danhSachTinTuc}">
+				                <div class="d-flex align-items-start">
+				                    <!-- Hình ảnh đại diện -->
+				                    <a th:href="@{'/baiviet/' + ${maSiteInfor} + '/' + ${baiViet.maBaiViet}}" class="me-3">
+				                        <img th:src="@{${baiViet.anhDaiDien}}" alt="Ảnh đại diện" style="height: 70px; width: 100px; object-fit: cover;">
+				                    </a>
+				
+				                    <!-- Nội dung bài viết -->
+				                    <div>
+				                        <a th:href="@{'/baiviet/' + ${maSiteInfor} + '/' + ${baiViet.maBaiViet}}" th:text="${baiViet.tieuDe}"></a>
+				                        <small class="text-muted" th:text="${#temporals.format(baiViet.ngayXuatBan, 'dd/MM/yyyy')}"></small>
+				                        <p class="mb-0 mt-1" th:text="${#strings.abbreviate(baiViet.noiDung, 150)}"></p>
+				                    </div>
+				                </div>
+				            </li>
+				        </ul>
+				    </section>
+				
+				    <!-- Hiển thị nội dung trang nếu không phải là trang chủ -->
+				    <section th:if="${trang.duongDan != 'trang-chu'}">
+				        <div th:utext="${trang.noiDung}"></div>
+				    </section>
+				</article>
+
             </main>
         </div>
     </div>

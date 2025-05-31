@@ -10,332 +10,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Font Awesome for social icons and sidebar -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
-    <style>
-        :root {
-            --primary: #2a4cff;
-            --secondary: #6c757d;
-            --background: #f5f7fa;
-            --dark: #1e2a44;
-            --light: #ffffff;
-            --accent: #00ddeb;
-        }
+	<link rel="stylesheet" th:href="@{/css/style_detail.css}">
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f0 100%);
-            padding-top: 80px;
-            color: var(--dark);
-            box-sizing: border-box;
-        }
-
-        /* Navbar */
-        .navbar {
-            background: linear-gradient(to right, var(--dark), #2a3a66);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            padding: 1rem 0;
-        }
-        .navbar-brand {
-            font-weight: 600;
-            font-size: 1.8rem;
-            color: var(--light) !important;
-            letter-spacing: 0.5px;
-        }
-        .nav-link {
-            color: #ffffff !important;
-            font-weight: 500;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-        .nav-link:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: var(--accent) !important;
-        }
-        .dropdown-menu {
-            background-color: var(--light);
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            margin-top: 10px;
-        }
-        .dropdown-item {
-            padding: 12px 20px;
-            font-weight: 400;
-            transition: all 0.3s ease;
-        }
-        .dropdown-item:hover {
-            background-color: var(--primary);
-            color: var(--light);
-        }
-
-        /* Sidebar */
-        .sidebar {
-            background: linear-gradient(180deg, var(--light) 0%, #f8fafc 100%);
-            border-right: 1px solid rgba(0, 0, 0, 0.05);
-            border-radius: 0 12px 12px 0;
-            margin: 0;
-            padding: 25px 15px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
-            min-height: calc(100vh - 80px);
-            position: sticky;
-            top: 80px;
-            transition: all 0.3s ease;
-            overflow: hidden;
-            z-index: 1000;
-        }
-        .sidebar h5 {
-            font-weight: 700;
-            color: var(--dark);
-            border-bottom: 3px solid var(--primary);
-            padding-bottom: 12px;
-            margin-bottom: 25px;
-            font-size: 1.6rem;
-            letter-spacing: 0.5px;
-            position: relative;
-            text-transform: uppercase;
-        }
-        .sidebar h5::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: var(--accent);
-            transition: width 0.3s ease;
-        }
-        .sidebar:hover h5::after {
-            width: 120px;
-        }
-        .sidebar .nav-link1 {
-            color: var(--dark);
-            padding: 12px 15px;
-            border-radius: 8px;
-            font-weight: 500;
-            font-size: 1.05rem;
-            transition: all 0.3s ease;
-            position: relative;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            overflow: hidden;
-        }
-        .sidebar .nav-link1::before {
-            content: '\f105';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            color: var(--secondary);
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-        .sidebar .nav-link1::after {
-            content: '';
-            position: absolute;
-            left: -100%;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(42, 76, 255, 0.1), transparent);
-            transition: left 0.3s ease;
-        }
-        .sidebar .nav-link1:hover {
-            background-color: var(--primary);
-            color: var(--light);
-            transform: translateX(6px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-        .sidebar .nav-link1:hover::before {
-            color: var(--light);
-            opacity: 1;
-            transform: scale(1.1);
-        }
-        .sidebar .nav-link1:hover::after {
-            left: 100%;
-        }
-        .sidebar .nav-link1.active {
-            background-color: var(--primary);
-            color: var(--light);
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-            transform: translateX(6px);
-        }
-        .sidebar .nav-link1.active::before {
-            color: var(--light);
-            opacity: 1;
-            transform: scale(1.1);
-        }
-        /* Sidebar Icons for Menu Items */
-        .sidebar .nav-link1[href*='trang-chu']::before { content: '\f015'; } /* Home */
-        .sidebar .nav-link1[href*='gioi-thieu']::before { content: '\f05a'; } /* Info */
-        .sidebar .nav-link1[href*='bo-mon']::before { content: '\f0c0'; } /* Group */
-        .sidebar .nav-link1[href*='dao-tao']::before { content: '\f19d'; } /* Education */
-        .sidebar .nav-link1[href*='nghien-cuu-khoa-hoc']::before { content: '\f0c3'; } /* Research */
-        .sidebar .nav-link1[href*='lien-he']::before { content: '\f0e0'; } /* Contact */
-        /* Sidebar Scrollbar */
-        .sidebar .nav {
-            max-height: calc(100vh - 200px);
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: var(--primary) var(--light);
-        }
-        .sidebar .nav::-webkit-scrollbar {
-            width: 6px;
-        }
-        .sidebar .nav::-webkit-scrollbar-track {
-            background: var(--light);
-            border-radius: 10px;
-        }
-        .sidebar .nav::-webkit-scrollbar-thumb {
-            background: var(--primary);
-            border-radius: 10px;
-        }
-        .sidebar .nav::-webkit-scrollbar-thumb:hover {
-            background: var(--accent);
-        }
-        /* Sidebar Toggle Button */
-        .sidebar-toggle {
-            display: none;
-            font-size: 1.5rem;
-            color: var(--dark);
-            background: none;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        /* Main Content */
-        main {
-            background: var(--light);
-            border-radius: 12px 0 0 12px;
-            padding: 40px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
-            min-height: calc(100vh - 80px);
-        }
-        main h1 {
-            font-weight: 700;
-            color: var(--dark);
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-        }
-        main .article-meta {
-            color: var(--secondary);
-            font-size: 0.9rem;
-            margin-bottom: 20px;
-        }
-        main .article-meta span {
-            margin-right: 15px;
-        }
-        main .article-content {
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--dark);
-            margin-bottom: 30px;
-        }
-        main .article-content p {
-            margin-bottom: 20px;
-        }
-        main .article-content img {
-            max-width: 100%;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-        main .article-content a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 500;
-        }
-        main .article-content a:hover {
-            color: var(--accent);
-        }
-        main .btn-secondary {
-            background-color: var(--secondary);
-            border: none;
-            padding: 10px 20px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        main .btn-secondary:hover {
-            background-color: var(--primary);
-            color: var(--light);
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(to right, var(--dark), #2a3a66);
-            color: var(--light);
-            padding: 50px 0;
-            font-size: 0.95rem;
-        }
-        footer h5 {
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-        footer a {
-            color: #adb5bd;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        footer a:hover {
-            color: var(--accent);
-        }
-        .social-icons a {
-            font-size: 1.5rem;
-            margin: 0 15px;
-            color: var(--light);
-            transition: all 0.3s ease;
-        }
-        .social-icons a:hover {
-            color: var(--accent);
-            transform: scale(1.2);
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .sidebar {
-                min-height: auto;
-                border-radius: 10px;
-                position: fixed;
-                top: 80px;
-                left: -100%;
-                width: 250px;
-                height: calc(100vh - 80px);
-                z-index: 1000;
-                transition: left 0.3s ease;
-            }
-            .sidebar.active {
-                left: 0;
-            }
-            .sidebar-toggle {
-                display: block;
-                position: fixed;
-                top: 90px;
-                left: 10px;
-                z-index: 1100;
-            }
-            main {
-                border-radius: 10px;
-                padding: 25px;
-            }
-            .navbar-brand {
-                font-size: 1.5rem;
-            }
-            .sidebar .nav-link1 {
-                font-size: 1rem;
-                padding: 10px 15px;
-            }
-            .sidebar .nav-link1:hover,
-            .sidebar .nav-link1.active {
-                transform: translateX(4px);
-            }
-        }
-    </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#" th:text="${siteInfor?.tenSite} ?: 'Tên Website'">Tên Website</a>
+            <a class="navbar-brand" th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/trang-chu'">
+			    <img th:src="@{${siteInfor.logo}}" alt="Logo" style="height: 50px;">
+			</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -343,7 +27,7 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/trang/trang-chu}" aria-current="page">Trang Chủ</a>
+                        <a class="nav-link active" th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/trang-chu'" aria-current="page">Trang Chủ</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button"
@@ -357,18 +41,26 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink2" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Kế hoạch đào tạo
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink2">
-                            <li><a class="dropdown-item" th:href="@{/trang/dao-tao/ctdt-nganh-khoa-hoc-may-tinh}">CTĐT Ngành Khoa học máy tính</a></li>
-                            <li><a class="dropdown-item" th:href="@{/trang/dao-tao/ctdt-nganh-he-thong-thong-tin-quan-ly}">CTĐT Ngành Hệ thống thông tin quản lý</a></li>
-                            <li><a class="dropdown-item" th:href="@{/trang/dao-tao/ctdt-nganh-cong-nghe-thong-tin}">CTĐT Ngành Công nghệ thông tin</a></li>
-                        </ul>
+						<div>
+						    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownChuyenNganh" data-bs-toggle="dropdown" aria-expanded="false">
+						        Chuyên ngành
+						    </button>
+						    <ul class="dropdown-menu" aria-labelledby="dropdownChuyenNganh">
+						        <li th:each="siteInfor : ${danhSachSiteInfor}">
+						            <a class="dropdown-item" th:text="${siteInfor.tenSite}" 
+						               th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/trang-chu'"></a>
+						        </li>
+						    </ul>
+						</div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/trang/lien-he}">Liên hệ</a>
+                        <a class="nav-link" th:href="@{/trang/ke-hoach-hoc-tap}">Kế hoạch học tập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/trang/su-kien-hoi-thao}">Sự kiện & Hội thảo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/trang/thong-bao}">Thông báo</a>
                     </li>
                 </ul>
             </div>
@@ -385,29 +77,12 @@
             <!-- Sidebar -->
             <nav class="col-md-3 col-lg-2 sidebar" id="sidebarMenu">
                 <div class="position-sticky">
-                    <h5 class="px-3 mt-3">Menu</h5>
+                    <h5 class="px-3 mt-3">Sinh Viên</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item1" th:classappend="${trang?.tieuDe == 'Trang Chủ'} ? 'active'">
-                            <a class="nav-link1" th:href="@{/trang/trang-chu}">Trang chủ</a>
-                        </li>
-                        <li class="nav-item1" th:classappend="${trang?.tieuDe == 'Giới thiệu'} ? 'active'">
-                            <a class="nav-link1" th:href="@{/trang/gioi-thieu}">Giới thiệu</a>
-                        </li>
-                        <li class="nav-item1" th:classappend="${trang?.tieuDe == 'Bộ môn'} ? 'active'">
-                            <a class="nav-link1" th:href="@{/trang/bo-mon}">Bộ môn</a>
-                        </li>
-                        <li class="nav-item1" th:classappend="${trang?.tieuDe == 'Đào tạo'} ? 'active'">
-                            <a class="nav-link1" th:href="@{/trang/dao-tao}">Đào tạo</a>
-                        </li>
-                        <li class="nav-item1" th:classappend="${trang?.tieuDe == 'Nghiên cứu khoa học'} ? 'active'">
-                            <a class="nav-link1" th:href="@{/trang/nghien-cuu-khoa-hoc}">Nghiên cứu khoa học</a>
-                        </li>
-                        <li class="nav-item1" th:classappend="${trang?.tieuDe == 'Liên hệ'} ? 'active'">
-                            <a class="nav-link1" th:href="@{/trang/lien-he}">Liên hệ</a>
-                        </li>
-                        <li class="nav-item1" th:each="menu : ${danhSachMenu}" th:classappend="${trang?.tieuDe == menu?.ten} ? 'active'">
-                            <a class="nav-link1" th:href="@{'/trang/' + ${menu?.duongDan} ?: '#'}" th:text="${menu?.ten} ?: 'Menu Item'"></a>
-                        </li>
+					    <li class="nav-item1" th:each="tr : ${danhSachTrang}">
+					        <a class="nav-link1" th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/' + ${tr.duongDan}}" 
+					           th:text="${tr.tieuDe}">Tên trang</a>
+					    </li>
                     </ul>
                 </div>
             </nav>

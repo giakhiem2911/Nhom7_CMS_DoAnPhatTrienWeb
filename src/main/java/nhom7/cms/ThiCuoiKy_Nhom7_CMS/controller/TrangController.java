@@ -44,6 +44,10 @@ public class TrangController {
     @GetMapping
     public String listTrang(Model model) {
         List<Trang> trangs = trangRepository.findAll();
+        String maSiteInfor = "khoa-cong-nghe-thong-tin";
+        SiteInfor siteInfor = siteInforRepository.findById(maSiteInfor)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
+        model.addAttribute("siteInfor", siteInfor);
         model.addAttribute("dsTrang", trangs);
         return "trang/list";
     }
@@ -111,6 +115,7 @@ public class TrangController {
 //        return "trang/detail";
 //    }
     // Thêm danh sách SiteInfor vào model cho mọi request trong controller này
+    
     @ModelAttribute("danhSachSiteInfor")
     public List<SiteInfor> danhSachSiteInfor() {
         return siteInforRepository.findAll();

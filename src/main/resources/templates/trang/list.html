@@ -44,7 +44,7 @@
 			    <tr th:each="trang : ${dsTrang}" class="list">
 			        <td th:text="${trang.maTrang}">ma-trang</td>
 			        <td>
-					    <a th:href="@{'/trang/' + ${trang.duongDan}}" th:text="${trang.tieuDe}" class="text-decoration-none"></a>
+					    <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/' + ${trang.duongDan}}" th:text="${trang.tieuDe}" class="text-decoration-none"></a>
 					</td>
 			        <td th:text="${trang.duongDan}">/duong-dan-mau</td>
 			        <td th:text="${trang.menu != null ? trang.menu.ten : 'Không có'}">Tên menu</td>

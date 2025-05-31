@@ -3,10 +3,13 @@ package nhom7.cms.ThiCuoiKy_Nhom7_CMS.controller;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.BaiViet;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.DanhMuc;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.NguoiDung;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.SiteInfor;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.Trang;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.BaiVietRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.DanhMucRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.NguoiDungRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.SiteInforRepository;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.TrangService;
 
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +17,14 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +49,9 @@ public class BaiVietController {
 
     @Autowired
     private NguoiDungRepository nguoiDungRepository;
+
+    @Autowired
+    private TrangService trangService;
     
     @GetMapping
     public String danhSachBaiViet(Model model) {
@@ -51,16 +59,23 @@ public class BaiVietController {
         model.addAttribute("danhSachBaiViet", danhSach);
         return "bai_viet/list_bai_viet";
     }
-
-    @GetMapping("/{id}")
-    public String chiTietBaiViet(@PathVariable String id, Model model) {
+    @ModelAttribute("danhSachSiteInfor")
+    public List<SiteInfor> danhSachSiteInfor() {
+        return siteInforRepository.findAll();
+    }
+    @GetMapping("/{maSiteInfor}/{id}")
+    public String chiTietBaiViet(@PathVariable String id, Model model, @PathVariable String maSiteInfor) {
+    	SiteInfor siteInfor = siteInforRepository.findById(maSiteInfor)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
         Optional<BaiViet> optionalBaiViet = baiVietRepository.findById(id);
         if (optionalBaiViet.isPresent()) {
             model.addAttribute("baiViet", optionalBaiViet.get());
         } else {
             return "error/404";
         }
-        model.addAttribute("siteInfor", siteInforRepository.findFirstByOrderByMaSiteInforAsc());
+        List<Trang> danhSachTrang = trangService.findAll();
+        model.addAttribute("danhSachTrang", danhSachTrang);
+        model.addAttribute("siteInfor", siteInfor);
         return "bai_viet/chitiet";
     }
 
