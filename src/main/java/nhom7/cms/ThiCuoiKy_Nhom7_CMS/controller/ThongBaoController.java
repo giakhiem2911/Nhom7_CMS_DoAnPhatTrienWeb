@@ -1,6 +1,8 @@
 package nhom7.cms.ThiCuoiKy_Nhom7_CMS.controller;
 
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.NguoiDung;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.ThongBao;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.NguoiDungRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.ThongBaoService;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.NguoiDungService;
 
@@ -23,6 +25,9 @@ public class ThongBaoController {
 
     @Autowired
     private NguoiDungService nguoiDungService;
+
+    @Autowired
+    private NguoiDungRepository nguoiDungRepository;
 
     // Danh sách thông báo
     @GetMapping
@@ -56,6 +61,7 @@ public class ThongBaoController {
     @PostMapping("/save")
     public String luuThongBao(@Validated @ModelAttribute("thongBao") ThongBao thongBao,
                               BindingResult result,
+                              @RequestParam("maNguoiDung") String maNguoiDung,
                               Model model,
                               RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
@@ -64,6 +70,15 @@ public class ThongBaoController {
         }
 
         try {
+            // Tìm và gán NguoiDung dựa trên maNguoiDung từ form
+            Optional<NguoiDung> nguoiDungOpt = nguoiDungRepository.findById(maNguoiDung);
+            if (nguoiDungOpt.isPresent()) {
+                thongBao.setNguoiDung(nguoiDungOpt.get());
+            } else {
+                model.addAttribute("danhSachNguoiDung", nguoiDungService.findAll());
+                model.addAttribute("errorMessage", "Người dùng không tồn tại!");
+                return "thongbao/form_thong_bao";
+            }
             thongBaoService.save(thongBao);
             redirectAttributes.addFlashAttribute("successMessage", "Lưu thông báo thành công!");
         } catch (Exception e) {

@@ -27,7 +27,7 @@ CREATE TABLE ThongBao (
     MaThongBao CHAR(256) PRIMARY KEY,
     MaNguoiDung CHAR(256),
     TieuDe NVARCHAR(256),
-    NoiDung TEXT,
+    NoiDung NVARCHAR(MAX),
     TrangThai NVARCHAR(256),
     FOREIGN KEY (MaNguoiDung) REFERENCES NguoiDung(MaNguoiDung)
 );
@@ -37,7 +37,7 @@ CREATE TABLE SuKien (
     MaSuKien CHAR(256) PRIMARY KEY,
     MaNguoiDung CHAR(256),
     TieuDe NVARCHAR(256),
-    MoTa TEXT,
+    MoTa NVARCHAR(MAX),
     DuongDan NVARCHAR(256),
     ThoiGianBatDau DATETIME,
     ThoiGianKetThuc DATETIME,

@@ -4,90 +4,90 @@
     <meta charset="UTF-8">
     <title th:text="${thongBao.maThongBao != null} ? 'Chỉnh sửa Thông Báo' : 'Tạo mới Thông Báo'"></title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 </head>
-<body th:replace="~{layout :: layout}">
+<body>
+<div th:replace="~{layout :: layout}">
+    <div th:fragment="content" class="p-4">
+        <h2 class="mb-4 fw-bold" th:text="${thongBao.maThongBao != null} ? 'Chỉnh sửa Thông Báo' : 'Tạo mới Thông Báo'"></h2>
 
-<div th:fragment="content" class="p-4">
-    <h2 class="mb-4 fw-bold" th:text="${thongBao.maThongBao != null} ? 'Chỉnh sửa Thông Báo' : 'Tạo mới Thông Báo'"></h2>
-
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <form th:action="@{/thongbao/save}" th:object="${thongBao}" method="post" class="needs-validation" novalidate>
-
-                <!-- Mã Thông Báo -->
-                <div class="mb-4">
-                    <label for="maThongBao" class="form-label fw-medium">Mã Thông Báo</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-tag"></i></span>
-                        <input type="text" th:field="*{maThongBao}" id="maThongBao" class="form-control"
-                               th:readonly="${thongBao.maThongBao != null}" required placeholder="Nhập mã thông báo">
-                        <div class="invalid-feedback">Vui lòng nhập mã thông báo.</div>
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <form th:action="@{/thongbao/save}" th:object="${thongBao}" method="post" class="needs-validation" novalidate>
+                    <!-- Mã Thông Báo -->
+                    <div class="mb-4">
+                        <label for="maThongBao" class="form-label fw-medium">Mã Thông Báo</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-tag"></i></span>
+                            <input type="text" id="maThongBao" th:field="*{maThongBao}" class="form-control"
+                                   th:readonly="${thongBao.maThongBao != null}" required
+                                   placeholder="Nhập mã thông báo (ví dụ: TB01)" />
+                            <div class="invalid-feedback">Vui lòng nhập mã thông báo.</div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Tiêu Đề -->
-                <div class="mb-4">
-                    <label for="tieuDe" class="form-label fw-medium">Tiêu Đề</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-type"></i></span>
-                        <input type="text" th:field="*{tieuDe}" id="tieuDe" class="form-control" required placeholder="Nhập tiêu đề">
-                        <div class="invalid-feedback">Vui lòng nhập tiêu đề.</div>
+                    <!-- Tiêu Đề -->
+                    <div class="mb-4">
+                        <label for="tieuDe" class="form-label fw-medium">Tiêu Đề</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-fonts"></i></span>
+                            <input type="text" id="tieuDe" th:field="*{tieuDe}" class="form-control" required
+                                   placeholder="Nhập tiêu đề thông báo" />
+                            <div class="invalid-feedback">Vui lòng nhập tiêu đề.</div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Nội Dung -->
-                <div class="mb-4">
-                    <label for="noiDung" class="form-label fw-medium">Nội Dung</label>
-                    <textarea th:field="*{noiDung}" id="noiDung" class="form-control" rows="4" required
-                              placeholder="Nhập nội dung thông báo"></textarea>
-                    <div class="invalid-feedback">Vui lòng nhập nội dung thông báo.</div>
-                </div>
+                    <!-- Nội Dung -->
+                    <div class="mb-4">
+                        <label for="noiDung" class="form-label fw-medium">Nội Dung</label>
+                        <textarea id="noiDung" th:field="*{noiDung}" class="form-control" rows="6" required
+                                  placeholder="Nhập nội dung thông báo"></textarea>
+                        <div class="invalid-feedback">Vui lòng nhập nội dung thông báo.</div>
+                    </div>
 
-                <!-- Người Gửi -->
-                <div class="mb-4">
-                    <label for="nguoiDung" class="form-label fw-medium">Người Gửi</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-person"></i></span>
-                        <select th:field="*{nguoiDung.maNguoiDung}" id="nguoiDung" class="form-select" required>
-                            <option value="" disabled th:selected="${thongBao.nguoiDung == null}">-- Chọn người gửi --</option>
-                            <option th:each="nd : ${danhSachNguoiDung}" th:value="${nd.maNguoiDung}" th:text="${nd.hoTen}"
-                                    th:selected="${nd.maNguoiDung == thongBao.nguoiDung?.maNguoiDung}"></option>
+                    <!-- Người Gửi -->
+                    <div class="mb-4">
+                        <label for="maNguoiDung" class="form-label fw-medium">Người Gửi</label>
+                        <select id="maNguoiDung" name="maNguoiDung" class="form-select" required>
+                            <option value="">-- Chọn người gửi --</option>
+                            <option th:each="nd : ${danhSachNguoiDung}" 
+                                    th:value="${nd.maNguoiDung}" 
+                                    th:text="${nd.hoTen}"
+                                    th:selected="${thongBao.nguoiDung != null and thongBao.nguoiDung.maNguoiDung == nd.maNguoiDung}">
+                            </option>
                         </select>
-                        <div class="invalid-feedback">Vui lòng chọn người gửi thông báo.</div>
+                        <div class="invalid-feedback">Vui lòng chọn người gửi.</div>
                     </div>
-                </div>
 
-                <!-- Trạng Thái -->
-                <div class="mb-4">
-                    <label for="trangThai" class="form-label fw-medium">Trạng Thái</label>
-                    <div class="input-group">
-                        <span class="input-group-text"><i class="bi bi-toggle-on"></i></span>
-                        <select th:field="*{trangThai}" id="trangThai" class="form-select" required>
-                            <option value="" disabled th:selected="${thongBao.trangThai == null}">-- Chọn trạng thái --</option>
-                            <option value="Đang hoạt động" th:selected="${thongBao.trangThai == 'Đang hoạt động'}">Đang hoạt động</option>
-                            <option value="Ẩn" th:selected="${thongBao.trangThai == 'Ẩn'}">Ẩn</option>
+                    <!-- Trạng Thái -->
+                    <div class="mb-4">
+                        <label for="trangThai" class="form-label fw-medium">Trạng Thái</label>
+                        <select id="trangThai" th:field="*{trangThai}" class="form-select" required>
+                            <option value="">-- Chọn trạng thái --</option>
+                            <option value="Đang hoạt động">Đang hoạt động</option>
+                            <option value="Ẩn">Ẩn</option>
                         </select>
                         <div class="invalid-feedback">Vui lòng chọn trạng thái.</div>
                     </div>
-                </div>
 
-                <!-- Nút hành động -->
-                <div class="d-flex justify-content-end gap-3">
-                    <a th:href="@{/thongbao}" class="btn btn-secondary px-4">Hủy</a>
-                    <button type="submit" class="btn btn-primary px-4">
-                        <i class="bi bi-save me-2"></i>Lưu
-                    </button>
-                </div>
-
-            </form>
+                    <!-- Nút Lưu / Hủy -->
+                    <div class="d-flex justify-content-end gap-3">
+                        <a th:href="@{/thongbao}" class="btn btn-secondary px-4">Hủy</a>
+                        <button type="submit" class="btn btn-primary px-4">
+                            <i class="bi bi-save me-2"></i>Lưu
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Script Bootstrap & Validation -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script>
+    // Form validation
     (() => {
         'use strict';
         const forms = document.querySelectorAll('.needs-validation');
@@ -101,6 +101,16 @@
             }, false);
         });
     })();
+
+    // Initialize CKEditor
+    ClassicEditor
+        .create(document.querySelector('#noiDung'))
+        .then(editor => {
+            editor.ui.view.editable.element.style.height = '400px';
+        })
+        .catch(error => {
+            console.error(error);
+        });
 </script>
 </body>
 </html>

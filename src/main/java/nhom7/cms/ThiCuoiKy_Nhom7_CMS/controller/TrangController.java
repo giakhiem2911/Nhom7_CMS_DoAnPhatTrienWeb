@@ -11,8 +11,13 @@ import org.springframework.web.server.ResponseStatusException;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.BaiViet;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.NguoiDung;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.SiteInfor;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.SuKien;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.ThongBao;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.Trang;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.TrangRepository;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.SiteInforService;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.SuKienService;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.ThongBaoService;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.TrangService;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.BaiVietRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.MenuRepository;
@@ -151,6 +156,13 @@ public class TrangController {
             baiViet.setNoiDung(stripHtml(baiViet.getNoiDung()));
         }
         model.addAttribute("danhSachTinTuc", danhSachTinTuc);
+
+        List<ThongBao> danhSachThongBao = thongBaoService.findAll();
+        danhSachThongBao.forEach(tb -> System.out.println("NoiDung: " + tb.getNoiDung()));
+        for (ThongBao tb : danhSachThongBao) {
+            tb.setNoiDung(stripHtml(tb.getNoiDung()));
+        }
+        model.addAttribute("danhSachThongBao", danhSachThongBao);
         
         List<Trang> danhSachTrang = trangService.findAll();
         model.addAttribute("danhSachTrang", danhSachTrang);
@@ -164,4 +176,55 @@ public class TrangController {
         model.addAttribute("trang", trang);
         return "trang/detail";
     }
+    @Autowired
+    private SuKienService suKienService;
+
+    @GetMapping("{maSiteInfor}/su-kien-hoi-thao")
+    public String hienThiSuKienHoiThao(Model model, @PathVariable String maSiteInfor) {
+        List<SuKien> danhSachSuKien = suKienService.findAll();
+        for (SuKien suKien : danhSachSuKien) {
+        	suKien.setMoTa(stripHtml(suKien.getMoTa()));
+        }
+        model.addAttribute("danhSachSuKien", danhSachSuKien);
+        
+        List<ThongBao> danhSachThongBao = thongBaoService.findAll();
+        danhSachThongBao.forEach(tb -> System.out.println("NoiDung: " + tb.getNoiDung()));
+        for (ThongBao tb : danhSachThongBao) {
+            tb.setNoiDung(stripHtml(tb.getNoiDung()));
+        }
+        
+        model.addAttribute("danhSachThongBao", danhSachThongBao);
+
+        SiteInfor siteInfor = siteInforRepository.findById(maSiteInfor)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));// tuỳ logic bạn triển khai
+        
+        List<Trang> danhSachTrang = trangService.findAll();
+        model.addAttribute("danhSachTrang", danhSachTrang);
+        model.addAttribute("siteInfor", siteInfor);
+
+        return "trang/su_kien_hoi_thao"; // tạo file này
+    }
+    
+    @Autowired
+    private ThongBaoService thongBaoService;
+    
+    @GetMapping("{maSiteInfor}/thong-bao")
+    public String hienThiThongBao(Model model, @PathVariable String maSiteInfor) {
+        List<ThongBao> danhSachThongBao = thongBaoService.findAll();
+        danhSachThongBao.forEach(tb -> System.out.println("NoiDung: " + tb.getNoiDung()));
+        for (ThongBao tb : danhSachThongBao) {
+            tb.setNoiDung(stripHtml(tb.getNoiDung()));
+        }
+        model.addAttribute("danhSachThongBao", danhSachThongBao);
+
+        SiteInfor siteInfor = siteInforRepository.findById(maSiteInfor)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
+        
+        List<Trang> danhSachTrang = trangService.findAll();
+        model.addAttribute("danhSachTrang", danhSachTrang);
+        model.addAttribute("siteInfor", siteInfor);
+
+        return "trang/thong_bao"; 
+    }
+
 }
