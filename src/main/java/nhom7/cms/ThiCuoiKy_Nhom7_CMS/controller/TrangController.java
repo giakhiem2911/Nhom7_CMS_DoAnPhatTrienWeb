@@ -26,6 +26,7 @@ import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.SiteInforRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/trang")
@@ -247,4 +248,26 @@ public class TrangController {
 
         return "sukien/chi-tiet-su-kien";
     }
+    @GetMapping("/{maSiteInfor}/thong-bao/{maThongBao}")
+    public String xemChiTietThongBao(@PathVariable("maSiteInfor") String maSiteInfor,
+                                     @PathVariable("maThongBao") String maThongBao,
+                                     Model model) {
+        List<ThongBao> danhSachThongBao = thongBaoService.findAll();
+        danhSachThongBao.forEach(tb -> System.out.println("NoiDung: " + tb.getNoiDung()));
+        for (ThongBao tb : danhSachThongBao) {
+            tb.setNoiDung(stripHtml(tb.getNoiDung()));
+        }
+        ThongBao thongBao = thongBaoService.findById(maThongBao)
+        	    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy thông báo"));
+        	model.addAttribute("thongBao", thongBao);
+        SiteInfor siteInfor = siteInforRepository.findById(maSiteInfor)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
+        
+        List<Trang> danhSachTrang = trangService.findAll();
+        model.addAttribute("danhSachTrang", danhSachTrang);
+        model.addAttribute("danhSachThongBao", danhSachThongBao);
+        model.addAttribute("siteInfor", siteInfor);
+        return "thongbao/chi_tiet_thong_bao";
+    }
+
 }

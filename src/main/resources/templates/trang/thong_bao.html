@@ -223,13 +223,40 @@
     </div>
 </footer>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Sidebar Toggle Script -->
-<script>
-    document.getElementById('sidebarToggle').addEventListener('click', function () {
-        document.getElementById('sidebarMenu').classList.toggle('active');
-    });
-</script>
+	<!-- Bootstrap JS -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<!-- Sidebar Toggle Script -->
+	<script>
+	    document.getElementById('sidebarToggle').addEventListener('click', function () {
+	        document.getElementById('sidebarMenu').classList.toggle('active');
+	    });
+	</script>
+    <script>
+	  document.addEventListener('DOMContentLoaded', function() {
+	    const btnThongBao = document.getElementById('btnThongBao');
+	    const popup = document.getElementById('popupThongBao');
+	    const btnClose = document.getElementById('btnClosePopup');
+	
+	    btnThongBao.addEventListener('click', function(e) {
+	      e.stopPropagation(); // ngăn sự kiện nổi bọt lên document
+	      if (popup.style.display === 'none' || popup.style.display === '') {
+	        popup.style.display = 'block';
+	      } else {
+	        popup.style.display = 'none';
+	      }
+	    });
+	
+	    btnClose.addEventListener('click', function() {
+	      popup.style.display = 'none';
+	    });
+	
+	    // Ẩn popup nếu click ra ngoài popup và nút
+	    document.addEventListener('click', function(e) {
+	      if (!popup.contains(e.target) && e.target !== btnThongBao) {
+	        popup.style.display = 'none';
+	      }
+	    });
+	  });
+	</script>
 </body>
 </html>
