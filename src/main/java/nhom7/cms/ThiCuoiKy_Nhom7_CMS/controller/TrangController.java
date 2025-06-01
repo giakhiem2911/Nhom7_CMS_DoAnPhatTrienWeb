@@ -147,36 +147,40 @@ public class TrangController {
         SiteInfor siteInfor = siteInforRepository.findById(maSiteInfor)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
 
-        // Lấy trang chủ (nếu bạn có dữ liệu trang chủ trong bảng Trang)
-        Trang trangChu = trangService.findByDuongDan("trang-chu");
-        model.addAttribute("trang", trangChu);
-
-        // Lấy danh sách bài viết thuộc danh mục "Tin tức"
-        List<BaiViet> danhSachTinTuc = baiVietRepository.findByDanhMucTen("Tin tức");
-        for (BaiViet baiViet : danhSachTinTuc) {
-            baiViet.setNoiDung(stripHtml(baiViet.getNoiDung()));
-        }
-        model.addAttribute("danhSachTinTuc", danhSachTinTuc);
-
-        List<ThongBao> danhSachThongBao = thongBaoService.findAll();
-        danhSachThongBao.forEach(tb -> System.out.println("NoiDung: " + tb.getNoiDung()));
-        for (ThongBao tb : danhSachThongBao) {
-            tb.setNoiDung(stripHtml(tb.getNoiDung()));
-        }
-        model.addAttribute("danhSachThongBao", danhSachThongBao);
-        
-        List<Trang> danhSachTrang = trangService.findAll();
-        model.addAttribute("danhSachTrang", danhSachTrang);
-        
         Trang trang = trangService.findByDuongDan(duongDan);
+        // hiển thị danh sách tin tức ở trang chủ
         if (trang == null || !"PUBLISH".equalsIgnoreCase(trang.getTrangThai())) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy trang");
+        }
+        if ("trang-chu".equalsIgnoreCase(trang.getDuongDan())) {
+            List<BaiViet> danhSachTinTuc = baiVietRepository.findByDanhMucTen("Tin tức");
+            for (BaiViet bv : danhSachTinTuc) {
+                bv.setNoiDung(stripHtml(bv.getNoiDung()));
+            }
+            model.addAttribute("danhSachTinTuc", danhSachTinTuc);
+        }
+
+        // Lấy danh sách bài viết liên quan theo tên chuyên mục = tên trang
+        List<BaiViet> danhSachBaiVietLienQuan = baiVietRepository.findByDanhMucTen(trang.getTieuDe());
+        for (BaiViet bv : danhSachBaiVietLienQuan) {
+            bv.setNoiDung(stripHtml(bv.getNoiDung()));
+        }
+
+        List<Trang> danhSachTrang = trangService.findAll();
+        List<ThongBao> danhSachThongBao = thongBaoService.findAll();
+        for (ThongBao tb : danhSachThongBao) {
+            tb.setNoiDung(stripHtml(tb.getNoiDung()));
         }
 
         model.addAttribute("siteInfor", siteInfor);
         model.addAttribute("trang", trang);
+        model.addAttribute("danhSachTrang", danhSachTrang);
+        model.addAttribute("danhSachThongBao", danhSachThongBao);
+        model.addAttribute("danhSachBaiViet", danhSachBaiVietLienQuan);
+
         return "trang/detail";
     }
+
     @Autowired
     private SuKienService suKienService;
 

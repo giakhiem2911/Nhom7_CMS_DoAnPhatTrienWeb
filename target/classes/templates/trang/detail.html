@@ -136,6 +136,29 @@
 				            </li>
 				        </ul>
 				    </section>
+				<section th:if="${trang.duongDan == 'bo-mon'}"  th:each="baiViet : ${danhSachBaiViet}">
+				    <h2 th:text="${baiViet.tieuDe}">Bộ môn</h2>
+				    <ul class="list-unstyled">
+				        <li class="news-item mb-3">
+				            <div class="d-flex align-items-start">
+				                <!-- Hình ảnh đại diện -->
+				                <a th:href="@{'/baiviet/' + ${siteInfor.maSiteInfor} + '/' + ${baiViet.maBaiViet}}" class="me-3">
+				                    <img th:src="@{${baiViet.anhDaiDien}}" alt="Ảnh đại diện"
+				                         style="height: 70px; width: 100px; object-fit: cover;">
+				                </a>
+				
+				                <!-- Nội dung bài viết -->
+				                <div>
+				                    <a th:href="@{'/baiviet/' + ${siteInfor.maSiteInfor} + '/' + ${baiViet.maBaiViet}}"
+				                       th:text="${baiViet.tieuDe}"></a>
+				                    <small class="text-muted"
+				                           th:text="${#temporals.format(baiViet.ngayXuatBan, 'dd/MM/yyyy')}"></small>
+				                    <p class="mb-0 mt-1" th:text="${#strings.abbreviate(baiViet.noiDung, 150)}"></p>
+				                </div>
+				            </div>
+				        </li>
+				    </ul>
+				</section>
 				
 				    <!-- Hiển thị nội dung trang nếu không phải là trang chủ -->
 				    <section th:if="${trang.duongDan != 'trang-chu'}">
