@@ -331,4 +331,40 @@ body {
             .sidebar .nav-link1.active {
                 transform: translateX(4px);
             }
+			main {
+			    background-color: #fff;
+			    border-radius: 8px;
+			    padding: 30px;
+			    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+			}
+			
+			.article-content img {
+			    max-width: 100%;
+			    height: auto;
+			    display: block;
+			    margin: 20px auto;
+			    border-radius: 8px;
+			}
+			
+			.article-content {
+			    line-height: 1.8;
+			    font-size: 1.1rem;
+			    word-wrap: break-word;
+			}
+			/* Giới hạn hình ảnh trong nội dung CKEditor */
+			.article-content img {
+			    width: 100% !important;
+			    height: auto !important;
+			    display: block;
+			    margin: 20px auto;
+			    border-radius: 8px;
+			    object-fit: contain;
+			}
+			.article-meta {
+			    font-size: 0.95rem;
+			    color: #666;
+			    margin-top: 10px;
+			    margin-bottom: 20px;
+			}
+
         }

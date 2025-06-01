@@ -58,7 +58,7 @@
                 <li class="nav-item">
                     <a class="nav-link active" th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/su-kien-hoi-thao'" aria-current="page">Sự kiện & Hội thảo</a>
                 </li>
-<li class="nav-item position-relative">
+				<li class="nav-item position-relative">
 					  <button id="btnThongBao" class="nav-link btn btn-link" style="color: white; text-decoration: none;">
 					    Thông báo <i class="fa fa-bell"></i>
 					  </button>
@@ -121,7 +121,9 @@
                 </div>
 
                 <div class="list-group" th:if="${!danhSachSuKien.isEmpty()}">
-                    <a th:each="suKien : ${danhSachSuKien}" href="#" class="list-group-item list-group-item-action">
+                    <a th:each="suKien : ${danhSachSuKien}"
+					   th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/su-kien-hoi-thao/' + ${suKien.maSuKien}}"
+					   class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1" th:text="${suKien.tieuDe}">Tên sự kiện</h5>
                         </div>

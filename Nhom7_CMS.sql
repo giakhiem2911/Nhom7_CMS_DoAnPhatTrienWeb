@@ -21,7 +21,7 @@ CREATE TABLE NguoiDung (
 	NgayTao DATETIME,
     FOREIGN KEY (MaVaiTro) REFERENCES VaiTro(MaVaiTro)
 );
-
+SELECT * FROM ThongBao
 -- Bảng ThongBao
 CREATE TABLE ThongBao (
     MaThongBao CHAR(256) PRIMARY KEY,

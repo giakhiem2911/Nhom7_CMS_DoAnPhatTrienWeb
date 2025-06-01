@@ -56,12 +56,34 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/trang/ke-hoach-hoc-tap}">Kế hoạch học tập</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/trang/su-kien-hoi-thao}">Sự kiện & Hội thảo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/trang/thong-bao}">Thông báo</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/su-kien-hoi-thao'" aria-current="page">Sự kiện & Hội thảo</a>
+                </li>
+				<li class="nav-item position-relative">
+					  <button id="btnThongBao" class="nav-link btn btn-link" style="color: white; text-decoration: none;">
+					    Thông báo <i class="fa fa-bell"></i>
+					  </button>
+					  
+					  <!-- Ô thông báo popup -->
+						<div id="popupThongBao" class="card position-absolute" 
+						     style="width: 400px; top: 100%; right: 0; z-index: 1050; display: none; max-height: 400px; overflow-y: auto;">
+						  <div class="card-header">
+						    <strong>Thông báo mới nhất</strong>
+						    <button type="button" class="btn-close float-end" aria-label="Close" id="btnClosePopup"></button>
+						  </div>
+						  <div class="card-body" style="font-size: 14px; line-height: 1.4;">
+						    <div th:each="tb : ${danhSachThongBao}">
+						        <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/thong-bao'" th:text="${tb.tieuDe}" 
+								     style="display: block; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 8px; text-decoration: none; color: inherit;">
+								</a>
+								<a th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/thong-bao'" 
+								     style="display: block; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 8px; text-decoration: none; color: blue;">
+									Xem tất cả
+								</a>
+						    </div>
+						  </div>
+						</div>
+					</li>
                 </ul>
             </div>
         </div>
@@ -145,5 +167,32 @@
             document.getElementById('sidebarMenu').classList.toggle('active');
         });
     </script>
+    <script>
+	  document.addEventListener('DOMContentLoaded', function() {
+	    const btnThongBao = document.getElementById('btnThongBao');
+	    const popup = document.getElementById('popupThongBao');
+	    const btnClose = document.getElementById('btnClosePopup');
+	
+	    btnThongBao.addEventListener('click', function(e) {
+	      e.stopPropagation(); // ngăn sự kiện nổi bọt lên document
+	      if (popup.style.display === 'none' || popup.style.display === '') {
+	        popup.style.display = 'block';
+	      } else {
+	        popup.style.display = 'none';
+	      }
+	    });
+	
+	    btnClose.addEventListener('click', function() {
+	      popup.style.display = 'none';
+	    });
+	
+	    // Ẩn popup nếu click ra ngoài popup và nút
+	    document.addEventListener('click', function(e) {
+	      if (!popup.contains(e.target) && e.target !== btnThongBao) {
+	        popup.style.display = 'none';
+	      }
+	    });
+	  });
+	</script>
 </body>
 </html>

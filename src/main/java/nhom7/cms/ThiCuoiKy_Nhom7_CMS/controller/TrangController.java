@@ -226,5 +226,25 @@ public class TrangController {
 
         return "trang/thong_bao"; 
     }
+    
+    @GetMapping("/{maSiteInfor}/su-kien-hoi-thao/{maSuKien}")
+    public String chiTietSuKien(@PathVariable("maSiteInfor") String maSiteInfor,
+                                @PathVariable("maSuKien") String maSuKien,
+                                Model model) {
+        List<ThongBao> danhSachThongBao = thongBaoService.findAll();
+        danhSachThongBao.forEach(tb -> System.out.println("NoiDung: " + tb.getNoiDung()));
+        for (ThongBao tb : danhSachThongBao) {
+            tb.setNoiDung(stripHtml(tb.getNoiDung()));
+        }
+        model.addAttribute("danhSachThongBao", danhSachThongBao);
+        SuKien suKien = suKienService.findById(maSuKien);
+        SiteInfor siteInfor = siteInforRepository.findById(maSiteInfor)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
+        List<Trang> danhSachTrang = trangService.findAll();
+        model.addAttribute("danhSachTrang", danhSachTrang);
+        model.addAttribute("suKien", suKien);
+        model.addAttribute("siteInfor", siteInfor);
 
+        return "sukien/chi-tiet-su-kien";
+    }
 }

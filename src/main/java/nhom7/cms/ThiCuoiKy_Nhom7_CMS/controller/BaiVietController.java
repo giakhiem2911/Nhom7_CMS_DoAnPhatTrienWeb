@@ -4,11 +4,13 @@ import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.BaiViet;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.DanhMuc;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.NguoiDung;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.SiteInfor;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.ThongBao;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.Trang;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.BaiVietRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.DanhMucRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.NguoiDungRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.SiteInforRepository;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.ThongBaoService;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.TrangService;
 
 import org.jsoup.Jsoup;
@@ -53,6 +55,9 @@ public class BaiVietController {
     @Autowired
     private TrangService trangService;
     
+    @Autowired
+    private ThongBaoService thongBaoService;
+    
     @GetMapping
     public String danhSachBaiViet(Model model) {
         List<BaiViet> danhSach = baiVietRepository.findAll();
@@ -62,6 +67,10 @@ public class BaiVietController {
     @ModelAttribute("danhSachSiteInfor")
     public List<SiteInfor> danhSachSiteInfor() {
         return siteInforRepository.findAll();
+    }
+    private String stripHtml(String html) {
+        if (html == null) return "";
+        return Jsoup.parse(html).text();
     }
     @GetMapping("/{maSiteInfor}/{id}")
     public String chiTietBaiViet(@PathVariable String id, Model model, @PathVariable String maSiteInfor) {
@@ -73,6 +82,12 @@ public class BaiVietController {
         } else {
             return "error/404";
         }
+        List<ThongBao> danhSachThongBao = thongBaoService.findAll();
+        danhSachThongBao.forEach(tb -> System.out.println("NoiDung: " + tb.getNoiDung()));
+        for (ThongBao tb : danhSachThongBao) {
+            tb.setNoiDung(stripHtml(tb.getNoiDung()));
+        }
+        model.addAttribute("danhSachThongBao", danhSachThongBao);
         List<Trang> danhSachTrang = trangService.findAll();
         model.addAttribute("danhSachTrang", danhSachTrang);
         model.addAttribute("siteInfor", siteInfor);
