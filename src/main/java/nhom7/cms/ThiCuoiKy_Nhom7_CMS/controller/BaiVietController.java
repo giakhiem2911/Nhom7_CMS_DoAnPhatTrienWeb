@@ -87,6 +87,9 @@ public class BaiVietController {
         for (ThongBao tb : danhSachThongBao) {
             tb.setNoiDung(stripHtml(tb.getNoiDung()));
         }
+        List<BaiViet> danhSachBoMon = baiVietRepository.findByDanhMucTen("Bộ môn");
+        
+        model.addAttribute("danhSachBoMon", danhSachBoMon);
         model.addAttribute("danhSachThongBao", danhSachThongBao);
         List<Trang> danhSachTrang = trangService.findAll();
         model.addAttribute("danhSachTrang", danhSachTrang);

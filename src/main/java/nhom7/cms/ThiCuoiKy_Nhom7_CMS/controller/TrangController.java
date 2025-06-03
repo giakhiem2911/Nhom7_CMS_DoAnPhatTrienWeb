@@ -165,7 +165,7 @@ public class TrangController {
         for (BaiViet bv : danhSachBaiVietLienQuan) {
             bv.setNoiDung(stripHtml(bv.getNoiDung()));
         }
-
+        List<BaiViet> danhSachBoMon = baiVietRepository.findByDanhMucTen("Bộ môn");
         List<Trang> danhSachTrang = trangService.findAll();
         List<ThongBao> danhSachThongBao = thongBaoService.findAll();
         for (ThongBao tb : danhSachThongBao) {
@@ -177,6 +177,8 @@ public class TrangController {
         model.addAttribute("danhSachTrang", danhSachTrang);
         model.addAttribute("danhSachThongBao", danhSachThongBao);
         model.addAttribute("danhSachBaiViet", danhSachBaiVietLienQuan);
+        model.addAttribute("danhSachBoMon", danhSachBoMon);
+
 
         return "trang/detail";
     }

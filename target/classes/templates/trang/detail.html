@@ -26,24 +26,24 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/trang-chu'" aria-current="page">Trang Chủ</a>
+                        <a class="nav-link active" th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/trang-chu'}" aria-current="page">Trang Chủ</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button"
-                           data-bs-toggle="dropdown" aria-expanded="false">
-                            Bộ môn
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink1">
-                            <li><a class="dropdown-item" th:href="@{/trang/bo-mon/ky-thuat-phan-mem}">Kỹ thuật phần mềm</a></li>
-                            <li><a class="dropdown-item" th:href="@{/trang/bo-mon/mang-may-tinh-va-truyen-thong}">Mạng máy tính và truyền thông</a></li>
-                            <li><a class="dropdown-item" th:href="@{/trang/bo-mon/he-thong-thong-tin}">Hệ thống thông tin</a></li>
-                        </ul>
-                    </li>
+					<li class="nav-item dropdown">
+					    <a class="nav-link dropdown-toggle text-light" href="#" id="dropdownBoMon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					        Bộ môn
+					    </a>
+					    <ul class="dropdown-menu" aria-labelledby="dropdownBoMon">
+					        <li th:each="baiViet : ${danhSachBoMon}">
+					            <a class="dropdown-item" th:text="${baiViet.tieuDe}" 
+					               th:href="@{'/baiviet/' + ${siteInfor.maSiteInfor} + '/' + ${baiViet.maBaiViet}}"></a>
+					        </li>
+					    </ul>
+					</li>
                     <li class="nav-item dropdown">
 						<div>
-						    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownChuyenNganh" data-bs-toggle="dropdown" aria-expanded="false">
+						    <a class="nav-link dropdown-toggle text-light" href="#" id="dropdownChuyenNganh" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 						        Chuyên ngành
-						    </button>
+						    </a>
 						    <ul class="dropdown-menu" aria-labelledby="dropdownChuyenNganh">
 						        <li th:each="siteInfor : ${danhSachSiteInfor}">
 						            <a class="dropdown-item" th:text="${siteInfor.tenSite}" 
@@ -51,9 +51,6 @@
 						        </li>
 						    </ul>
 						</div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/trang/ke-hoach-hoc-tap}">Kế hoạch học tập</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/su-kien-hoi-thao'">Sự kiện & Hội thảo</a>
@@ -136,32 +133,28 @@
 				            </li>
 				        </ul>
 				    </section>
-				<section th:if="${trang.duongDan == 'bo-mon'}"  th:each="baiViet : ${danhSachBaiViet}">
-				    <h2 th:text="${baiViet.tieuDe}">Bộ môn</h2>
-				    <ul class="list-unstyled">
-				        <li class="news-item mb-3">
-				            <div class="d-flex align-items-start">
-				                <!-- Hình ảnh đại diện -->
-				                <a th:href="@{'/baiviet/' + ${siteInfor.maSiteInfor} + '/' + ${baiViet.maBaiViet}}" class="me-3">
-				                    <img th:src="@{${baiViet.anhDaiDien}}" alt="Ảnh đại diện"
-				                         style="height: 70px; width: 100px; object-fit: cover;">
-				                </a>
-				
-				                <!-- Nội dung bài viết -->
-				                <div>
-				                    <a th:href="@{'/baiviet/' + ${siteInfor.maSiteInfor} + '/' + ${baiViet.maBaiViet}}"
-				                       th:text="${baiViet.tieuDe}"></a>
-				                    <small class="text-muted"
-				                           th:text="${#temporals.format(baiViet.ngayXuatBan, 'dd/MM/yyyy')}"></small>
-				                    <p class="mb-0 mt-1" th:text="${#strings.abbreviate(baiViet.noiDung, 150)}"></p>
-				                </div>
-				            </div>
-				        </li>
-				    </ul>
-				</section>
-				
+					<section th:if="${trang.duongDan == 'bo-mon'}">
+					    <ul class="list-unstyled">
+					        <li class="news-item mb-3" th:each="baiViet : ${danhSachBaiViet}">
+					            <div class="d-flex align-items-start">
+					                <!-- Hình ảnh đại diện -->
+					                <a th:href="@{'/baiviet/' + ${siteInfor.maSiteInfor} + '/' + ${baiViet.maBaiViet}}" class="me-3">
+					                    <img th:src="@{${baiViet.anhDaiDien}}" alt="Ảnh đại diện"
+					                         style="height: 70px; width: 100px; object-fit: cover;">
+					                </a>
+					
+					                <!-- Nội dung bài viết -->
+					                <div>
+					                	<a th:href="@{'/baiviet/' + ${siteInfor.maSiteInfor} + '/' + ${baiViet.maBaiViet}}"
+					                	th:text="${baiViet.tieuDe}"></a> <br>
+					                    <span class="mb-0 mt-1" th:text="${#strings.abbreviate(baiViet.noiDung, 150)}"></span>
+					                </div>
+					            </div>
+					        </li>
+					    </ul>
+					</section>
 				    <!-- Hiển thị nội dung trang nếu không phải là trang chủ -->
-				    <section th:if="${trang.duongDan != 'trang-chu'}">
+				    <section th:if="${trang.duongDan != 'trang-chu' and trang.duongDan != 'bo-mon'}">
 				        <div th:utext="${trang.noiDung}"></div>
 				    </section>
 				</article>
