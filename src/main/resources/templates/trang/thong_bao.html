@@ -85,33 +85,34 @@
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/trang-chu'">Trang Chủ</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Bộ môn</a>
-                    <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" th:href="@{/trang/bo-mon/ky-thuat-phan-mem}">Kỹ thuật phần mềm</a></li>
-                        <li><a class="dropdown-item" th:href="@{/trang/bo-mon/mang-may-tinh-va-truyen-thong}">Mạng máy tính và truyền thông</a></li>
-                        <li><a class="dropdown-item" th:href="@{/trang/bo-mon/he-thong-thong-tin}">Hệ thống thông tin</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <div>
-                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            Chuyên ngành
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li th:each="site : ${danhSachSiteInfor}">
-                                <a class="dropdown-item" th:text="${site.tenSite}" th:href="@{'/trang/' + ${site.maSiteInfor}} + '/trang-chu'"></a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/trang/ke-hoach-hoc-tap}">Kế hoạch học tập</a>
-                </li>
+					<li class="nav-item dropdown">
+					    <a class="nav-link dropdown-toggle text-light" href="#" id="dropdownBoMon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					        Bộ môn
+					    </a>
+					    <ul class="dropdown-menu" aria-labelledby="dropdownBoMon">
+					        <li th:each="baiViet : ${danhSachBoMon}">
+					            <a class="dropdown-item" th:text="${baiViet.tieuDe}" 
+					               th:href="@{'/baiviet/' + ${siteInfor.maSiteInfor} + '/' + ${baiViet.maBaiViet}}"></a>
+					        </li>
+					    </ul>
+					</li>
+                    <li class="nav-item dropdown">
+						<div>
+						    <a class="nav-link dropdown-toggle text-light" href="#" id="dropdownChuyenNganh" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+						        Chuyên ngành
+						    </a>
+						    <ul class="dropdown-menu" aria-labelledby="dropdownChuyenNganh">
+						        <li th:each="siteInfor : ${danhSachSiteInfor}">
+						            <a class="dropdown-item" th:text="${siteInfor.tenSite}" 
+						               th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/trang-chu'"></a>
+						        </li>
+						    </ul>
+						</div>
+                    </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/su-kien-hoi-thao'">Sự kiện & Hội thảo</a>
                 </li>
-<li class="nav-item position-relative">
+				<li class="nav-item position-relative">
 					  <button id="btnThongBao" class="nav-link btn btn-link" style="color: white; text-decoration: none;">
 					    Thông báo <i class="fa fa-bell"></i>
 					  </button>
@@ -125,7 +126,7 @@
 						  </div>
 						  <div class="card-body" style="font-size: 14px; line-height: 1.4;">
 						    <div th:each="tb : ${danhSachThongBao}">
-						        <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/thong-bao'" th:text="${tb.tieuDe}" 
+						        <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/thong-bao/' + ${tb.maThongBao}}" th:text="${tb.tieuDe}" 
 								     style="display: block; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 8px; text-decoration: none; color: inherit;">
 								</a>
 								<a th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/thong-bao'" 

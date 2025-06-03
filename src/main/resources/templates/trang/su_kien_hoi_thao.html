@@ -72,7 +72,7 @@
 						  </div>
 						  <div class="card-body" style="font-size: 14px; line-height: 1.4;">
 						    <div th:each="tb : ${danhSachThongBao}">
-						        <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/thong-bao'" th:text="${tb.tieuDe}" 
+						        <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/thong-bao/' + ${tb.maThongBao}}" th:text="${tb.tieuDe}" 
 								     style="display: block; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 8px; text-decoration: none; color: inherit;">
 								</a>
 								<a th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/thong-bao'" 
