@@ -7,20 +7,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.MenuRepository;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.service.ThongKeService;
 
 @Controller
 public class HomeController {
-
+    
     @Autowired
-    private MenuRepository menuRepository;
+    private ThongKeService thongKeService;
 
     @GetMapping("/")
     public String home(HttpServletRequest request, Model model) {
+        // Lấy số liệu thống kê
+    	long postCount = thongKeService.demBaiViet();
+        long menuCount = thongKeService.demMenu();
+        long pageCount = thongKeService.demTrang();
+        long activeUsers = thongKeService.demNguoiDungHoatDong();
         model.addAttribute("requestURI", request.getRequestURI());
         model.addAttribute("title", "Bảng điều khiển - NHOM7_CMS");
-        model.addAttribute("menuCount", menuRepository.count());
-        model.addAttribute("pageCount", 5);
-        model.addAttribute("activeUsers", 3);
+
+        model.addAttribute("postCount", postCount);
+        model.addAttribute("menuCount", menuCount);
+        model.addAttribute("pageCount", pageCount);
+        model.addAttribute("activeUsers", activeUsers);
         return "index";
     }
 }
