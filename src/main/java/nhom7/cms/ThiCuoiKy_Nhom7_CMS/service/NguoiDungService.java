@@ -1,8 +1,13 @@
 package nhom7.cms.ThiCuoiKy_Nhom7_CMS.service;
 
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.NguoiDung;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.VaiTro;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.NguoiDungRepository;
+import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.VaiTroRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +18,14 @@ public class NguoiDungService {
 
     @Autowired
     private NguoiDungRepository nguoiDungRepository;
+    @Autowired
+    private VaiTroRepository vaiTroRepository;
 
     // Lấy tất cả người dùng
+    
+    public Page<NguoiDung> findAll(Pageable pageable) {
+        return nguoiDungRepository.findAll(pageable);
+    }
     public List<NguoiDung> findAll() {
         return nguoiDungRepository.findAll();
     }
@@ -25,6 +36,9 @@ public class NguoiDungService {
     }
 
     // Lấy người dùng theo tên đăng nhập
+    public Page<NguoiDung> searchNguoiDung(String keyword, Pageable pageable) {
+        return nguoiDungRepository.findByEmailContainingIgnoreCaseOrTenDangNhapContainingIgnoreCase(keyword, keyword, pageable);
+    }
     public Optional<NguoiDung> findByTenDangNhap(String tenDangNhap) {
         return nguoiDungRepository.findByTenDangNhap(tenDangNhap);
     }
@@ -37,14 +51,25 @@ public class NguoiDungService {
         }
         return user;
     }
+    public List<VaiTro> getVaiTroList() {
+        return vaiTroRepository.findAll();
+    }
 
-    // Tạo hoặc cập nhật người dùng
+    // Phương thức lưu người dùng
     public NguoiDung save(NguoiDung nguoiDung) {
+        // Bạn có thể thêm mã hóa mật khẩu nếu muốn
         return nguoiDungRepository.save(nguoiDung);
     }
+
+    // Tạo hoặc cập nhật người dùng
+//    public NguoiDung save(NguoiDung nguoiDung) {
+//        return nguoiDungRepository.save(nguoiDung);
+//    }
 
     // Xóa người dùng theo ID
     public void deleteById(String maNguoiDung) {
         nguoiDungRepository.deleteById(maNguoiDung);
     }
+    
+    
 }

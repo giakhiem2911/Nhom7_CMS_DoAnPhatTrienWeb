@@ -14,7 +14,16 @@
         <div class="card-body">
             <form th:action="@{/nguoidung/save}" th:object="${user}" method="post" class="needs-validation" novalidate>
                 <input type="hidden" th:field="*{maNguoiDung}"/>
-
+				
+				<div class="mb-3">
+				    <label class="form-label fw-medium">Tên đăng nhập</label>
+				    <div class="input-group">
+				        <span class="input-group-text"><i class="bi bi-person-badge"></i></span>
+				        <input type="text" th:field="*{tenDangNhap}" class="form-control" required placeholder="Tên đăng nhập">
+				        <div class="invalid-feedback">Vui lòng nhập tên đăng nhập.</div>
+				    </div>
+				</div>
+				
                 <div class="mb-3">
                     <label class="form-label fw-medium">Email</label>
                     <div class="input-group">
@@ -59,6 +68,11 @@
                         <i class="bi bi-save me-1"></i>Lưu
                     </button>
                 </div>
+                	
+<!--                 <div class="mb-3">
+				    <label class="form-label fw-medium">Ngày tạo</label>
+				    <input type="text" th:value="${#dates.format(user.ngayTao, 'dd/MM/yyyy HH:mm')}" class="form-control" readonly>
+				</div> -->
             </form>
         </div>
     </div>
