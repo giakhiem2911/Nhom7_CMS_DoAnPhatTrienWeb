@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import jakarta.servlet.http.HttpSession;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.BaiViet;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.NguoiDung;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.model.SiteInfor;
@@ -25,6 +26,7 @@ import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.NguoiDungRepository;
 import nhom7.cms.ThiCuoiKy_Nhom7_CMS.repository.SiteInforRepository;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -142,8 +144,12 @@ public class TrangController {
     public String hienThiTrangTheoSite(
             @PathVariable String maSiteInfor,
             @PathVariable String duongDan,
+            HttpSession session,
             Model model) {
-
+    	Object nguoiDung = session.getAttribute("nguoiDung");
+    	if (nguoiDung != null) {
+    	    model.addAttribute("nguoiDung", nguoiDung);
+    	}
         SiteInfor siteInfor = siteInforRepository.findById(maSiteInfor)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
 
@@ -154,6 +160,7 @@ public class TrangController {
         }
         if ("trang-chu".equalsIgnoreCase(trang.getDuongDan())) {
             List<BaiViet> danhSachTinTuc = baiVietRepository.findByDanhMucTen("Tin tức");
+            danhSachTinTuc.sort(Comparator.comparing(BaiViet::getNgayXuatBan).reversed());
             for (BaiViet bv : danhSachTinTuc) {
                 bv.setNoiDung(stripHtml(bv.getNoiDung()));
             }
@@ -178,7 +185,6 @@ public class TrangController {
         model.addAttribute("danhSachThongBao", danhSachThongBao);
         model.addAttribute("danhSachBaiViet", danhSachBaiVietLienQuan);
         model.addAttribute("danhSachBoMon", danhSachBoMon);
-
 
         return "trang/detail";
     }

@@ -77,7 +77,7 @@ public class NguoiDungController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // Xóa session để đăng xuất
-        return "redirect:/"; // Quay về trang đăng nhập
+        return "redirect:/sign_in"; // Quay về trang đăng nhập
     }
     
     
