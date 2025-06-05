@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class NguoiDungService {
@@ -57,7 +58,9 @@ public class NguoiDungService {
 
     // Phương thức lưu người dùng
     public NguoiDung save(NguoiDung nguoiDung) {
-        // Bạn có thể thêm mã hóa mật khẩu nếu muốn
+    	if (nguoiDung.getMaNguoiDung() == null || nguoiDung.getMaNguoiDung().isEmpty()) {
+            nguoiDung.setMaNguoiDung(UUID.randomUUID().toString());
+        }
         return nguoiDungRepository.save(nguoiDung);
     }
 

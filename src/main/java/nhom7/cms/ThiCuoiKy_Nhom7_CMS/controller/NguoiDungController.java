@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -37,11 +38,11 @@ public class NguoiDungController {
                 session.setAttribute("currentUser", nguoiDung);
 
                 // Kiểm tra vai trò từ entity VaiTro
-                String tenVaiTro = nguoiDung.getVaiTro().getTenVaiTro(); // VD: "admin", "user"
+                String tenVaiTro = nguoiDung.getVaiTro().getTenVaiTro();
                 if ("user".equalsIgnoreCase(tenVaiTro)) {
                     return "redirect:http://localhost:8080/trang/khoa-cong-nghe-thong-tin/trang-chu";
                 } else {
-                    return "redirect:/"; // admin thì về trang chủ mặc định
+                    return "redirect:/";
                 }
 
             } else {
@@ -57,7 +58,7 @@ public class NguoiDungController {
     @GetMapping("/sign_in")
     public String showLoginForm(HttpSession session) {
         if (session.getAttribute("currentUser") != null) {
-            return "redirect:/sign_out"; // Đã đăng nhập -> chuyển sang trang sign_out
+            return "redirect:/sign_out";
         }
         return "auth/sign_in";
     }
@@ -70,7 +71,7 @@ public class NguoiDungController {
             return "redirect:/sign_in";
         }
         model.addAttribute("user", currentUser);
-        return "auth/sign_out";  // View sign_out.html (tạo bên dưới)
+        return "auth/sign_out";
     }
  // Xử lý đăng xuất
     @GetMapping("/logout")
@@ -101,7 +102,7 @@ public class NguoiDungController {
         model.addAttribute("currentPage", page);
         model.addAttribute("keyword", keyword);
 
-        return "nguoidung/list"; // Tên file Thymeleaf: `list.html` trong thư mục `templates/nguoidung`
+        return "nguoidung/list";
     }
 
  // Phương thức hiển thị form thêm người dùng đã có sẵn
@@ -111,13 +112,32 @@ public class NguoiDungController {
         model.addAttribute("vaiTroList", nguoiDungService.getVaiTroList());
         return "nguoidung/form";
     }
+    
+ // SỬA người dùng
+    @GetMapping("/nguoidung/edit/{id}")
+    public String editUser(@PathVariable("id") String id, Model model) {
+        Optional<NguoiDung> nguoiDung = nguoiDungService.findById(id);
+        if (nguoiDung.isPresent()) {
+            model.addAttribute("user", nguoiDung.get());
+            model.addAttribute("vaiTroList", nguoiDungService.getVaiTroList());
+            return "nguoidung/form";
+        } else {
+            return "redirect:/nguoidung";
+        }
+    }
 
+    // XÓA người dùng
+    @GetMapping("/nguoidung/delete/{id}")
+    public String deleteUser(@PathVariable("id") String id) {
+        nguoiDungService.deleteById(id);
+        return "redirect:/nguoidung";
+    }
+
+    
     // Phương thức xử lý lưu người dùng mới hoặc cập nhật
     @PostMapping("/nguoidung/save")
     public String saveUser(@ModelAttribute("user") NguoiDung nguoiDung, Model model) {
-        // Kiểm tra hoặc xử lý thêm nếu cần (vd: kiểm tra trùng username/email, mã hóa mật khẩu...)
-
         nguoiDungService.save(nguoiDung);
-        return "redirect:/nguoidung"; // Trở về danh sách người dùng
+        return "redirect:/nguoidung";
     }
 }
