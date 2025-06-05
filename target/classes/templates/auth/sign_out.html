@@ -11,7 +11,7 @@
 <body>
     <div class="user-info-wrapper">
         <div class="user-info-container">
-            <a th:href="@{/}" class="close-button">&times;</a>
+            <a href="#" onclick="history.back(); return false;" class="close-button">&times;</a>
 
             <h2><i class="bi bi-person-circle"></i> Thông tin người dùng</h2>
             <div class="info-field"><strong>Tên đăng nhập:</strong> <span th:text="${user.tenDangNhap}">user123</span></div>

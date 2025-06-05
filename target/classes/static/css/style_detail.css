@@ -72,6 +72,34 @@ body {
             background-color: var(--primary);
             color: var(--light);
         }
+        
+        /* CSS cho nút đăng nhập */
+        #login{
+        	height: 40px;
+        	width: 40px;
+        	background-color: red;   /* Nền xanh dương */
+		    border-radius: 5px;           /* Bo góc */
+		    margin-left: 15px;            /* Khoảng cách với phần tử bên trái */
+		    font-weight: 600;             /* Chữ đậm */
+		    transition: background-color 0.3s ease;
+        }
+        #logina{
+        	height: 40px;
+        	width: 40px;
+        }
+        #logini{
+        	height: 40px;
+        	width: 40px;
+        	color: black;
+        }
+		
+		.navbar-nav .nav-item:last-child a.nav-link:hover {
+		    background-color: #0056b3;   /* Nền đổi màu khi hover */
+		    color: #fff;
+		}
+
+        
+        
 
         /* Sidebar */
         .sidebar {
@@ -366,5 +394,8 @@ body {
 			    margin-top: 10px;
 			    margin-bottom: 20px;
 			}
+			
+			
 
         }
+        

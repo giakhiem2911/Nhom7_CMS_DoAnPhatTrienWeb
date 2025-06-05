@@ -27,16 +27,23 @@ public class NguoiDungController {
             @RequestParam("username") String username,
             @RequestParam("password") String password,
             Model model,
-            HttpSession session) {  // Thêm HttpSession
+            HttpSession session) {
 
         Optional<NguoiDung> optNguoiDung = nguoiDungService.findByUsernameOrEmail(username);
 
         if (optNguoiDung.isPresent()) {
             NguoiDung nguoiDung = optNguoiDung.get();
             if (nguoiDung.getMatKhau().equals(password)) {
-                // Lưu thông tin người dùng vào session
                 session.setAttribute("currentUser", nguoiDung);
-                return "redirect:/";  // Hoặc chuyển sang trang chính của bạn
+
+                // Kiểm tra vai trò từ entity VaiTro
+                String tenVaiTro = nguoiDung.getVaiTro().getTenVaiTro(); // VD: "admin", "user"
+                if ("user".equalsIgnoreCase(tenVaiTro)) {
+                    return "redirect:http://localhost:8080/trang/khoa-cong-nghe-thong-tin/trang-chu";
+                } else {
+                    return "redirect:/"; // admin thì về trang chủ mặc định
+                }
+
             } else {
                 model.addAttribute("error", "Mật khẩu không đúng");
                 return "auth/sign_in";
