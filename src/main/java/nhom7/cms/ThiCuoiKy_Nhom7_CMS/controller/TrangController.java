@@ -258,6 +258,8 @@ public class TrangController {
         SiteInfor siteInfor = siteInforRepository.findById(maSiteInfor)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
         List<Trang> danhSachTrang = trangService.findAll();
+        List<BaiViet> danhSachBoMon = baiVietRepository.findByDanhMucTen("Bộ môn");
+        model.addAttribute("danhSachBoMon", danhSachBoMon);
         model.addAttribute("danhSachTrang", danhSachTrang);
         model.addAttribute("suKien", suKien);
         model.addAttribute("siteInfor", siteInfor);
@@ -280,6 +282,8 @@ public class TrangController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
         
         List<Trang> danhSachTrang = trangService.findAll();
+        List<BaiViet> danhSachBoMon = baiVietRepository.findByDanhMucTen("Bộ môn");
+        model.addAttribute("danhSachBoMon", danhSachBoMon);
         model.addAttribute("danhSachTrang", danhSachTrang);
         model.addAttribute("danhSachThongBao", danhSachThongBao);
         model.addAttribute("siteInfor", siteInfor);
