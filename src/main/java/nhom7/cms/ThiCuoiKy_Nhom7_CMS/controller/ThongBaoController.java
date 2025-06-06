@@ -70,7 +70,6 @@ public class ThongBaoController {
         }
 
         try {
-            // Tìm và gán NguoiDung dựa trên maNguoiDung từ form
             Optional<NguoiDung> nguoiDungOpt = nguoiDungRepository.findById(maNguoiDung);
             if (nguoiDungOpt.isPresent()) {
                 thongBao.setNguoiDung(nguoiDungOpt.get());

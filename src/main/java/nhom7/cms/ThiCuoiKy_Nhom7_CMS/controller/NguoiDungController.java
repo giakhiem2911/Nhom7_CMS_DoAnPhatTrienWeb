@@ -54,20 +54,17 @@ public class NguoiDungController {
             return "auth/sign_in";
         }
     }
- // Trang đăng nhập GET - kiểm tra nếu đã đăng nhập thì chuyển hướng sang sign_out
     @GetMapping("/sign_in")
     public String showLoginForm(HttpSession session) {
         if (session.getAttribute("currentUser") != null) {
-            return "redirect:/sign_out";
+            return "redirect:/";
         }
         return "auth/sign_in";
     }
- // Trang sign_out hiển thị thông tin người dùng và nút đăng xuất
-    @GetMapping("/sign_out")
+     @GetMapping("/sign_out")
     public String showSignOutPage(HttpSession session, Model model) {
         NguoiDung currentUser = (NguoiDung) session.getAttribute("currentUser");
         if (currentUser == null) {
-            // Nếu chưa đăng nhập thì chuyển về trang đăng nhập
             return "redirect:/sign_in";
         }
         model.addAttribute("user", currentUser);

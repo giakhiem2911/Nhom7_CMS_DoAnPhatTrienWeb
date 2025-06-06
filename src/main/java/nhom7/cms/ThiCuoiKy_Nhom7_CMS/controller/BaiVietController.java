@@ -126,7 +126,7 @@ public class BaiVietController {
         baiViet.setNguoiDung(nguoiDung);
         baiViet.setDanhMuc(danhMuc);
 
-        // Xử lý ảnh đại diện (lưu ngoài resources)
+        // Xử lý ảnh đại diện
         if (!file.isEmpty()) {
             try {
                 String fileName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();

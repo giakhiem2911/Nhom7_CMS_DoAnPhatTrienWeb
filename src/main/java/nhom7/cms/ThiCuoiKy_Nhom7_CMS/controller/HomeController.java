@@ -17,6 +17,12 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(HttpServletRequest request, Model model) {
+        // Kiểm tra xem có người dùng đăng nhập không
+    	Object nguoiDung = request.getSession().getAttribute("currentUser");
+    	if (nguoiDung == null) {
+            // Nếu chưa đăng nhập, chuyển hướng về trang login
+            return "redirect:/sign_in";
+        }
         // Lấy số liệu thống kê
     	long postCount = thongKeService.demBaiViet();
         long menuCount = thongKeService.demMenu();

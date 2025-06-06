@@ -73,7 +73,6 @@ public class TrangController {
         if (trang.getNgayTao() == null) {
             trang.setNgayTao(LocalDateTime.now());
         }
-        // Gán người dùng nếu có như mình đã nói ở trên
         if (trang.getNguoiDung() != null && trang.getNguoiDung().getMaNguoiDung() != null) {
             NguoiDung nguoiDung = nguoiDungRepository.findById(trang.getNguoiDung().getMaNguoiDung()).orElse(null);
             trang.setNguoiDung(nguoiDung);
@@ -200,6 +199,9 @@ public class TrangController {
         }
         model.addAttribute("danhSachSuKien", danhSachSuKien);
         
+        List<BaiViet> danhSachBoMon = baiVietRepository.findByDanhMucTen("Bộ môn");
+        model.addAttribute("danhSachBoMon", danhSachBoMon);
+
         List<ThongBao> danhSachThongBao = thongBaoService.findAll();
         danhSachThongBao.forEach(tb -> System.out.println("NoiDung: " + tb.getNoiDung()));
         for (ThongBao tb : danhSachThongBao) {
@@ -234,6 +236,8 @@ public class TrangController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
         
         List<Trang> danhSachTrang = trangService.findAll();
+        List<BaiViet> danhSachBoMon = baiVietRepository.findByDanhMucTen("Bộ môn");
+        model.addAttribute("danhSachBoMon", danhSachBoMon);
         model.addAttribute("danhSachTrang", danhSachTrang);
         model.addAttribute("siteInfor", siteInfor);
 

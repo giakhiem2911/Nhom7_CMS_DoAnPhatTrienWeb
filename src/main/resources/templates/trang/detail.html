@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Font Awesome for social icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 	<link rel="stylesheet" th:href="@{/css/style_detail.css}">
 </head>
 <body>
@@ -80,10 +81,9 @@
 						  </div>
 						</div>
 					</li>
-					<li class="nav-item dropdown">
+					<li class="nav-item dropdown" th:if="${nguoiDung != null}">
 					    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
-					        <i class="bi bi-person-circle" style="font-size: 2rem;"></i>
-							<span th:text="${nguoiDung != null ? nguoiDung.hoTen : 'Bạn'}"></span>
+					        <i class="bi bi-person-circle"></i>
 					    </a>
 					    <ul class="dropdown-menu dropdown-menu-end">
 					        <li><a class="dropdown-item" th:href="@{/sign_out}">Trang cá nhân</a></li>

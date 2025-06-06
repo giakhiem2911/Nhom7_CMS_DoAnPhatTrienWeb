@@ -8,9 +8,17 @@
     <div th:fragment="header" class="header" style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
         <h1>Bảng điều khiển</h1>
         <div>
-            <a th:href="@{/sign_in}" title="Đăng nhập" style="color: #333; text-decoration: none;">
-                <i class="bi bi-person-circle" style="font-size: 2rem;"></i>
-            </a>
+            <div th:if="${session.currentUser != null}">
+                <a th:href="@{/sign_out}" title="Đăng xuất" style="color: #333; text-decoration: none; display: flex; align-items: center;">
+                    <i class="bi bi-person-circle" style="font-size: 2rem; margin-right: 8px;"></i>
+                    <span th:text="${session.currentUser.hoTen}">Tên người dùng</span>
+                </a>
+            </div>
+            <div th:if="${session.currentUser == null}">
+                <a th:href="@{/sign_in}" title="Đăng nhập" style="color: #333; text-decoration: none;">
+                    <i class="bi bi-person-circle" style="font-size: 2rem;"></i>
+                </a>
+            </div>
         </div>
     </div>
 </body>
