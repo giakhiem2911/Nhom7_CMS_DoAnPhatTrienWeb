@@ -3,189 +3,164 @@
 <head>
     <meta charset="UTF-8" />
     <title th:text="${suKien?.tieuDe} ?: 'Chi tiết sự kiện'">Chi tiết sự kiện</title>
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" th:href="@{/css/style_detail.css}">
 </head>
 <body>
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container-fluid">
-        <a class="navbar-brand" th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/trang-chu'}">
-            <img th:src="@{${siteInfor.logo}}" alt="Logo" style="height: 50px;">
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-                aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/trang-chu'}">Trang Chủ</a>
-                </li>
-					<li class="nav-item dropdown">
-					    <a class="nav-link dropdown-toggle text-light" href="#" id="dropdownBoMon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-					        Bộ môn
-					    </a>
-					    <ul class="dropdown-menu" aria-labelledby="dropdownBoMon">
-					        <li th:each="baiViet : ${danhSachBoMon}">
-					            <a class="dropdown-item" th:text="${baiViet.tieuDe}" 
-					               th:href="@{'/baiviet/' + ${siteInfor.maSiteInfor} + '/' + ${baiViet.maBaiViet}}"></a>
-					        </li>
-					    </ul>
-					</li>
-                    <li class="nav-item dropdown">
-						<div>
-						    <a class="nav-link dropdown-toggle text-light" href="#" id="dropdownChuyenNganh" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						        Chuyên ngành
-						    </a>
-						    <ul class="dropdown-menu" aria-labelledby="dropdownChuyenNganh">
-						        <li th:each="siteInfor : ${danhSachSiteInfor}">
-						            <a class="dropdown-item" th:text="${siteInfor.tenSite}" 
-						               th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/trang-chu'"></a>
-						        </li>
-						    </ul>
-						</div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/trang-chu'}">
+                <img th:src="@{${siteInfor.logo}}" alt="Logo" style="height: 50px;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/trang-chu'}" aria-current="page">Trang Chủ</a>
                     </li>
-                <li class="nav-item">
-                    <a class="nav-link active" th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/su-kien-hoi-thao'" aria-current="page">Sự kiện & Hội thảo</a>
-                </li>
-				<li class="nav-item position-relative">
-					  <button id="btnThongBao" class="nav-link btn btn-link" style="color: white; text-decoration: none;">
-					    Thông báo <i class="fa fa-bell"></i>
-					  </button>
-					  
-					  <!-- Ô thông báo popup -->
-						<div id="popupThongBao" class="card position-absolute" 
-						     style="width: 400px; top: 100%; right: 0; z-index: 1050; display: none; max-height: 400px; overflow-y: auto;">
-						  <div class="card-header">
-						    <strong>Thông báo mới nhất</strong>
-						    <button type="button" class="btn-close float-end" aria-label="Close" id="btnClosePopup"></button>
-						  </div>
-						  <div class="card-body" style="font-size: 14px; line-height: 1.4;">
-						    <div th:each="tb : ${danhSachThongBao}">
-						        <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/thong-bao/' + ${tb.maThongBao}}" th:text="${tb.tieuDe}" 
-								     style="display: block; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 8px; text-decoration: none; color: inherit;">
-								</a>
-								<a th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/thong-bao'" 
-								     style="display: block; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 8px; text-decoration: none; color: blue;">
-									Xem tất cả
-								</a>
-						    </div>
-						  </div>
-						</div>
-					</li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
-<!-- Sidebar Toggle -->
-<button class="sidebar-toggle" id="sidebarToggle">
-    <i class="fas fa-bars"></i>
-</button>
-
-<div class="container-fluid">
-    <div class="row gx-0">
-        <!-- Sidebar -->
-        <nav class="col-md-3 col-lg-2 sidebar" id="sidebarMenu">
-            <div class="position-sticky">
-                <h5 class="px-3 mt-3">Sinh Viên</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item1" th:each="tr : ${danhSachTrang}">
-                        <a class="nav-link1" th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/' + ${tr.duongDan}}"
-                           th:text="${tr.tieuDe}">Tên trang</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-light" href="#" id="dropdownBoMon" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Bộ môn
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownBoMon">
+                            <li th:each="baiViet : ${danhSachBoMon}">
+                                <a class="dropdown-item" th:text="${baiViet.tieuDe}" 
+                                   th:href="@{'/baiviet/' + ${siteInfor.maSiteInfor} + '/' + ${baiViet.maBaiViet}}"></a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <div>
+                            <a class="nav-link dropdown-toggle text-light" href="#" id="dropdownChuyenNganh" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Chuyên ngành
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownChuyenNganh">
+                                <li th:each="siteInfor : ${danhSachSiteInfor}">
+                                    <a class="dropdown-item" th:text="${siteInfor.tenSite}" 
+                                       th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/trang-chu'}"></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/su-kien-hoi-thao'}">Sự kiện & Hội thảo</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-light" href="#" id="dropdownSinhVien" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Sinh Viên
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownSinhVien">
+                            <li th:each="tr : ${danhSachTrang}">
+                                <a class="dropdown-item" th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/' + ${tr.duongDan}}" th:text="${tr.tieuDe}">Tên trang</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item position-relative">
+                        <button id="btnThongBao" class="nav-link btn btn-link" style="color: white; text-decoration: none;">
+                            Thông báo <i class="fa fa-bell"></i>
+                        </button>
+                        <div id="popupThongBao" class="card position-absolute" 
+                             style="width: 400px; top: 100%; right: 0; z-index: 1050; display: none; max-height: 400px; overflow-y: auto;">
+                            <div class="card-header">
+                                <strong>Thông báo mới nhất</strong>
+                                <button type="button" class="btn-close float-end" aria-label="Close" id="btnClosePopup"></button>
+                            </div>
+                            <div class="card-body" style="font-size: 14px; line-height: 1.4;">
+                                <div th:each="tb : ${danhSachThongBao}">
+                                    <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/thong-bao/' + ${tb.maThongBao}}" th:text="${tb.tieuDe}" 
+                                       style="display: block; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 8px; text-decoration: none; color: inherit;">
+                                    </a>
+                                    <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/thong-bao'}" 
+                                       style="display: block; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 8px; text-decoration: none; color: blue;">
+                                        Xem tất cả
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown" th:if="${nguoiDung != null}">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
+                            <i class="bi bi-person-circle"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" th:href="@{/sign_out}">Trang cá nhân</a></li>
+                            <li><a class="dropdown-item" th:href="@{/logout}">Đăng xuất</a></li>
+                        </ul>
                     </li>
                 </ul>
             </div>
-        </nav>
+        </div>
+    </nav>
 
-        <!-- Main Content -->
-        <main class="col-md-9 col-lg-10 py-4" style="padding-left: 24px; padding-right: 24px; overflow-x: hidden; word-wrap: break-word;">
-            <header class="mb-4">
-                <h1 th:text="${suKien?.tieuDe} ?: 'Tiêu đề sự kiện'">Tiêu đề sự kiện</h1>
-                <div class="article-meta" th:if="${suKien != null}">
-                    <span th:text="${#temporals.format(suKien?.thoiGianBatDau, 'dd/MM/yyyy')} ?: 'Ngày bắt đầu'">Ngày bắt đầu</span>
-                    <span th:if="${suKien?.diaDiem != null}" th:text="' - ' + ${suKien.diaDiem}">Địa điểm</span>
-                </div>
-            </header>
+    <div class="container-fluid">
+        <div class="row gx-0">
+            <main class="col-12 py-4" style="padding-left: 24px; padding-right: 24px; overflow-x: hidden; word-wrap: break-word; border-radius:0%">
+                <header class="mb-4">
+                    <h1 th:text="${suKien?.tieuDe} ?: 'Tiêu đề sự kiện'">Tiêu đề sự kiện</h1>
+                    <div class="article-meta" th:if="${suKien != null}">
+                        <span th:text="${#temporals.format(suKien?.thoiGianBatDau, 'dd/MM/yyyy')} ?: 'Ngày bắt đầu'">Ngày bắt đầu</span>
+                        <span th:if="${suKien?.diaDiem != null}" th:text="' - ' + ${suKien.diaDiem}">Địa điểm</span>
+                    </div>
+                </header>
 
-            <article>
-                <section class="article-content mb-4">
-                    <div th:utext="${suKien?.moTa} ?: 'Nội dung sự kiện chưa có'">Nội dung sự kiện</div>
-                </section>
+                <article>
+                    <section class="article-content mb-4">
+                        <div th:utext="${suKien?.moTa} ?: 'Nội dung sự kiện chưa có'">Nội dung sự kiện</div>
+                    </section>
 
-                <a class="btn btn-secondary" th:href="@{/trang/su-kien-hoi-thao}">← Quay lại danh sách sự kiện</a>
-            </article>
-        </main>
+                    <a class="btn btn-secondary" th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/su-kien-hoi-thao'}">← Quay lại danh sách sự kiện</a>
+                </article>
+            </main>
+        </div>
     </div>
-</div>
 
-<!-- Footer -->
-<footer class="mt-5 bg-light py-4">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
-                <h5 th:text="${siteInfor?.tenSite} ?: 'Tên Website'">Tên Website</h5>
-                <p>© <span th:text="${siteInfor?.tenSite}">Tên website</span> - All rights reserved.</p>
-            </div>
-            <div class="col-md-4 text-center mb-4 mb-md-0">
-                <h5>Liên hệ</h5>
-                <p>Email: <a th:href="'mailto:' + ${siteInfor?.email}" th:text="${siteInfor?.email}">email@example.com</a></p>
-                <p>Địa chỉ: <span th:text="${siteInfor?.diaChi}">Địa chỉ công ty</span></p>
-            </div>
-            <div class="col-md-4 text-center text-md-end">
-                <h5>Theo dõi</h5>
-                <div class="social-icons">
-                    <a th:href="${siteInfor?.facebook} ?: '#'" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
+                    <h5 th:text="${siteInfor?.tenSite} ?: 'Tên Website'">Tên Website</h5>
+                    <p>© <span th:text="${siteInfor?.tenSite} ?: 'Tên website'">Tên website</span> - All rights reserved.</p>
+                </div>
+                <div class="col-md-4 text-center mb-4 mb-md-0">
+                    <h5>Liên hệ</h5>
+                    <p>Email: <a th:href="'mailto:' + ${siteInfor?.email} ?: 'mailto:email@example.com'" th:text="${siteInfor?.email} ?: 'email@example.com'">email@example.com</a></p>
+                    <p>Địa chỉ: <span th:text="${siteInfor?.diaChi} ?: 'Địa chỉ công ty'">Địa chỉ công ty</span></p>
+                </div>
+                <div class="col-md-4 text-center text-md-end">
+                    <h5>Theo dõi</h5>
+                    <div class="social-icons">
+                        <a th:href="${siteInfor?.facebook} ?: '#'" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
-<!-- Bootstrap JS -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-	<script>
-	    document.getElementById('sidebarToggle').addEventListener('click', function () {
-	        document.getElementById('sidebarMenu').classList.toggle('active');
-	    });
-	</script>
-	<script>
-	  document.addEventListener('DOMContentLoaded', function() {
-	    const btnThongBao = document.getElementById('btnThongBao');
-	    const popup = document.getElementById('popupThongBao');
-	    const btnClose = document.getElementById('btnClosePopup');
-	
-	    btnThongBao.addEventListener('click', function(e) {
-	      e.stopPropagation(); // ngăn sự kiện nổi bọt lên document
-	      if (popup.style.display === 'none' || popup.style.display === '') {
-	        popup.style.display = 'block';
-	      } else {
-	        popup.style.display = 'none';
-	      }
-	    });
-	
-	    btnClose.addEventListener('click', function() {
-	      popup.style.display = 'none';
-	    });
-	
-	    // Ẩn popup nếu click ra ngoài popup và nút
-	    document.addEventListener('click', function(e) {
-	      if (!popup.contains(e.target) && e.target !== btnThongBao) {
-	        popup.style.display = 'none';
-	      }
-	    });
-	  });
-	</script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('btnThongBao').addEventListener('click', function () {
+            var popup = document.getElementById('popupThongBao');
+            popup.style.display = (popup.style.display === 'block') ? 'none' : 'block';
+        });
+        document.getElementById('btnClosePopup').addEventListener('click', function () {
+            document.getElementById('popupThongBao').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
