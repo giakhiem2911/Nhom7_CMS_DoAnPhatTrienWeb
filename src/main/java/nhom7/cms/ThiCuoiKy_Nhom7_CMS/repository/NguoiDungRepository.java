@@ -11,4 +11,5 @@ public interface NguoiDungRepository extends JpaRepository<NguoiDung, String> {
 	Page<NguoiDung> findByEmailContainingIgnoreCaseOrTenDangNhapContainingIgnoreCase(String email, String tenDangNhap, Pageable pageable);
     Optional<NguoiDung> findByTenDangNhap(String tenDangNhap);
     Optional<NguoiDung> findByEmail(String email);
+    Optional<NguoiDung> findByTenDangNhapOrEmail(String tenDangNhap, String email);
 }

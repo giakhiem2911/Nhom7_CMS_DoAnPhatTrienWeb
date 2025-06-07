@@ -12,12 +12,10 @@
 	    <a href="#" onclick="history.back(); return false;" class="close-button">&times;</a>
 	    <h2>Đăng nhập</h2>
 	
-	    <!-- Hiển thị thông báo lỗi -->
-	    <div th:if="${error}" class="alert alert-danger" style="color: red; margin-bottom: 15px;">
-	        <i class="bi bi-exclamation-triangle-fill"></i>
-	        <span th:text="${error}"></span>
-	    </div>
-	
+		<div th:if="${param.error}" class="alert alert-danger" style="color: red; margin-bottom: 15px;">
+		    <i class="bi bi-exclamation-triangle-fill"></i> Tên đăng nhập hoặc mật khẩu không đúng
+		</div>
+
 	    <form th:action="@{/sign_in}" method="post">
 	        <div class="form-group">
 	            <i class="bi bi-person"></i>

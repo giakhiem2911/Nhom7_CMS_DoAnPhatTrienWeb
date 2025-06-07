@@ -13,6 +13,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="container-fluid" th:fragment="layout">
         <div class="row">
@@ -28,8 +29,32 @@
         </div>
     </div>
 
+    <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-</body>
 
+    <!-- Custom JS cho header dropdown -->
+    <script th:inline="javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            var toggle = document.getElementById("userToggle");
+            var dropdown = document.getElementById("userDropdown");
+
+            if (toggle && dropdown) {
+                toggle.addEventListener("click", function(event) {
+                    event.preventDefault();
+                    var isVisible = dropdown.style.display === "block";
+                    dropdown.style.display = isVisible ? "none" : "block";
+                    toggle.setAttribute("aria-expanded", !isVisible);
+                });
+
+                document.addEventListener("click", function(event) {
+                    if (!toggle.contains(event.target) && !dropdown.contains(event.target)) {
+                        dropdown.style.display = "none";
+                        toggle.setAttribute("aria-expanded", "false");
+                    }
+                });
+            }
+        });
+    </script>
+</body>
 </html>
