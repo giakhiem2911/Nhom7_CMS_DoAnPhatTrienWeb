@@ -83,11 +83,11 @@
                                        th:text="${tb.tieuDe}"
                                        style="display: block; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 8px; text-decoration: none; color: inherit;">
                                     </a>
+                                </div>
                                     <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/thong-bao'}"
                                        style="display: block; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 8px; text-decoration: none; color: blue;">
                                         Xem tất cả
                                     </a>
-                                </div>
                             </div>
                         </div>
                     </li>
@@ -128,21 +128,23 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 text-center text-md-start mb-4 mb-md-0">
-                    <h5 th:text="${siteInfor?.tenSite} ?: 'Tên Website'">Tên Website</h5>
-                    <p>© <span th:text="${siteInfor?.tenSite} ?: 'Tên website'">Tên website</span> - All rights reserved.</p>
+                    <a class="navbar-brand" href="#">
+                        <img th:src="@{${siteInfor.logo}}" alt="Logo" style="height: 40px;">
+                    </a>
+                    <p>© <span th:text="${siteInfor.tenSite}">Tên website</span> - All rights reserved.</p>
                 </div>
                 <div class="col-md-4 text-center mb-4 mb-md-0">
                     <h5>Liên hệ</h5>
-                    <p>Email: <a th:href="'mailto:' + ${siteInfor?.email} ?: 'mailto:email@example.com'" th:text="${siteInfor?.email} ?: 'email@example.com'">email@example.com</a></p>
-                    <p>Địa chỉ: <span th:text="${siteInfor?.diaChi} ?: 'Địa chỉ công ty'">Địa chỉ công ty</span></p>
+                    <p>Email: <a th:href="'mailto:' + ${siteInfor.email}" th:text="${siteInfor.email}" style="color:white">email@example.com</a></p>
+                    <p>Địa chỉ: <span th:text="${siteInfor.diaChi}">Địa chỉ công ty</span></p>
                 </div>
                 <div class="col-md-4 text-center text-md-end">
                     <h5>Theo dõi</h5>
                     <div class="social-icons">
-                        <a th:href="${siteInfor?.facebook} ?: '#'" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a th:href="${siteInfor.facebook}" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-twitter"></i></a>
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+                    </div>		
                 </div>
             </div>
         </div>

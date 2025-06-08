@@ -51,12 +51,15 @@ public class TrangController {
 
     @GetMapping
     public String listTrang(Model model) {
+        SiteInfor siteInfor = siteInforRepository.findFirstByOrderByMaSiteInforAsc();
+        if (siteInfor == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site");
+        }
         List<Trang> trangs = trangRepository.findAll();
-        String maSiteInfor = "khoa-cong-nghe-thong-tin";
-        SiteInfor siteInfor = siteInforRepository.findById(maSiteInfor)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
+
         model.addAttribute("siteInfor", siteInfor);
         model.addAttribute("dsTrang", trangs);
+
         return "trang/list";
     }
 
@@ -211,13 +214,13 @@ public class TrangController {
         model.addAttribute("danhSachThongBao", danhSachThongBao);
 
         SiteInfor siteInfor = siteInforRepository.findById(maSiteInfor)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));// tuỳ logic bạn triển khai
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy site"));
         
         List<Trang> danhSachTrang = trangService.findAll();
         model.addAttribute("danhSachTrang", danhSachTrang);
         model.addAttribute("siteInfor", siteInfor);
 
-        return "trang/su_kien_hoi_thao"; // tạo file này
+        return "trang/su_kien_hoi_thao";
     }
     
     @Autowired

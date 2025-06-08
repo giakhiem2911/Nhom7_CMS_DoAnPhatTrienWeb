@@ -81,11 +81,11 @@
                                     <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/thong-bao/' + ${tb.maThongBao}}" th:text="${tb.tieuDe}" 
                                          style="display: block; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 8px; text-decoration: none; color: inherit;">
                                     </a>
+                                </div>
                                     <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor}} + '/thong-bao'" 
                                          style="display: block; border-bottom: 1px solid #ddd; padding-bottom: 8px; margin-bottom: 8px; text-decoration: none; color: blue;">
                                         Xem tất cả
                                     </a>
-                                </div>
                             </div>
                         </div>
                     </li>
@@ -209,7 +209,7 @@
                             <div class="card-body" style="max-height: 500px; overflow-y: auto;">
                                 <ul class="list-unstyled">
                                     <li th:each="tb : ${danhSachThongBao}" class="mb-3 border-bottom pb-2">
-                                        <a th:href="@{'/thong-bao/' + ${siteInfor.maSiteInfor} + '/' + ${tb.maThongBao}}" th:text="${tb.tieuDe}" style="text-decoration: none"></a>
+                                        <a th:href="@{'/trang/' + ${siteInfor.maSiteInfor} + '/thong-bao/' + ${tb.maThongBao}}" th:text="${tb.tieuDe}" style="text-decoration: none"></a>
                                         <br />
                                     </li>
                                 </ul>

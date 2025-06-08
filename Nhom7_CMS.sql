@@ -9,7 +9,7 @@ CREATE TABLE VaiTro (
     TenVaiTro NVARCHAR(256),
     MoTa TEXT
 );
-
+SELECT * FROM NguoiDung
 -- Bảng NguoiDung
 CREATE TABLE NguoiDung (
     MaNguoiDung CHAR(256) PRIMARY KEY,
@@ -113,12 +113,12 @@ VALUES ('VT001', N'Admin', N'Quản trị hệ thống');
 -- Thêm người dùng mẫu: Admin
 INSERT INTO NguoiDung (MaNguoiDung, MaVaiTro, TenDangNhap, MatKhau, HoTen, Email, NgayTao)
 VALUES (
-    'ND001',
+    'ND002',
     'VT001',
     N'admin',
-    N'123456', -- Bạn nên hash mật khẩu trong thực tế
+    N'alasieunhan',
     N'Nguyễn Hoàng Gia Khiêm',
-    N'admin@gmail.com',
+    N'admin1@gmail.com',
     GETDATE()
 );
 
